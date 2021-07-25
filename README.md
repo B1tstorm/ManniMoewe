@@ -4,3 +4,9 @@
 asdasd
 ## Teilnehmer:
 ...
+## Frameworks
+[Libgdx Wiki](https://de.wikipedia.org/wiki/LibGDX)
+[Libgdx ](https://libgdx.com)
+## Tools
+- IntelliJ
+- 

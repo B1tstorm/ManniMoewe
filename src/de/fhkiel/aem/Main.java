@@ -6,7 +6,7 @@ public class Main {
         System.out.println("hallo");
     }
 
-    double multiplizieren(double zahlEins, double zahlZwei){
+    public static double multiplizieren(double zahlEins, double zahlZwei){
         return zahlEins * zahlZwei;
     }
 }

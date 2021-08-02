@@ -1,6 +1,8 @@
 package de.fhkiel.aem;
 
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Main {
 
@@ -14,7 +16,7 @@ public class Main {
             if(input.equals("-help")) {
                 Utility.help();
             }
-
+            System.out.println("Ergebnis: "+ parseInput(input));
         } while (!input.equals("off"));
 
         scanner.close();
@@ -22,18 +24,18 @@ public class Main {
     }
 
     private static double parseInput(String input) {
-        Pattern pattern = Pattern.compile(
-                "(?<numone>-?[0-9]+[.,]?[0-9]+?\\s?)(?<sign>[+\\-*/])\\s?(?<numtwo>-?[0-9]+[.,]?[0-9]+?)");
-        Matcher matcher = pattern.matcher(input);
 
+        Pattern pattern = Pattern.compile("(?<numone>-?[0-9]*[.,]?[0-9]+?\\s?)(?<sign>[+\\-*\\/])\\s?(?<numtwo>-?[0-9]*[.,]?[0-9]+?)");
+
+        Matcher matcher = pattern.matcher(input);
         if (!matcher.matches()) {
             throw new RuntimeException("Die Rechnung konnte nicht erkannt werden!");
         }
 
         String numOne = matcher.group("numone");
+        String sign = matcher.group("sign");
         String numTwo = matcher.group("numtwo");
 
-        String sign = matcher.group("sign");
         double numOneParsed = Double.parseDouble(numOne);
         double numTwoParsed = Double.parseDouble(numTwo);
 

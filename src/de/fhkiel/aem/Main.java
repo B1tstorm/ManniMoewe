@@ -9,7 +9,6 @@ public class Main {
         System.out.println("hallo");
     }
 
-
     private static double parseInput(String input) {
         Pattern pattern = Pattern.compile(
                 "(?<numone>-?[0-9]+[.,]?[0-9]+?\\s?)(?<sign>[+\\-*/])\\s?(?<numtwo>-?[0-9]+[.,]?[0-9]+?)");

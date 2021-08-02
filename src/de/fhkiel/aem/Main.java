@@ -32,7 +32,7 @@ public class Main {
                 result = subtraktion(numOneParsed, numTwoParsed);
                 break;
             case "+":
-                result = multiplizieren(numOneParsed, numTwoParsed);
+                result = addition(numOneParsed, numTwoParsed);
                 break;
             case "*":
                 result = 0;

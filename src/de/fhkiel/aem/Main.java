@@ -49,10 +49,10 @@ public class Main {
                 result = addition(numOneParsed, numTwoParsed);
                 break;
             case "*":
-                result = 0;
+                result = multiplizieren(numOneParsed, numTwoParsed);
                 break;
             case "/":
-                result = 0;
+                result = divisoin(numOneParsed, numTwoParsed);
                 break;
             default:
                 throw new RuntimeException("Die Rechnung konnte nicht erkannt werden!");

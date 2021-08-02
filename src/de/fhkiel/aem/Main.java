@@ -23,14 +23,17 @@ public class Main {
         String numTwo = matcher.group("numtwo");
 
         String sign = matcher.group("sign");
+        double numOneParsed = Double.parseDouble(numOne);
+        double numTwoParsed = Double.parseDouble(numTwo);
+
         double result;
 
         switch (sign) {
             case "-":
-                result = 0;
+                result = subtraktion(numOneParsed, numTwoParsed);
                 break;
             case "+":
-                result = 0;
+                result = multiplizieren(numOneParsed, numTwoParsed);
                 break;
             case "*":
                 result = 0;

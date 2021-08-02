@@ -1,12 +1,7 @@
 # Flappy Bird - AEM 2021 - Team 2
----
-## Beschreibung:
-asdasd
-## Teilnehmer:
-...
-## Frameworks
-[Libgdx Wiki](https://de.wikipedia.org/wiki/LibGDX)
-[Libgdx ](https://libgdx.com)
+## Projektbeschreibung:
+    Das Programm ist ein Konsolen-Taschenrechner. Der alle Grundrechenarten beherscht. z.B. + - * / 
 ## Tools
-- IntelliJ
-- 
+- IntelliJ IDE 
+## Installation
+Die .exe Datei ist ready to run. Der User muss keine weiteren Instalationen betätigen

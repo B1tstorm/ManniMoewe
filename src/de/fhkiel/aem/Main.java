@@ -6,7 +6,13 @@ public class Main {
         System.out.println("hallo");
     }
 
-    public static double multiplizieren(double zahlEins, double zahlZwei){
+    public static double multiplizieren(double zahlEins, double zahlZwei) {
         return zahlEins * zahlZwei;
     }
+
+    private static double subtraktion(double _minuend, double _subtrahend) {
+        return (_minuend - _subtrahend);
+    }
 }
+
+

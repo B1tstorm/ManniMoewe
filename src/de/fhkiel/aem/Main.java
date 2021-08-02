@@ -12,7 +12,7 @@ public class Main {
 
         do {
             System.out.println("Gib eine Rechnung (Bsp. X+X) ein oder \"-help\".");
-            input = scanner.next();
+            input = scanner.nextLine();
             if(input.equals("-help")) {
                 Utility.help();
             }

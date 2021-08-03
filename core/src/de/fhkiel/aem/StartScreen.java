@@ -1,5 +1,6 @@
 package de.fhkiel.aem;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -18,6 +19,7 @@ public class StartScreen implements Screen {
     OrthographicCamera camera;
     private final Stage stage;
     private ImageButton startButton;
+    private ImageButton highscorebutton;
 
     public StartScreen(FlappyBird game) {
         this.game = game;
@@ -40,6 +42,19 @@ public class StartScreen implements Screen {
                 System.out.println("Start Button Pressed");
             }
         });
+
+        stage = new Stage();
+        Gdx.input.setInputProcessor(stage);
+        highscorebutton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("highscore.png")))));
+        highscorebutton.setPosition((1920/2) - 100, 200);
+        stage.addActor(highscorebutton);
+        highscorebutton.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+                System.out.println("Button Pressed");
+            }
+        });
+
     }
 
     @Override
@@ -55,6 +70,7 @@ public class StartScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
         game.font.draw(game.batch, "Welcome the best Flappy Bird Game ever.", Configuration.ScreenWidth / 2, 500);
+        game.font.draw(game.batch, "PRESS ANY KEY TO START", Configuration.ScreenWidth / 2, 450);
         stage.draw();
         game.batch.end();
     }

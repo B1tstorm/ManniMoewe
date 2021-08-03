@@ -37,9 +37,9 @@ public class StartScreen implements Screen {
         highscorebutton.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                System.out.println("Button Pressed");
-                game.setScreen(new Playscreen(game));
-                dispose();
+                System.out.println("Button highscorebutton Pressed");
+//                game.setScreen(new Playscreen(game));
+//                dispose();
             }
         });
 

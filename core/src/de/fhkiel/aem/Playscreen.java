@@ -35,7 +35,7 @@ public class Playscreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
-        game.font.draw(game.batch, "Welcome the Play Screen .", Configuration.ScreenWidth / 2, 500);
+        game.font.draw(game.batch, "Welcome the Play Screen .", 500, 500);
         stage.draw();
         game.batch.end();
     }

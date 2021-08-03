@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.ScreenUtils;
+import de.fhkiel.aem.utility.ButtonFactory;
 import org.w3c.dom.Text;
 
 
@@ -53,6 +54,11 @@ public class HighscoreScreen implements Screen {
         }
 
         highscoreTabelle.row();
+        highscoreTabelle.add(ButtonFactory.CreateImageButton("back.png",
+                () -> {
+                    game.setScreen(new StartScreen(game));
+                    dispose();
+        })).colspan(3).center();
 
         stage.addActor(highscoreTabelle);
 

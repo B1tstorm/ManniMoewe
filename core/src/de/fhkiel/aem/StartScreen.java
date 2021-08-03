@@ -51,8 +51,8 @@ public class StartScreen implements Screen {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
                 System.out.println("Start Button Pressed");
-//                game.setScreen(new Playscreen(game));
-//               dispose();
+                game.setScreen(new Playscreen(game));
+               dispose();
             }
         });
 

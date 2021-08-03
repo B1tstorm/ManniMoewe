@@ -1,11 +1,12 @@
 package de.fhkiel.aem;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
-public class FlappyBird extends ApplicationAdapter {
+public class FlappyBird extends Game {
 	SpriteBatch batch;
 	Texture img;
 	
@@ -13,14 +14,16 @@ public class FlappyBird extends ApplicationAdapter {
 	public void create () {
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
+		this.setScreen(new LauncherMenu());
 	}
 
 	@Override
 	public void render () {
-		ScreenUtils.clear(1, 0, 0, 1);
-		batch.begin();
+		//ScreenUtils.clear(1, 0, 0, 1);
+		super.render();
+		/*batch.begin();
 		batch.draw(img, 0, 0);
-		batch.end();
+		batch.end();*/
 	}
 	
 	@Override

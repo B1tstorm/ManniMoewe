@@ -22,7 +22,7 @@ public class HighscoreScreen implements Screen {
     Label.LabelStyle labelStyle;
     Table highscoreTabelle;
 
-    public HighscoreScreen(final FlappyBird game){
+    public HighscoreScreen(final FlappyBird game) {
         this.game = game;
         stage = new Stage();
         highscoreTabelle = new Table();

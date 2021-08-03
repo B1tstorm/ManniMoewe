@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -20,6 +22,7 @@ public class StartScreen implements Screen {
     private final Stage stage;
     private ImageButton startButton;
     private ImageButton highscorebutton;
+    private final Table table;
 
     public StartScreen(FlappyBird game) {
         this.game = game;
@@ -27,15 +30,26 @@ public class StartScreen implements Screen {
         camera.setToOrtho(false, Configuration.ScreenWidth, Configuration.ScreenHeight);
 
         stage = new Stage();
+        table = new Table();
+        Gdx.input.setInputProcessor(stage);
+
         createButtons();
-        stage.addActor(startButton);
+
+        table.debug();
+        table.add().expand().colspan(3);
+        table.row();
+        table.add(startButton).center().fillX();
+        table.add(highscorebutton).center().fillX();
+        table.add().center().fillX();
+
+        stage.addActor(table);
+
     }
 
     private void createButtons() {
         Drawable startImage = new TextureRegionDrawable(
                 new TextureRegion(new Texture("start.png")));
         startButton = new ImageButton(startImage);
-
         startButton.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
@@ -43,18 +57,14 @@ public class StartScreen implements Screen {
             }
         });
 
-        stage = new Stage();
-        Gdx.input.setInputProcessor(stage);
-        highscorebutton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("highscore.png")))));
-        highscorebutton.setPosition((1920/2) - 100, 200);
-        stage.addActor(highscorebutton);
+        highscorebutton = new ImageButton(
+                new TextureRegionDrawable(new TextureRegion(new Texture("highscore.png"))));
         highscorebutton.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
                 System.out.println("Button Pressed");
             }
         });
-
     }
 
     @Override
@@ -69,8 +79,6 @@ public class StartScreen implements Screen {
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
-        game.font.draw(game.batch, "Welcome the best Flappy Bird Game ever.", Configuration.ScreenWidth / 2, 500);
-        game.font.draw(game.batch, "PRESS ANY KEY TO START", Configuration.ScreenWidth / 2, 450);
         stage.draw();
         game.batch.end();
     }

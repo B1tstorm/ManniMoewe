@@ -23,7 +23,7 @@ public class StartScreen implements Screen {
     private ImageButton optionsButton;
     private final Table table;
 
-    public StartScreen(FlappyBird game) {
+    public StartScreen(final FlappyBird game) {
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Configuration.ScreenWidth, Configuration.ScreenHeight);
@@ -51,6 +51,8 @@ public class StartScreen implements Screen {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
                 System.out.println("Start Button Pressed");
+//                game.setScreen(new Playscreen(game));
+//               dispose();
             }
         });
 

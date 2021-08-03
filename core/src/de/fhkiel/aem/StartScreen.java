@@ -4,9 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.TextureArray;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -17,11 +20,12 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 public class StartScreen implements Screen {
 
-    final FlappyBird game;
-    OrthographicCamera camera;
+    private final FlappyBird game;
+    private final OrthographicCamera camera;
     private final Stage stage;
     private ImageButton startButton;
     private ImageButton highscorebutton;
+    private ImageButton optionsButton;
     private final Table table;
 
     public StartScreen(FlappyBird game) {
@@ -60,6 +64,14 @@ public class StartScreen implements Screen {
         highscorebutton = new ImageButton(
                 new TextureRegionDrawable(new TextureRegion(new Texture("highscore.png"))));
         highscorebutton.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+                System.out.println("Button Pressed");
+            }
+        });
+        optionsButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("optionen.png"))));
+        optionsButton.setPosition(Gdx.graphics.getWidth() - optionsButton.getWidth() - 50, 20);
+        optionsButton.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
                 System.out.println("Button Pressed");

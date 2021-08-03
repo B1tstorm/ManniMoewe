@@ -3,24 +3,20 @@ package de.fhkiel.aem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
+import de.fhkiel.aem.utility.ButtonFactory;
 
 public class StartScreen implements Screen {
 
     private final FlappyBird game;
     private final OrthographicCamera camera;
     private final Stage stage;
-    private ImageButton startButton;
-    private ImageButton highscorebutton;
-    private ImageButton optionsButton;
+    private final ImageButton startButton;
+    private final ImageButton highscoreButton;
+    private final ImageButton optionsButton;
     private final Table table;
 
     public StartScreen(final FlappyBird game) {
@@ -33,46 +29,21 @@ public class StartScreen implements Screen {
         table.setFillParent(true);
         Gdx.input.setInputProcessor(stage);
 
-        createButtons();
+        startButton = ButtonFactory.CreateImageButton("start.png",
+                () -> {
+                    game.setScreen(new Playscreen(game));
+                    dispose();
+        });
+        highscoreButton = ButtonFactory.CreateImageButton("highscore.png", () -> System.out.println("Highscore  Button pressed"));
+        optionsButton = ButtonFactory.CreateImageButton("optionen.png", () -> System.out.println("Options  Button pressed"));
 
         table.add().expand().colspan(3);
         table.row();
         table.add(startButton).center().fillX();
-        table.add(highscorebutton).center().fillX();
+        table.add(highscoreButton).center().fillX();
         table.add(optionsButton).center().fillX();
 
         stage.addActor(table);
-    }
-
-    private void createButtons() {
-        startButton = new ImageButton(
-                new TextureRegionDrawable(new TextureRegion(new Texture("start.png"))));
-        startButton.addListener(new ChangeListener() {
-            @Override
-            public void changed (ChangeEvent event, Actor actor) {
-                System.out.println("Start Button Pressed");
-//                game.setScreen(new Playscreen(game));
-//               dispose();
-            }
-        });
-
-        highscorebutton = new ImageButton(
-                new TextureRegionDrawable(new TextureRegion(new Texture("highscore.png"))));
-        highscorebutton.addListener(new ChangeListener() {
-            @Override
-            public void changed (ChangeEvent event, Actor actor) {
-                System.out.println("Highscore Button Pressed");
-            }
-        });
-
-        optionsButton = new ImageButton(
-                new TextureRegionDrawable(new TextureRegion(new Texture("optionen.png"))));
-        optionsButton.addListener(new ChangeListener() {
-            @Override
-            public void changed (ChangeEvent event, Actor actor) {
-                System.out.println("Options Button Pressed");
-            }
-        });
     }
 
     @Override

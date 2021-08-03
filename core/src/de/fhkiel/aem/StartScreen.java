@@ -30,12 +30,7 @@ public class StartScreen implements Screen {
 
         game.batch.begin();
         game.font.draw(game.batch, "Welcome the best Flappy Bird Game ever.", Configuration.ScreenWidth / 2, 500);
-        game.font.draw(game.batch, "PRESS ANY KEY TO START", Configuration.ScreenWidth / 2, 450);
         game.batch.end();
-
-        if (Gdx.input.isTouched()) {
-            // game.setScreen(new GameScreen(game));
-        }
     }
 
     @Override

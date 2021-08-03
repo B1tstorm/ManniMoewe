@@ -3,6 +3,7 @@ package de.fhkiel.aem;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.ScreenUtils;
 
 public class FlappyBird extends Game {
 	public SpriteBatch batch;
@@ -23,6 +24,5 @@ public class FlappyBird extends Game {
 	@Override
 	public void dispose () {
 		batch.dispose();
-		font.dispose();
 	}
 }

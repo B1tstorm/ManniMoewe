@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
+import de.fhkiel.aem.utility.ButtonFactory;
 
 public class StartScreen implements Screen {
 
@@ -33,6 +34,8 @@ public class StartScreen implements Screen {
         table.setFillParent(true);
         Gdx.input.setInputProcessor(stage);
 
+        startButton = ButtonFactory.CreateImageButton("start.png", () -> System.out.println("Test  Button pressed"));
+
         createButtons();
 
         table.add().expand().colspan(3);
@@ -45,7 +48,7 @@ public class StartScreen implements Screen {
     }
 
     private void createButtons() {
-        startButton = new ImageButton(
+        /*startButton = new ImageButton(
                 new TextureRegionDrawable(new TextureRegion(new Texture("start.png"))));
         startButton.addListener(new ChangeListener() {
             @Override
@@ -54,7 +57,7 @@ public class StartScreen implements Screen {
 //                game.setScreen(new Playscreen(game));
 //               dispose();
             }
-        });
+        }); */
 
         highscorebutton = new ImageButton(
                 new TextureRegionDrawable(new TextureRegion(new Texture("highscore.png"))));

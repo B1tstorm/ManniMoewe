@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 public class Playscreen implements Screen {
 
     final FlappyBird game;
+    private final Bird bird;
     OrthographicCamera camera;
     Stage stage;
 
@@ -19,6 +20,8 @@ public class Playscreen implements Screen {
 
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
+
+        bird = new Bird(50, 700 );
     }
 
 
@@ -33,8 +36,9 @@ public class Playscreen implements Screen {
 
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
-
         game.batch.begin();
+        game.batch.draw(bird.bird, bird.xPos, bird.yPos , 200 , 150);
+
         game.font.draw(game.batch, "Welcome the Play Screen .", 500, 500);
         stage.draw();
         game.batch.end();

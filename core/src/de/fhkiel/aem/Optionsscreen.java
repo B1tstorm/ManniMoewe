@@ -2,7 +2,9 @@ package de.fhkiel.aem;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -17,6 +19,7 @@ public class Optionsscreen implements Screen {
     Stage stage;
     private final Table table;
     private Label headerLabel;
+    private Label.LabelStyle labelStyle;
     private ImageButton backButton;
     private ImageButton easyButton;
     private ImageButton mediumButton;
@@ -36,21 +39,22 @@ public class Optionsscreen implements Screen {
         table.setFillParent(true);
         Gdx.input.setInputProcessor(stage);
 
-        headerLabel = new Label();
+        labelStyle = new Label.LabelStyle();
+        labelStyle.font = new BitmapFont(Gdx.files.internal("title-font-export.fnt"));
+        labelStyle.fontColor = Color.WHITE;
 
-        table.add().expand().colspan(3);
-        table.add(headerLabel);
+        headerLabel = new Label("Options", labelStyle);
+
+        table.add(headerLabel).height(200).center().colspan(3);
         table.row();
         table.add(easyButton).center().fillX();
         table.add(mediumButton).center().fillX();
         table.add(hardButton).center().fillX();
         table.row();
-        table.add(skinButton1).center().fillX();
+        table.add(skinButton1).height(180).center().fillX();
         table.add(skinButton2).center().fillX();
         table.add(skinButton3).center().fillX();
-
         table.row();
-
         table.add(backButton).expand().colspan(3);
 
         stage.addActor(table);

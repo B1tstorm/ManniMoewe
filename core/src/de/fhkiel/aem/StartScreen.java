@@ -39,8 +39,6 @@ public class StartScreen implements Screen {
                     game.setScreen(new HighscoreScreen(game));
                     dispose();
         });
-        optionsButton = ButtonFactory.CreateImageButton("optionen.png", () -> System.out.println("Options  Button pressed"));
-        highscoreButton = ButtonFactory.CreateImageButton("highscore.png", () -> System.out.println("Highscore  Button pressed"));
         optionsButton = ButtonFactory.CreateImageButton("optionen.png",
                 () -> {
             game.setScreen(new Optionsscreen(game));

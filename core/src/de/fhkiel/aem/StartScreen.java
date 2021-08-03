@@ -19,7 +19,7 @@ public class StartScreen implements Screen {
     private final ImageButton optionsButton;
     private final Table table;
 
-    public StartScreen(FlappyBird game) {
+    public StartScreen(final FlappyBird game) {
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Configuration.ScreenWidth, Configuration.ScreenHeight);
@@ -29,7 +29,11 @@ public class StartScreen implements Screen {
         table.setFillParent(true);
         Gdx.input.setInputProcessor(stage);
 
-        startButton = ButtonFactory.CreateImageButton("start.png", () -> System.out.println("Play Button pressed"));
+        startButton = ButtonFactory.CreateImageButton("start.png",
+                () -> {
+                //    game.setScreen(new Playscreen(game));
+                //    dispose();
+        });
         highscoreButton = ButtonFactory.CreateImageButton("highscore.png", () -> System.out.println("Highscore  Button pressed"));
         optionsButton = ButtonFactory.CreateImageButton("optionen.png", () -> System.out.println("Options  Button pressed"));
 

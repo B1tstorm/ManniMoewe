@@ -35,25 +35,23 @@ public class StartScreen implements Screen {
 
         stage = new Stage();
         table = new Table();
+        table.setFillParent(true);
         Gdx.input.setInputProcessor(stage);
 
         createButtons();
 
-        table.debug();
         table.add().expand().colspan(3);
         table.row();
         table.add(startButton).center().fillX();
         table.add(highscorebutton).center().fillX();
-        table.add().center().fillX();
+        table.add(optionsButton).center().fillX();
 
         stage.addActor(table);
-
     }
 
     private void createButtons() {
-        Drawable startImage = new TextureRegionDrawable(
-                new TextureRegion(new Texture("start.png")));
-        startButton = new ImageButton(startImage);
+        startButton = new ImageButton(
+                new TextureRegionDrawable(new TextureRegion(new Texture("start.png"))));
         startButton.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
@@ -66,15 +64,16 @@ public class StartScreen implements Screen {
         highscorebutton.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                System.out.println("Button Pressed");
+                System.out.println("Highscore Button Pressed");
             }
         });
-        optionsButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("optionen.png"))));
-        optionsButton.setPosition(Gdx.graphics.getWidth() - optionsButton.getWidth() - 50, 20);
+
+        optionsButton = new ImageButton(
+                new TextureRegionDrawable(new TextureRegion(new Texture("optionen.png"))));
         optionsButton.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                System.out.println("Button Pressed");
+                System.out.println("Options Button Pressed");
             }
         });
     }

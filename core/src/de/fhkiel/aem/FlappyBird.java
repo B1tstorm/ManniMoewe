@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 public class FlappyBird extends Game {
 	public SpriteBatch batch;
 	public BitmapFont font;
-	
+
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
@@ -20,7 +20,7 @@ public class FlappyBird extends Game {
 	public void render () {
 		super.render();
 	}
-	
+
 	@Override
 	public void dispose () {
 		batch.dispose();

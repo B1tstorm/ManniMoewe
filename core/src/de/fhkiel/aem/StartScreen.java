@@ -24,16 +24,26 @@ public class StartScreen implements Screen {
     OrthographicCamera camera;
     Stage stage;
     ImageButton optionsButton;
-    ImageButton.ImageButtonStyle buttonStyle;
-    BitmapFont font;
-    Skin skin;
-    TextureAtlas buttonAtlas;
+    ImageButton highscorebutton;
 
     public StartScreen(FlappyBird game) {
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Configuration.ScreenWidth, Configuration.ScreenHeight);
         createButtons();
+
+        stage = new Stage();
+        Gdx.input.setInputProcessor(stage);
+        highscorebutton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("highscore.png")))));
+        highscorebutton.setPosition((1920/2) - 100, 200);
+        stage.addActor(highscorebutton);
+        highscorebutton.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+                System.out.println("Button Pressed");
+            }
+        });
+
     }
 
     @Override

@@ -34,15 +34,7 @@ public class StartScreen implements Screen {
 
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
-        highscorebutton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("highscore.png")))));
-        highscorebutton.setPosition((1920/2) - 100, 200);
-        stage.addActor(highscorebutton);
-        highscorebutton.addListener(new ChangeListener() {
-            @Override
-            public void changed (ChangeEvent event, Actor actor) {
-                System.out.println("Button Pressed");
-            }
-        });
+
 
     }
 
@@ -72,14 +64,9 @@ public class StartScreen implements Screen {
     public void createButtons() {
 
         stage = new Stage();
-        Gdx.input.setInputProcessor(stage);
-        font = new BitmapFont();
+        Gdx.input.setInputProcessor(stage);;
 
         optionsButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("optionen.png"))));
-
-
-
-        //optionsButton.setSize(100, 70);
         optionsButton.setPosition(Gdx.graphics.getWidth() - optionsButton.getWidth() - 50, 20);
         optionsButton.addListener(new ChangeListener() {
             @Override
@@ -88,6 +75,16 @@ public class StartScreen implements Screen {
             }
         });
         stage.addActor(optionsButton);
+
+        highscorebutton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("highscore.png")))));
+        highscorebutton.setPosition((1920/2) - 100, 200);
+        highscorebutton.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+                System.out.println("Button Pressed");
+            }
+        });
+        stage.addActor(highscorebutton);
     }
 
     @Override

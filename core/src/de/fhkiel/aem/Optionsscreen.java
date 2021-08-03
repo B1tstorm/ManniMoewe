@@ -70,38 +70,30 @@ public class Optionsscreen implements Screen {
 
         easyButton = ButtonFactory.CreateImageButton("start.png",
                 () -> {
-                    game.setScreen(new Playscreen(game));
-                    dispose();
                 });
 
         mediumButton = ButtonFactory.CreateImageButton("start.png",
                 () -> {
-                    game.setScreen(new Playscreen(game));
-                    dispose();
+
                 });
 
         hardButton = ButtonFactory.CreateImageButton("start.png",
                 () -> {
-                    game.setScreen(new Playscreen(game));
-                    dispose();
+
                 });
 
         skinButton1 = ButtonFactory.CreateImageButton("start.png",
                 () -> {
-                    game.setScreen(new Playscreen(game));
-                    dispose();
                 });
 
         skinButton2 = ButtonFactory.CreateImageButton("start.png",
                 () -> {
-                    game.setScreen(new Playscreen(game));
-                    dispose();
+
                 });
 
         skinButton3 = ButtonFactory.CreateImageButton("start.png",
                 () -> {
-                    game.setScreen(new Playscreen(game));
-                    dispose();
+
                 });
     }
 

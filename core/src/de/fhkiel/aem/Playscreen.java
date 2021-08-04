@@ -87,7 +87,7 @@ public class Playscreen implements Screen {
     @Override
     public void show() {
         game.meerMoeweMusik.stop();
-        kielMusik.play();
+        game.kielMusik.play();
     }
 
     /**

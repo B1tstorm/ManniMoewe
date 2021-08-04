@@ -9,7 +9,6 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.TimeUtils;
 import java.util.concurrent.ThreadLocalRandom;
 
 import java.util.Iterator;
@@ -26,7 +25,6 @@ public class Playscreen implements Screen {
     private final Array<PositionTexture> backgroundLoop;
     private final Bird bird;
     private Array<Barrier> barriers = new Array<>();
-    private final Music kielMusik;
 
     /**
      * Creates a new PlayScreen where the game is running on.
@@ -35,16 +33,13 @@ public class Playscreen implements Screen {
     public Playscreen(FlappyBird game) {
         this.game = game;
 
-        kielMusik = Gdx.audio.newMusic(Gdx.files.internal("Kiel_Sound.mp3"));
-        kielMusik.setVolume(0.5f);
-        kielMusik.setLooping(true);
-
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Configuration.ScreenWidth, Configuration.ScreenHeight);
 
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
 
+        createBarriers();
         backgroundTexture = new Texture(Gdx.files.internal("background.png"));
         backgroundLoop = new Array<>();
 
@@ -53,7 +48,6 @@ public class Playscreen implements Screen {
         }
 
         bird = new Bird(50, 500 );
-        createBarriers();
     }
 
     /**
@@ -93,7 +87,7 @@ public class Playscreen implements Screen {
     @Override
     public void show() {
         game.meerMoeweMusik.stop();
-        kielMusik.play();
+        game.kielMusik.play();
     }
 
     /**
@@ -213,7 +207,7 @@ public class Playscreen implements Screen {
 
     @Override
     public void hide() {
-
+        game.kielMusik.stop();
     }
 
     @Override
@@ -222,6 +216,5 @@ public class Playscreen implements Screen {
         for(PositionTexture texture: backgroundLoop) {
             texture.dispose();
         }
-        kielMusik.dispose();
     }
 }

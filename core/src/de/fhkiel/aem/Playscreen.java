@@ -102,9 +102,9 @@ public class Playscreen implements Screen {
 
         game.batch.begin();
 
-        game.batch.draw(bird.getTexture(), bird.getX(), bird.getY() , 200 , 150);
         stage.draw();
         renderArray(backgroundLoop);
+        game.batch.draw(bird.getTexture(), bird.getX(), bird.getY() , 200 , 150);
 
         game.batch.end();
 

@@ -1,22 +1,14 @@
 package de.fhkiel.aem;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Vector3;
 
-import java.awt.*;
-
-public class Bird {
-
-    public float xPos;
-    public float yPos;
-    public Texture bird;
+/**
+ * The Bird of the Game.
+ */
+public class Bird extends PositionTexture {
 
     public Bird(float xPos, float yPos) {
-        this.xPos = xPos;
-        this.yPos = yPos;
-        bird = new Texture("flappy1_up.png");
-
+        super(new Texture("flappy1_up.png"), xPos, yPos);
     }
-
 
 }

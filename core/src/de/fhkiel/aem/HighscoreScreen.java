@@ -10,21 +10,25 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.ScreenUtils;
 import de.fhkiel.aem.utility.ButtonFactory;
-import org.w3c.dom.Text;
 
 
 public class HighscoreScreen implements Screen {
 
     final FlappyBird game;
-    OrthographicCamera camera;
-    Stage stage;
-    Label highscore, platz, name, score;
-    Label.LabelStyle labelStyle;
-    Table highscoreTabelle;
+    private final OrthographicCamera camera;
+    private final Stage stage;
+    private final Label highscore, platz, name, score;
+    private final Label.LabelStyle labelStyle;
+    private final Table highscoreTabelle;
+
 
     public HighscoreScreen(final FlappyBird game) {
+
         this.game = game;
+
         stage = new Stage();
+
+
         highscoreTabelle = new Table();
         highscoreTabelle.setFillParent(true);
 

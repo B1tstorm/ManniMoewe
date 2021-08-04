@@ -15,8 +15,8 @@ import de.fhkiel.aem.utility.ButtonFactory;
 public class Optionsscreen implements Screen {
 
     final FlappyBird game;
-    OrthographicCamera camera;
-    Stage stage;
+    private final OrthographicCamera camera;
+    private final Stage stage;
     private final Table table;
     private Label headerLabel;
     private Label.LabelStyle labelStyle;
@@ -28,8 +28,10 @@ public class Optionsscreen implements Screen {
     private ImageButton skinButton2;
     private ImageButton skinButton3;
 
+
     public Optionsscreen(FlappyBird game) {
         this.game = game;
+
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Configuration.ScreenWidth, Configuration.ScreenHeight);
 
@@ -106,6 +108,8 @@ public class Optionsscreen implements Screen {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0.5f, 1);
+
+
 
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);

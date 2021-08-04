@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.TimeUtils;
 
 public class Playscreen implements Screen {
 
@@ -37,7 +38,9 @@ public class Playscreen implements Screen {
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
-        game.batch.draw(bird.bird, bird.xPos, bird.yPos , 200 , 150);
+        game.batch.draw(bird.bird, bird.xPos, bird.yPos , 200 , 150 );
+
+        bird.move();
 
         game.font.draw(game.batch, "Welcome the Play Screen .", 500, 500);
         stage.draw();

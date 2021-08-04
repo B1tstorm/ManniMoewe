@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.TimeUtils;
 import java.util.concurrent.ThreadLocalRandom;
 
 import java.util.Iterator;
@@ -44,7 +45,6 @@ public class Playscreen implements Screen {
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
 
-        createBarriers();
         backgroundTexture = new Texture(Gdx.files.internal("background.png"));
         backgroundLoop = new Array<>();
 
@@ -53,6 +53,7 @@ public class Playscreen implements Screen {
         }
 
         bird = new Bird(50, 500 );
+        createBarriers();
     }
 
     /**
@@ -106,13 +107,16 @@ public class Playscreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
+        renderArray(backgroundLoop);
 
         stage.draw();
-        renderArray(backgroundLoop);
+
+        game.batch.draw(bird.bird, bird.xPos, bird.yPos , 100 , 100 );
+        bird.move();
+
         for(Barrier barrier : barriers){
             barrier.render(game.batch, barriers.size / 2);
         }
-        game.batch.draw(bird.getTexture(), bird.getX(), bird.getY() , 200 , 150);
 
         game.batch.end();
 
@@ -136,8 +140,8 @@ public class Playscreen implements Screen {
         int randomNum = 0;
 
         for(Barrier barrier : barriers) {
-            if (Intersector.overlaps(bird.birdSprite.getBoundingRectangle(), barrier.getBarrierSprite().getBoundingRectangle()))
-                System.out.println("knallt");
+//            if (Intersector.overlaps(bird , barrier.getBarrierSprite().getBoundingRectangle()))
+//                System.out.println("knallt");
         }
         moveArrayLeft(backgroundLoop, 60f);
         for(Iterator<PositionTexture> iter = backgroundLoop.iterator(); iter.hasNext(); ) {
@@ -218,7 +222,6 @@ public class Playscreen implements Screen {
         for(PositionTexture texture: backgroundLoop) {
             texture.dispose();
         }
-        bird.dispose();
         kielMusik.dispose();
     }
 }

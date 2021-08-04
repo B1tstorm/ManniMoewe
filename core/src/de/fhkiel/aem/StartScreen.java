@@ -2,6 +2,7 @@ package de.fhkiel.aem;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -18,13 +19,20 @@ public class StartScreen implements Screen {
     private final ImageButton highscoreButton;
     private final ImageButton optionsButton;
     private final Table table;
+    private final Music meerMöwemusik;
 
     public StartScreen(final FlappyBird game) {
         this.game = game;
+
+        meerMöwemusik = Gdx.audio.newMusic(Gdx.files.internal("Meer_Möwe.mp3"));
+        meerMöwemusik.setVolume(0.5f);
+        meerMöwemusik.setLooping(true);
+
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Configuration.ScreenWidth, Configuration.ScreenHeight);
 
         stage = new Stage();
+
         table = new Table();
         table.setFillParent(true);
         Gdx.input.setInputProcessor(stage);
@@ -34,8 +42,16 @@ public class StartScreen implements Screen {
                     game.setScreen(new Playscreen(game));
                     dispose();
         });
-        highscoreButton = ButtonFactory.CreateImageButton("highscore.png", () -> System.out.println("Highscore  Button pressed"));
-        optionsButton = ButtonFactory.CreateImageButton("optionen.png", () -> System.out.println("Options  Button pressed"));
+        highscoreButton = ButtonFactory.CreateImageButton("highscore.png",
+                () -> {
+                    game.setScreen(new HighscoreScreen(game));
+                    dispose();
+        });
+        optionsButton = ButtonFactory.CreateImageButton("optionen.png",
+                () -> {
+            game.setScreen(new Optionsscreen(game));
+            dispose();
+        });
 
         table.add().expand().colspan(3);
         table.row();
@@ -48,7 +64,7 @@ public class StartScreen implements Screen {
 
     @Override
     public void show() {
-
+        meerMöwemusik.play();
     }
 
     @Override
@@ -84,6 +100,6 @@ public class StartScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        meerMöwemusik.dispose();
     }
 }

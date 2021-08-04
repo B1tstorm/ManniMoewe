@@ -2,6 +2,7 @@ package de.fhkiel.aem;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -23,6 +24,8 @@ public class Playscreen implements Screen {
     private final Stage stage;
     private final Texture backgroundTexture;
     private final Array<PositionTexture> backgroundLoop;
+    private final Bird bird;
+    private final Music kielMusik;
 
     /**
      * Creates a new PlayScreen where the game is running on.
@@ -30,6 +33,10 @@ public class Playscreen implements Screen {
      */
     public Playscreen(FlappyBird game) {
         this.game = game;
+
+        kielMusik = Gdx.audio.newMusic(Gdx.files.internal("Kiel_Sound.mp3"));
+        kielMusik.setVolume(0.5f);
+        kielMusik.setLooping(true);
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Configuration.ScreenWidth, Configuration.ScreenHeight);
@@ -43,6 +50,8 @@ public class Playscreen implements Screen {
         while(!isFilledWithBackgroundImages(backgroundLoop)) {
             backgroundLoop.add(new PositionTexture(backgroundTexture, findRightestPixel(backgroundLoop), 0));
         }
+
+        bird = new Bird(50, 700 );
     }
 
     /**
@@ -81,7 +90,7 @@ public class Playscreen implements Screen {
 
     @Override
     public void show() {
-
+        kielMusik.play();
     }
 
     /**
@@ -93,8 +102,10 @@ public class Playscreen implements Screen {
         ScreenUtils.clear(0.443f, 0.772f, 0.811f, 1);
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
+
         game.batch.begin();
 
+        game.batch.draw(bird.bird, bird.xPos, bird.yPos , 200 , 150);
         stage.draw();
         renderArray(backgroundLoop);
 
@@ -163,6 +174,6 @@ public class Playscreen implements Screen {
 
     @Override
     public void dispose() {
-
+        kielMusik.dispose();
     }
 }

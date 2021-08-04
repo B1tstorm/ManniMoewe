@@ -3,8 +3,10 @@ package de.fhkiel.aem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
@@ -27,11 +29,16 @@ public class Playscreen implements Screen {
     private Array<Barrier> barriers = new Array<>();
     private final Music kielMusik;
 
+    ShapeRenderer shapeRenderer;
+
     /**
      * Creates a new PlayScreen where the game is running on.
      * @param game Gameobject
      */
     public Playscreen(FlappyBird game) {
+
+        shapeRenderer = new ShapeRenderer();
+
         this.game = game;
 
         kielMusik = Gdx.audio.newMusic(Gdx.files.internal("Kiel_Sound.mp3"));
@@ -112,9 +119,14 @@ public class Playscreen implements Screen {
         for(Barrier barrier : barriers){
             barrier.render(game.batch, barriers.size / 2);
         }
-        game.batch.draw(bird.getTexture(), bird.getX(), bird.getY() , 200 , 150);
+        game.batch.draw(bird.birdSprite, bird.birdSprite.getX(), bird.birdSprite.getY() , 200 , 150);
 
         game.batch.end();
+
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.setColor(Color.CYAN);
+        shapeRenderer.circle(bird.hitbox.x, bird.hitbox.y, bird.hitbox.radius);
+        shapeRenderer.end();
 
         update();
     }
@@ -218,7 +230,7 @@ public class Playscreen implements Screen {
         for(PositionTexture texture: backgroundLoop) {
             texture.dispose();
         }
-        bird.dispose();
+        //bird.dispose();
         kielMusik.dispose();
     }
 }

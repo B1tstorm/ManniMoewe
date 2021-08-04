@@ -2,6 +2,7 @@ package de.fhkiel.aem;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -10,11 +11,17 @@ public class Playscreen implements Screen {
 
     final FlappyBird game;
     private final Bird bird;
-    OrthographicCamera camera;
-    Stage stage;
+    private final OrthographicCamera camera;
+    private final Stage stage;
+    private final Music kielMusik;
 
     public Playscreen(FlappyBird game) {
         this.game = game;
+
+        kielMusik = Gdx.audio.newMusic(Gdx.files.internal("Kiel_Sound.mp3"));
+        kielMusik.setVolume(0.5f);
+        kielMusik.setLooping(true);
+
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Configuration.ScreenWidth, Configuration.ScreenHeight);
 
@@ -27,7 +34,7 @@ public class Playscreen implements Screen {
 
     @Override
     public void show() {
-
+        kielMusik.play();
     }
 
     @Override
@@ -66,6 +73,6 @@ public class Playscreen implements Screen {
 
     @Override
     public void dispose() {
-
+        kielMusik.dispose();
     }
 }

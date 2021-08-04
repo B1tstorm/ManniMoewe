@@ -2,6 +2,7 @@ package de.fhkiel.aem;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -16,15 +17,23 @@ import org.w3c.dom.Text;
 public class HighscoreScreen implements Screen {
 
     final FlappyBird game;
-    OrthographicCamera camera;
-    Stage stage;
-    Label highscore, platz, name, score;
-    Label.LabelStyle labelStyle;
-    Table highscoreTabelle;
+    private final OrthographicCamera camera;
+    private final Stage stage;
+    private final Label highscore, platz, name, score;
+    private final Label.LabelStyle labelStyle;
+    private final Table highscoreTabelle;
+    private final Music meerMöweMusik;
 
     public HighscoreScreen(final FlappyBird game) {
+
         this.game = game;
+
         stage = new Stage();
+
+        meerMöweMusik = Gdx.audio.newMusic(Gdx.files.internal("Meer_Möwe.mp3"));
+        meerMöweMusik.setVolume(0.5f);
+        meerMöweMusik.setLooping(true);
+
         highscoreTabelle = new Table();
         highscoreTabelle.setFillParent(true);
 
@@ -71,7 +80,7 @@ public class HighscoreScreen implements Screen {
 
     @Override
     public void show() {
-
+        meerMöweMusik.play();
     }
 
     @Override
@@ -108,6 +117,6 @@ public class HighscoreScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        meerMöweMusik.dispose();
     }
 }

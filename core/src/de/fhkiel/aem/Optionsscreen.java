@@ -2,6 +2,7 @@ package de.fhkiel.aem;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -15,8 +16,8 @@ import de.fhkiel.aem.utility.ButtonFactory;
 public class Optionsscreen implements Screen {
 
     final FlappyBird game;
-    OrthographicCamera camera;
-    Stage stage;
+    private final OrthographicCamera camera;
+    private final Stage stage;
     private final Table table;
     private Label headerLabel;
     private Label.LabelStyle labelStyle;
@@ -27,9 +28,15 @@ public class Optionsscreen implements Screen {
     private ImageButton skinButton1;
     private ImageButton skinButton2;
     private ImageButton skinButton3;
+    private final Music meerMöweMusik;
 
     public Optionsscreen(FlappyBird game) {
         this.game = game;
+
+        meerMöweMusik = Gdx.audio.newMusic(Gdx.files.internal("Meer_Möwe.mp3"));
+        meerMöweMusik.setVolume(0.5f);
+        meerMöweMusik.setLooping(true);
+
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Configuration.ScreenWidth, Configuration.ScreenHeight);
 
@@ -100,7 +107,7 @@ public class Optionsscreen implements Screen {
 
     @Override
     public void show() {
-
+        meerMöweMusik.play();
     }
 
     @Override
@@ -137,6 +144,6 @@ public class Optionsscreen implements Screen {
 
     @Override
     public void dispose() {
-
+        meerMöweMusik.dispose();
     }
 }

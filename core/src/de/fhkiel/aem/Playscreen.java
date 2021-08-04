@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.TimeUtils;
 import java.util.concurrent.ThreadLocalRandom;
 
 import java.util.Iterator;
@@ -51,7 +52,6 @@ public class Playscreen implements Screen {
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
 
-        createBarriers();
         backgroundTexture = new Texture(Gdx.files.internal("background.png"));
         backgroundLoop = new Array<>();
 
@@ -60,6 +60,7 @@ public class Playscreen implements Screen {
         }
 
         bird = new Bird(50, 500 );
+        createBarriers();
     }
 
     /**
@@ -116,6 +117,12 @@ public class Playscreen implements Screen {
 
         stage.draw();
         renderArray(backgroundLoop);
+
+        stage.draw();
+
+        game.batch.draw(bird.bird, bird.xPos, bird.yPos , 100 , 100 );
+        bird.move();
+
         for(Barrier barrier : barriers){
             barrier.render(game.batch, barriers.size / 2);
         }

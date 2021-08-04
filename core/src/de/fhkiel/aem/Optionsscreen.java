@@ -15,8 +15,8 @@ import de.fhkiel.aem.utility.ButtonFactory;
 public class Optionsscreen implements Screen {
 
     final FlappyBird game;
-    OrthographicCamera camera;
-    Stage stage;
+    private final OrthographicCamera camera;
+    private final Stage stage;
     private final Table table;
     private Label headerLabel;
     private Label.LabelStyle labelStyle;
@@ -28,8 +28,10 @@ public class Optionsscreen implements Screen {
     private ImageButton skinButton2;
     private ImageButton skinButton3;
 
+
     public Optionsscreen(FlappyBird game) {
         this.game = game;
+
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Configuration.ScreenWidth, Configuration.ScreenHeight);
 
@@ -62,36 +64,36 @@ public class Optionsscreen implements Screen {
     }
 
     private void createButtons(){
-        backButton = ButtonFactory.CreateImageButton("start.png",
+        backButton = ButtonFactory.CreateImageButton("back.png",
                 () -> {
                     game.setScreen(new StartScreen(game));
                     dispose();
                 });
 
-        easyButton = ButtonFactory.CreateImageButton("start.png",
+        easyButton = ButtonFactory.CreateImageButton("difficulty-easy.png",
                 () -> {
                 });
 
-        mediumButton = ButtonFactory.CreateImageButton("start.png",
-                () -> {
-
-                });
-
-        hardButton = ButtonFactory.CreateImageButton("start.png",
+        mediumButton = ButtonFactory.CreateImageButton("difficulty-medium.png",
                 () -> {
 
                 });
 
-        skinButton1 = ButtonFactory.CreateImageButton("start.png",
-                () -> {
-                });
-
-        skinButton2 = ButtonFactory.CreateImageButton("start.png",
+        hardButton = ButtonFactory.CreateImageButton("difficulty-hard.png",
                 () -> {
 
                 });
 
-        skinButton3 = ButtonFactory.CreateImageButton("start.png",
+        skinButton1 = ButtonFactory.CreateImageButton("flappy1_up.png",
+                () -> {
+                });
+
+        skinButton2 = ButtonFactory.CreateImageButton("flappy1_mid.png",
+                () -> {
+
+                });
+
+        skinButton3 = ButtonFactory.CreateImageButton("flappy1_down.png",
                 () -> {
 
                 });
@@ -106,6 +108,8 @@ public class Optionsscreen implements Screen {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0.5f, 1);
+
+
 
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);

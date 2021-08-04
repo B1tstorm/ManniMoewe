@@ -9,6 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.ScreenUtils;
 import de.fhkiel.aem.utility.ButtonFactory;
 
+
+
 public class StartScreen implements Screen {
 
     private final FlappyBird game;
@@ -19,12 +21,15 @@ public class StartScreen implements Screen {
     private final ImageButton optionsButton;
     private final Table table;
 
+
     public StartScreen(final FlappyBird game) {
         this.game = game;
+
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Configuration.ScreenWidth, Configuration.ScreenHeight);
 
         stage = new Stage();
+
         table = new Table();
         table.setFillParent(true);
         Gdx.input.setInputProcessor(stage);
@@ -56,7 +61,7 @@ public class StartScreen implements Screen {
 
     @Override
     public void show() {
-
+        game.meerMoeweMusik.play();
     }
 
     @Override

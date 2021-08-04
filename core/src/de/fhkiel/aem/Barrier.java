@@ -3,6 +3,7 @@ package de.fhkiel.aem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 
 public class Barrier {
@@ -10,13 +11,13 @@ public class Barrier {
     private Texture barrierTex = new Texture("barrier.png");
     private Sprite barrierSprite = new Sprite(barrierTex);
     private float posX, posY;
-    private float speed = 500;
+    private float speed = 300;
     private float gap = 250;
-    private float distance = 500;
+    private float distance = 700;
 
 
-    public void render(FlappyBird game, int posXLast){
-        game.batch.draw(barrierSprite, posX, posY, barrierSprite.getOriginX(), barrierSprite.getOriginY(),
+    public void render(SpriteBatch game, int posXLast){
+        game.draw(barrierSprite, posX, posY, barrierSprite.getOriginX(), barrierSprite.getOriginY(),
                 barrierSprite.getWidth(), barrierSprite.getHeight(),1,1, barrierSprite.getRotation());
         move(posXLast);
     }
@@ -26,7 +27,6 @@ public class Barrier {
         if(posX < (0 - barrierTex.getWidth())){
             posX += barriers * distance;
         }
-
     }
 
     public Texture getBarrierTex() {

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ public class Playscreen implements Screen {
 
     final FlappyBird game;
     private final Bird bird;
-    private ArrayList<Barrier> barriers = new ArrayList<>();
+    private Array<Barrier> barriers = new Array<>();
     OrthographicCamera camera;
     Stage stage;
 
@@ -43,7 +44,7 @@ public class Playscreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
         for(Barrier barrier : barriers){
-            barrier.render(game, barriers.size() / 2);
+            barrier.render(game.batch, barriers.size / 2);
         }
         game.batch.draw(bird.bird, bird.xPos, bird.yPos , 200 , 150);
         game.font.draw(game.batch, "Welcome the Play Screen .", 500, 500);

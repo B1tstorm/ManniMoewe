@@ -136,8 +136,8 @@ public class Playscreen implements Screen {
         int randomNum = 0;
 
         for(Barrier barrier : barriers) {
-            if (Intersector.overlaps(bird.birdSprite.getBoundingRectangle(), barrier.getBarrierSprite().getBoundingRectangle()))
-                System.out.println("knallt");
+            if (Intersector.overlaps(bird.getHitbox(), barrier.getBarrierSprite().getBoundingRectangle()))
+                game.setScreen(new StartScreen(game));
         }
         moveArrayLeft(backgroundLoop, 60f);
         for(Iterator<PositionTexture> iter = backgroundLoop.iterator(); iter.hasNext(); ) {

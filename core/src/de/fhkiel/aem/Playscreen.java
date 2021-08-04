@@ -114,11 +114,12 @@ public class Playscreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
-
-        stage.draw();
         renderArray(backgroundLoop);
 
         stage.draw();
+
+        game.batch.draw(bird.bird, bird.xPos, bird.yPos , 100 , 100 );
+        bird.move();
 
         for(Barrier barrier : barriers){
             barrier.render(game.batch, barriers.size / 2);
@@ -237,7 +238,6 @@ public class Playscreen implements Screen {
         for(PositionTexture texture: backgroundLoop) {
             texture.dispose();
         }
-        //bird.dispose();
         kielMusik.dispose();
     }
 }

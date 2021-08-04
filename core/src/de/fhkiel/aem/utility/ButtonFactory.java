@@ -26,4 +26,18 @@ public class ButtonFactory {
 		return button;
 	}
 
+	public static ImageButton CreateImageButton(String imagePath, String checkedImagePath, ActionFunction function) {
+		ImageButton button = new ImageButton(
+				new TextureRegionDrawable(new TextureRegion(new Texture(imagePath))),
+				new TextureRegionDrawable(new TextureRegion(new Texture(imagePath))),
+				new TextureRegionDrawable(new TextureRegion(new Texture(checkedImagePath))));
+		button.addListener(new ChangeListener() {
+			@Override
+			public void changed (ChangeEvent event, Actor actor) {
+				function.run();
+			}
+		});
+		return button;
+	}
+
 }

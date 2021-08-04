@@ -35,7 +35,6 @@ public class StartScreen implements Screen {
         stage = new Stage();
 
         table = new Table();
-        table.debug();
         table.setFillParent(true);
         Gdx.input.setInputProcessor(stage);
 
@@ -60,7 +59,8 @@ public class StartScreen implements Screen {
                 game.meerMoeweMusik.setVolume(0f);
                 game.kielMusik.setVolume(0f);
                 muteButton.setChecked(true);
-            } else {
+
+            }   else {
                 game.musik = true;
                 game.meerMoeweMusik.setVolume(0.5f);
                 game.kielMusik.setVolume(0.5f);
@@ -68,8 +68,7 @@ public class StartScreen implements Screen {
             }
         });
 
-
-
+        muteButton.setProgrammaticChangeEvents(false);
 
         table.add().expand().colspan(2);
         table.add(muteButton).expand().right().top();
@@ -84,12 +83,14 @@ public class StartScreen implements Screen {
 
     @Override
     public void show() {
-        game.meerMoeweMusik.play();
-        if(game.musik)
+        if(game.musik) {
+            game.meerMoeweMusik.play();
             game.meerMoeweMusik.setVolume(0.5f);
-        if(!game.musik)
+        }
+        if(!game.musik) {
             game.meerMoeweMusik.setVolume(0f);
-
+            muteButton.setChecked(true);
+        }
 
     }
 

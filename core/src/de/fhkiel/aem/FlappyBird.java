@@ -39,5 +39,6 @@ public class FlappyBird extends Game {
 	public void dispose () {
 		batch.dispose();
 		meerMoeweMusik.dispose();
+		kielMusik.dispose();
 	}
 }

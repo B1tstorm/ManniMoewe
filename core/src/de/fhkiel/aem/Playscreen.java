@@ -28,7 +28,6 @@ public class Playscreen implements Screen {
     private final Array<PositionTexture> backgroundLoop;
     private final Bird bird;
     private Array<Barrier> barriers = new Array<>();
-    private final Music kielMusik;
 
     ShapeRenderer shapeRenderer;
 
@@ -41,10 +40,6 @@ public class Playscreen implements Screen {
         shapeRenderer = new ShapeRenderer();
 
         this.game = game;
-
-        kielMusik = Gdx.audio.newMusic(Gdx.files.internal("Kiel_Sound.mp3"));
-        kielMusik.setVolume(0.5f);
-        kielMusik.setLooping(true);
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Configuration.ScreenWidth, Configuration.ScreenHeight);
@@ -100,7 +95,7 @@ public class Playscreen implements Screen {
     @Override
     public void show() {
         game.meerMoeweMusik.stop();
-        kielMusik.play();
+        game.kielMusik.play();
     }
 
     /**
@@ -117,9 +112,6 @@ public class Playscreen implements Screen {
         renderArray(backgroundLoop);
 
         stage.draw();
-
-        game.batch.draw(bird.bird, bird.xPos, bird.yPos , 100 , 100 );
-        bird.move();
 
         for(Barrier barrier : barriers){
             barrier.render(game.batch, barriers.size / 2);
@@ -156,8 +148,11 @@ public class Playscreen implements Screen {
         int randomNum = 0;
 
         for(Barrier barrier : barriers) {
-            if (Intersector.overlaps(bird.getHitbox(), barrier.getBarrierSprite().getBoundingRectangle()))
+            if (Intersector.overlaps(bird.getHitbox(), barrier.getBarrierSprite().getBoundingRectangle())){
+                game.kielMusik.stop();
                 game.setScreen(new StartScreen(game));
+                dispose();
+            }
         }
         moveArrayLeft(backgroundLoop, 60f);
         for(Iterator<PositionTexture> iter = backgroundLoop.iterator(); iter.hasNext(); ) {
@@ -238,6 +233,5 @@ public class Playscreen implements Screen {
         for(PositionTexture texture: backgroundLoop) {
             texture.dispose();
         }
-        kielMusik.dispose();
     }
 }

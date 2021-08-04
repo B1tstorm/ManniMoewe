@@ -37,6 +37,7 @@ public class StartScreen implements Screen {
         stage = new Stage();
 
         table = new Table();
+        table.debug();
         table.setFillParent(true);
         Gdx.input.setInputProcessor(stage);
 
@@ -71,14 +72,16 @@ public class StartScreen implements Screen {
         });
         exitButton = ButtonFactory.CreateImageButton("exit.png",
                 () -> {
-                    dispose();
+                    
         });
 
         muteButton.setProgrammaticChangeEvents(false);
 
-        table.add().expand().colspan(2);
-        table.add(muteButton).expand().right().top();
         table.add(exitButton).expand().left().top();
+
+        table.add().expand();
+
+        table.add(muteButton).expand().right().top();
 
         table.row();
         table.add(startButton).center().fillX();

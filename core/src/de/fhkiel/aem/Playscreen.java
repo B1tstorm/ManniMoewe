@@ -6,9 +6,12 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
@@ -27,6 +30,9 @@ public class Playscreen implements Screen {
     private final Texture backgroundTexture;
     private final Array<PositionTexture> backgroundLoop;
     private final Bird bird;
+    private Label highscoreLabel;
+    private final Label.LabelStyle labelStyle;
+    private final Table table;
     private Array<Barrier> barriers = new Array<>();
 
     ShapeRenderer shapeRenderer;
@@ -38,14 +44,23 @@ public class Playscreen implements Screen {
     public Playscreen(FlappyBird game) {
 
         shapeRenderer = new ShapeRenderer();
+        labelStyle = new Label.LabelStyle();
+        labelStyle.font = new BitmapFont(Gdx.files.internal("title-font-export.fnt"));
+        labelStyle.fontColor = Color.GRAY;
+        table = new Table();
+        table.setFillParent(true);
 
         this.game = game;
+        bird = new Bird(50, 500 );
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Configuration.ScreenWidth, Configuration.ScreenHeight);
 
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
+        highscoreLabel = new Label("Highscore: ", labelStyle);
+        table.add(highscoreLabel).height(100).center().top().expand();
+        stage.addActor(table);
 
         backgroundTexture = new Texture(Gdx.files.internal("background.png"));
         backgroundLoop = new Array<>();
@@ -54,7 +69,7 @@ public class Playscreen implements Screen {
             backgroundLoop.add(new PositionTexture(backgroundTexture, findRightestPixel(backgroundLoop), 0));
         }
 
-        bird = new Bird(50, 500 );
+
         createBarriers();
     }
 
@@ -111,7 +126,7 @@ public class Playscreen implements Screen {
         game.batch.begin();
         renderArray(backgroundLoop);
 
-        stage.draw();
+
 
         for(Barrier barrier : barriers){
             barrier.render(game.batch, barriers.size / 2);
@@ -119,6 +134,8 @@ public class Playscreen implements Screen {
 
         game.batch.draw(bird.birdSprite, bird.birdSprite.getX(), bird.birdSprite.getY() , bird.getWidth() , bird.getWidth());
         bird.move();
+
+        stage.draw();
 
         game.batch.end();
 
@@ -147,6 +164,8 @@ public class Playscreen implements Screen {
     private void update() {
         int randomNum = 0;
 
+        highscoreLabel.setText("Highscore: " + (int)bird.getHighscore());
+
         for(Barrier barrier : barriers) {
             if (Intersector.overlaps(bird.getHitbox(), barrier.getBarrierSprite().getBoundingRectangle())){
                 game.kielMusik.stop();
@@ -165,6 +184,10 @@ public class Playscreen implements Screen {
             backgroundLoop.add(new PositionTexture(backgroundTexture, findRightestPixel(backgroundLoop), 0));
         }
         for(Barrier barrier : barriers) {
+            if(bird.birdSprite.getX() >= barrier.getBarrierSprite().getX() && barrier.getWealth() != 0) {
+                bird.setHighscore(bird.getHighscore() + barrier.getWealth());
+                barrier.setWealth(0);
+            }
             if (barrier.getBarrierSprite().getX() < (0 - barrier.getBarrierSprite().getWidth())) {
                 if(barrier.getBarrierSprite().getRotation() != 180) {
                     randomNum = ThreadLocalRandom.current().nextInt(

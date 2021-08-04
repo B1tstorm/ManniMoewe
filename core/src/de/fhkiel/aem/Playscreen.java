@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -133,6 +134,11 @@ public class Playscreen implements Screen {
      */
     private void update() {
         int randomNum = 0;
+
+        for(Barrier barrier : barriers) {
+            if (Intersector.overlaps(bird.birdSprite.getBoundingRectangle(), barrier.getBarrierSprite().getBoundingRectangle()))
+                System.out.println("knallt");
+        }
         moveArrayLeft(backgroundLoop, 60f);
         for(Iterator<PositionTexture> iter = backgroundLoop.iterator(); iter.hasNext(); ) {
             PositionTexture item = iter.next();

@@ -5,9 +5,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -105,7 +102,7 @@ public class Playscreen implements Screen {
 
         game.batch.begin();
 
-        game.batch.draw(bird.bird, bird.xPos, bird.yPos , 200 , 150);
+        game.batch.draw(bird.getTexture(), bird.getX(), bird.getY() , 200 , 150);
         stage.draw();
         renderArray(backgroundLoop);
 
@@ -174,6 +171,11 @@ public class Playscreen implements Screen {
 
     @Override
     public void dispose() {
+        backgroundTexture.dispose();
+        for(PositionTexture texture: backgroundLoop) {
+            texture.dispose();
+        }
+        bird.dispose();
         kielMusik.dispose();
     }
 }

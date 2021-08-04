@@ -87,4 +87,11 @@ public class PositionTexture {
 		return texture.getHeight();
 	}
 
+	/**
+	 * Disposes the PositionTexture.
+	 */
+	public void dispose() {
+		texture.dispose();
+	}
+
 }

@@ -13,5 +13,6 @@ public class DesktopLauncher {
         config.title = "Flappy Bird";
         config.width = Configuration.ScreenWidth;
         config.height = Configuration.ScreenHeight;
+        config.fullscreen = Configuration.fullscreen;
     }
 }

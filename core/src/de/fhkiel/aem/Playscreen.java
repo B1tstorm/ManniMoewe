@@ -48,7 +48,7 @@ public class Playscreen implements Screen {
             backgroundLoop.add(new PositionTexture(backgroundTexture, findRightestPixel(backgroundLoop), 0));
         }
 
-        bird = new Bird(50, 700 );
+        bird = new Bird(50, 500 );
     }
 
     /**

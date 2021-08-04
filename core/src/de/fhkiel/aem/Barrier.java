@@ -11,7 +11,7 @@ public class Barrier {
 
     private Sprite barrierSprite = new Sprite(new Texture("barrier.png"));
     private float speed = 300;
-    private float gap = 250;
+    private float gap = 350;
     private float distance = 700;
 
 

@@ -87,6 +87,7 @@ public class StartScreen implements Screen {
             game.meerMoeweMusik.play();
         }
         if(!game.musik) {
+            game.kielMusik.setVolume(0f);
             muteButton.setChecked(true);
         }
 

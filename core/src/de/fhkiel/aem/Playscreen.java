@@ -3,12 +3,15 @@ package de.fhkiel.aem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.TimeUtils;
 import java.util.concurrent.ThreadLocalRandom;
 
 import java.util.Iterator;
@@ -26,11 +29,16 @@ public class Playscreen implements Screen {
     private final Bird bird;
     private Array<Barrier> barriers = new Array<>();
 
+    ShapeRenderer shapeRenderer;
+
     /**
      * Creates a new PlayScreen where the game is running on.
      * @param game Gameobject
      */
     public Playscreen(FlappyBird game) {
+
+        shapeRenderer = new ShapeRenderer();
+
         this.game = game;
 
         camera = new OrthographicCamera();
@@ -39,7 +47,6 @@ public class Playscreen implements Screen {
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
 
-        createBarriers();
         backgroundTexture = new Texture(Gdx.files.internal("background.png"));
         backgroundLoop = new Array<>();
 
@@ -48,6 +55,7 @@ public class Playscreen implements Screen {
         }
 
         bird = new Bird(50, 500 );
+        createBarriers();
     }
 
     /**
@@ -105,14 +113,20 @@ public class Playscreen implements Screen {
 
         stage.draw();
 
-        game.batch.draw(bird.bird, bird.xPos, bird.yPos , 100 , 100 );
-        bird.move();
-
         for(Barrier barrier : barriers){
             barrier.render(game.batch, barriers.size / 2);
         }
 
+        game.batch.draw(bird.birdSprite, bird.birdSprite.getX(), bird.birdSprite.getY() , bird.getWidth() , bird.getWidth());
+        bird.move();
+
         game.batch.end();
+
+        //Debug Hitbox
+        /*shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.setColor(Color.CYAN);
+        shapeRenderer.circle(bird.hitbox.x, bird.hitbox.y, bird.hitbox.radius);
+        shapeRenderer.end();*/
 
         update();
     }
@@ -134,8 +148,11 @@ public class Playscreen implements Screen {
         int randomNum = 0;
 
         for(Barrier barrier : barriers) {
-//            if (Intersector.overlaps(bird , barrier.getBarrierSprite().getBoundingRectangle()))
-//                System.out.println("knallt");
+            if (Intersector.overlaps(bird.getHitbox(), barrier.getBarrierSprite().getBoundingRectangle())){
+                game.kielMusik.stop();
+                game.setScreen(new StartScreen(game));
+                dispose();
+            }
         }
         moveArrayLeft(backgroundLoop, 60f);
         for(Iterator<PositionTexture> iter = backgroundLoop.iterator(); iter.hasNext(); ) {
@@ -207,7 +224,7 @@ public class Playscreen implements Screen {
 
     @Override
     public void hide() {
-        game.kielMusik.stop();
+
     }
 
     @Override

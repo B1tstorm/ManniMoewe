@@ -10,7 +10,7 @@ public class DesktopLauncher {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         new LwjglApplication(new FlappyBird(), config);
 
-        config.title = "Manny die Killermöwe";
+        config.title = "Manny die Möwe";
         config.width = Configuration.ScreenWidth;
         config.height = Configuration.ScreenHeight;
         config.fullscreen = Configuration.fullscreen;

@@ -2,8 +2,10 @@ package de.fhkiel.aem;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -19,7 +21,9 @@ public class StartScreen implements Screen {
     private final ImageButton startButton;
     private final ImageButton highscoreButton;
     private final ImageButton optionsButton;
+    private ImageButton muteButton;
     private final Table table;
+
 
 
     public StartScreen(final FlappyBird game) {
@@ -31,6 +35,7 @@ public class StartScreen implements Screen {
         stage = new Stage();
 
         table = new Table();
+        table.debug();
         table.setFillParent(true);
         Gdx.input.setInputProcessor(stage);
 
@@ -49,8 +54,26 @@ public class StartScreen implements Screen {
             game.setScreen(new Optionsscreen(game));
             dispose();
         });
+        muteButton = ButtonFactory.CreateImageButton("unmute.png", "mute.png", () -> {
+            if(game.musik){
+                game.musik = false;
+                game.meerMoeweMusik.setVolume(0f);
+                game.kielMusik.setVolume(0f);
+                muteButton.setChecked(true);
+            } else {
+                game.musik = true;
+                game.meerMoeweMusik.setVolume(0.5f);
+                game.kielMusik.setVolume(0.5f);
+                muteButton.setChecked(false);
+            }
+        });
 
-        table.add().expand().colspan(3);
+
+
+
+        table.add().expand().colspan(2);
+        table.add(muteButton).expand().right().top();
+
         table.row();
         table.add(startButton).center().fillX();
         table.add(highscoreButton).center().fillX();
@@ -62,6 +85,12 @@ public class StartScreen implements Screen {
     @Override
     public void show() {
         game.meerMoeweMusik.play();
+        if(game.musik)
+            game.meerMoeweMusik.setVolume(0.5f);
+        if(!game.musik)
+            game.meerMoeweMusik.setVolume(0f);
+
+
     }
 
     @Override

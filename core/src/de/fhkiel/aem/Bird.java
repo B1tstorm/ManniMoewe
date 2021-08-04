@@ -17,20 +17,22 @@ import java.awt.*;
 public class Bird {
     Sprite birdSprite;
     Circle hitbox;
+    private final Texture mannyStraight = new Texture("manny-straight.png");
+    private final Texture mannyUp = new Texture("manny-up.png");
+    private final Texture mannyDown = new Texture("manny-down.png");
+    private final int width = 100;
 
     //bestimmt die Beschleunigung, in der der Vogel nach iunten fällt
     float fallspeed = 2;
     long pressTime;
 
     public Bird(float xPos, float yPos) {
-        birdSprite = new Sprite(new Texture("manny-straight.png"));
+        birdSprite = new Sprite(mannyStraight);
 
         birdSprite.setX(xPos);
         birdSprite.setY(yPos);
-        birdSprite.setOrigin(birdSprite.getX() + birdSprite.getTexture().getWidth() / 2,
-                birdSprite.getY() + birdSprite.getTexture().getHeight() / 2);
-        hitbox = new Circle(birdSprite.getX(), birdSprite.getY(), birdSprite.getWidth()/3);
-        hitbox.setPosition(birdSprite.getOriginX(), birdSprite.getOriginY());
+        hitbox = new Circle(birdSprite.getX(), birdSprite.getY(), width / 2);
+        hitbox.setPosition(birdSprite.getX(), birdSprite.getY());
     }
 
     public void render(SpriteBatch game, int posXLast){
@@ -40,7 +42,8 @@ public class Bird {
 
     public void move(){
         //fallen und in eine Richtung beschleunigen
-        yPos = yPos - fallspeed;
+        birdSprite.setY(birdSprite.getY() - fallspeed);
+        hitbox.setPosition(birdSprite.getX() + width / 2, birdSprite.getY() + width / 2);
         fallspeed +=0.3;
 
         if ( Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
@@ -49,17 +52,17 @@ public class Bird {
 
         //nach xxxx millisec nachdem der button betätigt wurde, fällt der Vogel auf 2 Phasen wieder runter
         if (pressTime != 0 &&( fallspeed < 0  && TimeUtils.millis() >= (pressTime + 200))){
-            bird = new Texture("manny-straight.png");
+            birdSprite.setTexture(mannyStraight);
             fallspeed = 4;
         }
         if (pressTime != 0 && fallspeed > 0  && TimeUtils.millis() >= (pressTime + 300)){
-            bird = new Texture("manny-down.png");
+            birdSprite.setTexture(mannyDown);
 
             fallspeed = 6;
             pressTime = 0;
         }
 //stoppe den Vogel am Rand des Bilds
-        if (yPos <= 0 ){
+        if (birdSprite.getY() <= 0 ){
             //fallspeed = 0;
             //! zu testen da.... Damit der Vogel stopp, musst du die vorherige Zeile aktivieren und die folgende löschen
             sprungNachOben();
@@ -71,13 +74,16 @@ public class Bird {
         return hitbox;
     }
 
+    public int getWidth() {
+        return width;
     }
-/**
+
+    /**
  * der Vogel fliegt nach oben mit der beschleunigung -8
  */
     private void sprungNachOben(){
         pressTime = TimeUtils.millis();
-        bird = new Texture("manny-up.png");
+        birdSprite.setTexture(mannyUp);
         fallspeed = -13;
     }
 }

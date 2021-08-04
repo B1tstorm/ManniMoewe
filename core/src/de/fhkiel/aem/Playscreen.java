@@ -5,15 +5,17 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
+import java.util.concurrent.ThreadLocalRandom;
 
 import java.util.Iterator;
 
 /**
- * The scree the game is running on
+ * The screen the game is running on
  */
 public class Playscreen implements Screen {
 
@@ -23,6 +25,7 @@ public class Playscreen implements Screen {
     private final Texture backgroundTexture;
     private final Array<PositionTexture> backgroundLoop;
     private final Bird bird;
+    private Array<Barrier> barriers = new Array<>();
     private final Music kielMusik;
 
     /**
@@ -50,6 +53,7 @@ public class Playscreen implements Screen {
         }
 
         bird = new Bird(50, 500 );
+        createBarriers();
     }
 
     /**
@@ -103,15 +107,16 @@ public class Playscreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
-        //! bird ist hier
-
-
-
-        stage.draw();
         renderArray(backgroundLoop);
 
-        game.batch.draw(bird.bird, bird.xPos, bird.yPos , 150 , 150 );
+        stage.draw();
+
+        game.batch.draw(bird.bird, bird.xPos, bird.yPos , 100 , 100 );
         bird.move();
+
+        for(Barrier barrier : barriers){
+            barrier.render(game.batch, barriers.size / 2);
+        }
 
         game.batch.end();
 
@@ -132,7 +137,13 @@ public class Playscreen implements Screen {
      * Calculation and Updates of values.
      */
     private void update() {
-        moveArrayLeft(backgroundLoop, 20f);
+        int randomNum = 0;
+
+        for(Barrier barrier : barriers) {
+//            if (Intersector.overlaps(bird , barrier.getBarrierSprite().getBoundingRectangle()))
+//                System.out.println("knallt");
+        }
+        moveArrayLeft(backgroundLoop, 60f);
         for(Iterator<PositionTexture> iter = backgroundLoop.iterator(); iter.hasNext(); ) {
             PositionTexture item = iter.next();
             if(item.getX() + item.getWidth() < -20) {
@@ -141,6 +152,19 @@ public class Playscreen implements Screen {
         }
         if (findRightestPixel(backgroundLoop) < Configuration.ScreenWidth + 100) {
             backgroundLoop.add(new PositionTexture(backgroundTexture, findRightestPixel(backgroundLoop), 0));
+        }
+        for(Barrier barrier : barriers) {
+            if (barrier.getBarrierSprite().getX() < (0 - barrier.getBarrierSprite().getWidth())) {
+                if(barrier.getBarrierSprite().getRotation() != 180) {
+                    randomNum = ThreadLocalRandom.current().nextInt(
+                            (int) (Gdx.graphics.getHeight() - barrier.getBarrierSprite().getHeight()), Gdx.graphics.getHeight());
+                    barrier.getBarrierSprite().setY(randomNum);
+                }
+                else{
+                    barrier.getBarrierSprite().setY(randomNum - barrier.getBarrierSprite().getHeight() - barrier.getGap());
+                }
+                barrier.getBarrierSprite().setX(barrier.getBarrierSprite().getX() + (barriers.size / 2) * barrier.getDistance());
+            }
         }
     }
 
@@ -153,6 +177,22 @@ public class Playscreen implements Screen {
         float movement = speed * Gdx.graphics.getDeltaTime();
         for(PositionTexture item : new Array.ArrayIterator<>(array)) {
             item.setX(item.getX() - movement);
+        }
+    }
+
+    public void createBarriers(){
+        for(int i = 0; i < 10; i++) {
+            Barrier b = new Barrier();
+            int randomNum = ThreadLocalRandom.current().nextInt(
+                    (int) (Gdx.graphics.getHeight() - b.getBarrierSprite().getHeight()), Gdx.graphics.getHeight());
+            b.getBarrierSprite().setX(Gdx.graphics.getWidth() + (b.getDistance() * i));
+            b.getBarrierSprite().setY(randomNum);
+            barriers.add(b);
+            Barrier b2 = new Barrier();
+            b2.getBarrierSprite().setRotation(180f);
+            b2.getBarrierSprite().setX(Gdx.graphics.getWidth() + (b.getDistance() * i));
+            b2.getBarrierSprite().setY(randomNum - b2.getBarrierSprite().getHeight() - b2.getGap());
+            barriers.add(b2);
         }
     }
 

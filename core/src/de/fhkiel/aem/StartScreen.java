@@ -2,13 +2,14 @@ package de.fhkiel.aem;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.ScreenUtils;
 import de.fhkiel.aem.utility.ButtonFactory;
+
+
 
 public class StartScreen implements Screen {
 
@@ -19,14 +20,10 @@ public class StartScreen implements Screen {
     private final ImageButton highscoreButton;
     private final ImageButton optionsButton;
     private final Table table;
-    private final Music meerMöwemusik;
+
 
     public StartScreen(final FlappyBird game) {
         this.game = game;
-
-        meerMöwemusik = Gdx.audio.newMusic(Gdx.files.internal("Meer_Möwe.mp3"));
-        meerMöwemusik.setVolume(0.5f);
-        meerMöwemusik.setLooping(true);
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Configuration.ScreenWidth, Configuration.ScreenHeight);
@@ -64,7 +61,7 @@ public class StartScreen implements Screen {
 
     @Override
     public void show() {
-        meerMöwemusik.play();
+        game.meerMoeweMusik.play();
     }
 
     @Override
@@ -100,6 +97,6 @@ public class StartScreen implements Screen {
 
     @Override
     public void dispose() {
-        meerMöwemusik.dispose();
+
     }
 }

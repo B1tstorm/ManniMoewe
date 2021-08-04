@@ -24,6 +24,7 @@ public class Playscreen implements Screen {
     private final Array<PositionTexture> backgroundLoop;
     private final Bird bird;
     private Array<Barrier> barriers = new Array<>();
+    private final Music kielMusik;
 
     /**
      * Creates a new PlayScreen where the game is running on.
@@ -105,13 +106,11 @@ public class Playscreen implements Screen {
 
         game.batch.begin();
 
+        stage.draw();
+        renderArray(backgroundLoop);
         for(Barrier barrier : barriers){
             barrier.render(game.batch, barriers.size / 2);
         }
-        game.batch.draw(bird.bird, bird.xPos, bird.yPos , 200 , 150);
-        game.font.draw(game.batch, "Welcome the Play Screen .", 500, 500);
-        stage.draw();
-        renderArray(backgroundLoop);
         game.batch.draw(bird.getTexture(), bird.getX(), bird.getY() , 200 , 150);
 
         game.batch.end();
@@ -133,7 +132,8 @@ public class Playscreen implements Screen {
      * Calculation and Updates of values.
      */
     private void update() {
-        moveArrayLeft(backgroundLoop, 20f);
+        int randomNum = 0;
+        moveArrayLeft(backgroundLoop, 60f);
         for(Iterator<PositionTexture> iter = backgroundLoop.iterator(); iter.hasNext(); ) {
             PositionTexture item = iter.next();
             if(item.getX() + item.getWidth() < -20) {
@@ -142,6 +142,19 @@ public class Playscreen implements Screen {
         }
         if (findRightestPixel(backgroundLoop) < Configuration.ScreenWidth + 100) {
             backgroundLoop.add(new PositionTexture(backgroundTexture, findRightestPixel(backgroundLoop), 0));
+        }
+        for(Barrier barrier : barriers) {
+            if (barrier.getPosX() < (0 - barrier.getBarrierTex().getWidth())) {
+                if(barrier.getBarrierSprite().getRotation() != 180) {
+                    randomNum = ThreadLocalRandom.current().nextInt(
+                            Gdx.graphics.getHeight() - barrier.getBarrierTex().getHeight(), Gdx.graphics.getHeight());
+                    barrier.setPosY(randomNum);
+                }
+                else{
+                    barrier.setPosY(randomNum - barrier.getBarrierTex().getHeight() - barrier.getGap());
+                }
+                barrier.setPosX(barrier.getPosX() + (barriers.size / 2) * barrier.getDistance());
+            }
         }
     }
 

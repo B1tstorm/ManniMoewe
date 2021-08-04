@@ -24,9 +24,7 @@ public class Barrier {
 
     private void move(int barriers){
         posX -= Gdx.graphics.getDeltaTime() * speed;
-        if(posX < (0 - barrierTex.getWidth())){
-            posX += barriers * distance;
-        }
+
     }
 
     public Texture getBarrierTex() {

@@ -25,7 +25,6 @@ public class Playscreen implements Screen {
     private final Array<PositionTexture> backgroundLoop;
     private final Bird bird;
     private Array<Barrier> barriers = new Array<>();
-    private final Music kielMusik;
 
     /**
      * Creates a new PlayScreen where the game is running on.

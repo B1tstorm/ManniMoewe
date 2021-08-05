@@ -34,6 +34,8 @@ public class Playscreen implements Screen {
     private final Label.LabelStyle labelStyle;
     private final Table table;
     private Array<Barrier> barriers = new Array<>();
+    private GameOverScreen gameOverScreen;
+    private boolean gameOver = false;
 
     ShapeRenderer shapeRenderer;
 
@@ -149,7 +151,12 @@ public class Playscreen implements Screen {
         shapeRenderer.circle(bird.hitbox.x, bird.hitbox.y, bird.hitbox.radius);
         shapeRenderer.end();*/
 
-        update();
+        if(gameOver){
+            gameOverScreen.render(delta);
+        }
+        else {
+            update();
+        }
     }
 
     /**
@@ -173,8 +180,8 @@ public class Playscreen implements Screen {
         for(Barrier barrier : barriers) {
             if (Intersector.overlaps(bird.getHitbox(), barrier.getBarrierSprite().getBoundingRectangle())){
                 game.kielMusik.stop();
-                game.setScreen(new StartScreen(game));
-                dispose();
+                gameOver = true;
+                gameOverScreen = new GameOverScreen(game, bird.getHighscore());
             }
         }
         moveArrayLeft(backgroundLoop, 60f);

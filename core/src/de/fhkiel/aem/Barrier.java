@@ -30,7 +30,7 @@ public class Barrier {
     public void render(SpriteBatch game, int posXLast){
         game.draw(barrierSprite, barrierSprite.getX(), barrierSprite.getY(), barrierSprite.getOriginX(), barrierSprite.getOriginY(),
                 barrierSprite.getWidth(), barrierSprite.getHeight(),1,1, barrierSprite.getRotation());
-        //move(posXLast);
+        move(posXLast);
     }
 
     private void move(int barriers){

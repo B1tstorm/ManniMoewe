@@ -44,7 +44,7 @@ public class Bird {
      */
     public void render(SpriteBatch batch){
         batch.draw(birdSprite, birdSprite.getX(), birdSprite.getY(), birdSprite.getOriginX(), birdSprite.getOriginY(),
-                birdSprite.getWidth(), birdSprite.getHeight(),1,1, birdSprite.getRotation());
+                getWidth(), getWidth(),1,1, birdSprite.getRotation());
     }
 
     /**

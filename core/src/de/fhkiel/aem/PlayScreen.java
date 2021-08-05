@@ -133,7 +133,7 @@ public class PlayScreen implements Screen {
             barrier.render(game.batch);
         }
 
-        game.batch.draw(bird.getBirdSprite(), bird.getBirdSprite().getX(), bird.getBirdSprite().getY() , bird.getWidth() , bird.getWidth());
+        bird.render(game.batch);
         bird.move();
 
         stage.draw();

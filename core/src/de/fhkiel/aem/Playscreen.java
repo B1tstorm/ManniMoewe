@@ -32,8 +32,10 @@ public class Playscreen implements Screen {
     private final Array<PositionTexture> backgroundLoop;
     private final Bird bird;
     private Label highscoreLabel;
+    private Label pressSpaceLable;
     private final Label.LabelStyle labelStyle;
     private final Table table;
+    private final Table tablePressSpace;
     private Array<Barrier> barriers = new Array<>();
     private boolean runGame = false;
 
@@ -51,6 +53,8 @@ public class Playscreen implements Screen {
         labelStyle.fontColor = Color.GRAY;
         table = new Table();
         table.setFillParent(true);
+        tablePressSpace = new Table();
+        tablePressSpace.setFillParent(true);
 
         this.game = game;
         bird = new Bird(50, 500 );
@@ -64,6 +68,9 @@ public class Playscreen implements Screen {
         table.add(highscoreLabel).height(100).center().top().expand();
         stage.addActor(table);
 
+        pressSpaceLable = new Label("Press Space to start...", labelStyle);
+        tablePressSpace.add(pressSpaceLable).height(750).center().top().expand();
+        stage.addActor(tablePressSpace);
         backgroundTexture = new Texture(Gdx.files.internal("background.png"));
         backgroundLoop = new Array<>();
 
@@ -128,20 +135,21 @@ public class Playscreen implements Screen {
         game.batch.begin();
         renderArray(backgroundLoop);
 
-
-
+        stage.draw();
 
         game.batch.draw(bird.birdSprite, bird.birdSprite.getX(), bird.birdSprite.getY() , bird.getWidth() , bird.getWidth());
+        //beim Drücken der Leertaste soll die Zeile"press space to ......" verschwenden und das spiel wird in Bewegung gesetzt
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
             runGame = true;
+            tablePressSpace.clear();
         }
-        if (runGame ) {
+        if (runGame){
             bird.move();
             for (Barrier barrier : barriers) {
                 barrier.render(game.batch, barriers.size / 2);
             }
         }
-        stage.draw();
+
 
         game.batch.end();
 

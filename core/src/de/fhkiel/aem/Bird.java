@@ -23,6 +23,7 @@ public class Bird {
     private final int width = 100;
     private float highscore = 0;
 
+
     //bestimmt die Beschleunigung, in der der Vogel nach iunten fällt
     float fallspeed = 2;
     long pressTime;
@@ -42,32 +43,35 @@ public class Bird {
     }
 
     public void move(){
-        //fallen und in eine Richtung beschleunigen
-        birdSprite.setY(birdSprite.getY() - fallspeed);
-        hitbox.setPosition(birdSprite.getX() + width / 2, birdSprite.getY() + width / 2);
-        fallspeed +=0.3;
 
-        if ( Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
-            sprungNachOben();
-        }
 
-        //nach xxxx millisec nachdem der button betätigt wurde, fällt der Vogel auf 2 Phasen wieder runter
-        if (pressTime != 0 &&( fallspeed < 0  && TimeUtils.millis() >= (pressTime + 200))){
-            birdSprite.setTexture(mannyStraight);
-            fallspeed = 4;
-        }
-        if (pressTime != 0 && fallspeed > 0  && TimeUtils.millis() >= (pressTime + 300)){
-            birdSprite.setTexture(mannyDown);
+            //fallen und in eine Richtung beschleunigen
+            birdSprite.setY(birdSprite.getY() - fallspeed);
+            hitbox.setPosition(birdSprite.getX() + width / 2, birdSprite.getY() + width / 2);
+            fallspeed += 0.3;
 
-            fallspeed = 6;
-            pressTime = 0;
-        }
+            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+                sprungNachOben();
+            }
+
+            //nach xxxx millisec nachdem der button betätigt wurde, fällt der Vogel auf 2 Phasen wieder runter
+            if (pressTime != 0 && (fallspeed < 0 && TimeUtils.millis() >= (pressTime + 200))) {
+                birdSprite.setTexture(mannyStraight);
+                fallspeed = 4;
+            }
+            if (pressTime != 0 && fallspeed > 0 && TimeUtils.millis() >= (pressTime + 300)) {
+                birdSprite.setTexture(mannyDown);
+
+                fallspeed = 6;
+                pressTime = 0;
+            }
 //stoppe den Vogel am Rand des Bilds
-        if (birdSprite.getY() <= 0 ){
-            //fallspeed = 0;
-            //! zu testen da.... Damit der Vogel stopp, musst du die vorherige Zeile aktivieren und die folgende löschen
-            sprungNachOben();
-        }
+            if (birdSprite.getY() <= 0) {
+                //fallspeed = 0;
+                //! zu testen da.... Damit der Vogel stopp, musst du die vorherige Zeile aktivieren und die folgende löschen
+                sprungNachOben();
+            }
+
 
 }
 

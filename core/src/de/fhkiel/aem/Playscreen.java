@@ -1,6 +1,7 @@
 package de.fhkiel.aem;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
@@ -34,6 +35,7 @@ public class Playscreen implements Screen {
     private final Label.LabelStyle labelStyle;
     private final Table table;
     private Array<Barrier> barriers = new Array<>();
+    private boolean runGame = false;
 
     ShapeRenderer shapeRenderer;
 
@@ -128,13 +130,17 @@ public class Playscreen implements Screen {
 
 
 
-        for(Barrier barrier : barriers){
-            barrier.render(game.batch, barriers.size / 2);
-        }
 
         game.batch.draw(bird.birdSprite, bird.birdSprite.getX(), bird.birdSprite.getY() , bird.getWidth() , bird.getWidth());
-        bird.move();
-
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+            runGame = true;
+        }
+        if (true ) {
+            bird.move();
+            for (Barrier barrier : barriers) {
+                barrier.render(game.batch, barriers.size / 2);
+            }
+        }
         stage.draw();
 
         game.batch.end();

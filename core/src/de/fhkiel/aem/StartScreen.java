@@ -2,10 +2,8 @@ package de.fhkiel.aem;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -23,6 +21,8 @@ public class StartScreen implements Screen {
     private final ImageButton optionsButton;
     private ImageButton muteButton;
     private final Table table;
+    private final Bird bird;
+
 
 
 
@@ -33,6 +33,7 @@ public class StartScreen implements Screen {
         camera.setToOrtho(false, Configuration.ScreenWidth, Configuration.ScreenHeight);
 
         stage = new Stage();
+        bird = new Bird(50, 250 );
 
         table = new Table();
         table.setFillParent(true);
@@ -101,6 +102,7 @@ public class StartScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
         stage.draw();
+        game.batch.draw(bird.birdSprite, bird.birdSprite.getX(), bird.birdSprite.getY() , bird.getBirdWidth() , bird.getBirdWidth());
         game.batch.end();
     }
 

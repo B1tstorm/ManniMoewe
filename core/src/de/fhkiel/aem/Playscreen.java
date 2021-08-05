@@ -2,8 +2,6 @@ package de.fhkiel.aem;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -11,7 +9,7 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.TimeUtils;
+
 import java.util.concurrent.ThreadLocalRandom;
 
 import java.util.Iterator;
@@ -54,7 +52,10 @@ public class Playscreen implements Screen {
             backgroundLoop.add(new PositionTexture(backgroundTexture, findRightestPixel(backgroundLoop), 0));
         }
 
-        bird = new Bird(50, 500 );
+        bird = new Bird(50, 250 );
+
+        bird.birdSprite.setTexture(bird.getMannyStraight());
+
         createBarriers();
     }
 
@@ -117,7 +118,10 @@ public class Playscreen implements Screen {
             barrier.render(game.batch, barriers.size / 2);
         }
 
-        game.batch.draw(bird.birdSprite, bird.birdSprite.getX(), bird.birdSprite.getY() , bird.getWidth() , bird.getWidth());
+        game.batch.draw(bird.birdSprite, bird.birdSprite.getX(), bird.birdSprite.getY() , bird.getBirdWidth() , bird.getBirdWidth());
+        if(bird.getBirdWidth() > 100){
+            bird.setBirdWidth(bird.getBirdWidth()-5);
+        }
         bird.move();
 
         game.batch.end();

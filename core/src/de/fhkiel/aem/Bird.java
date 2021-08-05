@@ -6,10 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.TimeUtils;
-
-import java.awt.*;
 
 /**
  * The Bird of the Game.
@@ -20,18 +17,27 @@ public class Bird {
     private final Texture mannyStraight = new Texture("manny-straight.png");
     private final Texture mannyUp = new Texture("manny-up.png");
     private final Texture mannyDown = new Texture("manny-down.png");
-    private final int width = 100;
+    private final Texture mannyStare = new Texture("manny-stare.png");
+
+
+
+    private int birdWidth = 350;
+
+
+    public Texture getMannyStraight() {
+        return mannyStraight;
+    }
 
     //bestimmt die Beschleunigung, in der der Vogel nach iunten fällt
     float fallspeed = 2;
     long pressTime;
 
     public Bird(float xPos, float yPos) {
-        birdSprite = new Sprite(mannyStraight);
+        birdSprite = new Sprite(mannyStare);
 
         birdSprite.setX(xPos);
         birdSprite.setY(yPos);
-        hitbox = new Circle(birdSprite.getX(), birdSprite.getY(), width / 2);
+        hitbox = new Circle(birdSprite.getX(), birdSprite.getY(), 50);
         hitbox.setPosition(birdSprite.getX(), birdSprite.getY());
     }
 
@@ -43,7 +49,8 @@ public class Bird {
     public void move(){
         //fallen und in eine Richtung beschleunigen
         birdSprite.setY(birdSprite.getY() - fallspeed);
-        hitbox.setPosition(birdSprite.getX() + width / 2, birdSprite.getY() + width / 2);
+
+        hitbox.setPosition(birdSprite.getX() + birdWidth / 2, birdSprite.getY() + birdWidth / 2);
         fallspeed +=0.3;
 
         if ( Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
@@ -74,8 +81,14 @@ public class Bird {
         return hitbox;
     }
 
-    public int getWidth() {
-        return width;
+
+
+    public int getBirdWidth() {
+        return birdWidth;
+    }
+
+    public void setBirdWidth(int birdWidth) {
+        this.birdWidth = birdWidth;
     }
 
     /**
@@ -86,4 +99,6 @@ public class Bird {
         birdSprite.setTexture(mannyUp);
         fallspeed = -13;
     }
+
+
 }

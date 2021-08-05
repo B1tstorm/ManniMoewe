@@ -2,11 +2,11 @@ package de.fhkiel.aem;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -14,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.TimeUtils;
+
 import java.util.concurrent.ThreadLocalRandom;
 
 import java.util.Iterator;
@@ -22,32 +22,30 @@ import java.util.Iterator;
 /**
  * The screen the game is running on
  */
-public class Playscreen implements Screen {
+public class PlayScreen implements Screen {
 
     private final FlappyBird game;
     private final OrthographicCamera camera;
     private final Stage stage;
     private final Texture backgroundTexture;
-    private final Array<PositionTexture> backgroundLoop;
+    private final Array<Sprite> backgroundLoop;
     private final Bird bird;
-    private Label highscoreLabel;
-    private final Label.LabelStyle labelStyle;
-    private final Table table;
-    private Array<Barrier> barriers = new Array<>();
+    private final Label highscoreLabel;
+    private final Array<Barrier> barriers = new Array<>();
 
     ShapeRenderer shapeRenderer;
 
     /**
      * Creates a new PlayScreen where the game is running on.
-     * @param game Gameobject
+     * @param game The game object
      */
-    public Playscreen(FlappyBird game) {
+    public PlayScreen(FlappyBird game) {
 
         shapeRenderer = new ShapeRenderer();
-        labelStyle = new Label.LabelStyle();
+        Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = new BitmapFont(Gdx.files.internal("title-font-export.fnt"));
         labelStyle.fontColor = Color.GRAY;
-        table = new Table();
+        Table table = new Table();
         table.setFillParent(true);
 
         this.game = game;
@@ -66,7 +64,10 @@ public class Playscreen implements Screen {
         backgroundLoop = new Array<>();
 
         while(!isFilledWithBackgroundImages(backgroundLoop)) {
-            backgroundLoop.add(new PositionTexture(backgroundTexture, findRightestPixel(backgroundLoop), 0));
+            Sprite sprite = new Sprite(backgroundTexture);
+            sprite.setX(findRightestPixel(backgroundLoop));
+            sprite.setY(0);
+            backgroundLoop.add(sprite);
         }
 
 
@@ -78,10 +79,10 @@ public class Playscreen implements Screen {
      * @param array The array of background images
      * @return True if the whole width is covered.
      */
-    private boolean isFilledWithBackgroundImages(Array<PositionTexture> array) {
+    private boolean isFilledWithBackgroundImages(Array<Sprite> array) {
         float pixel = 0;
 
-        for (PositionTexture positionTexture : new Array.ArrayIterator<>(array)) {
+        for (Sprite positionTexture : new Array.ArrayIterator<>(array)) {
             if (positionTexture.getX() < 0) {
                 pixel += positionTexture.getWidth() - positionTexture.getX();
             } else {
@@ -96,10 +97,10 @@ public class Playscreen implements Screen {
      * @param array The array that is checked
      * @return The most right pixel on the screen
      */
-    private float findRightestPixel(Array<PositionTexture> array) {
+    private float findRightestPixel(Array<Sprite> array) {
         float pixel = 0;
 
-        for (PositionTexture texture: new Array.ArrayIterator<>(array)) {
+        for (Sprite texture: new Array.ArrayIterator<>(array)) {
             float right = texture.getX() + texture.getWidth();
             if (right > pixel) pixel = right;
         }
@@ -109,8 +110,8 @@ public class Playscreen implements Screen {
 
     @Override
     public void show() {
-        game.meerMoeweMusik.stop();
-        game.kielMusik.play();
+        game.oceanSeagullMusic.stop();
+        game.kielMusic.play();
     }
 
     /**
@@ -126,28 +127,16 @@ public class Playscreen implements Screen {
         game.batch.begin();
         renderArray(backgroundLoop);
 
-
-
-        for(Barrier barrier : barriers){
-            barrier.render(game.batch, barriers.size / 2);
+        for(Barrier barrier : new Array.ArrayIterator<>(barriers)){
+            barrier.render(game.batch);
         }
 
-        game.batch.draw(bird.birdSprite, bird.birdSprite.getX(), bird.birdSprite.getY() , bird.getWidth() , bird.getWidth());
+        bird.render(game.batch);
         bird.move();
 
         stage.draw();
 
         game.batch.end();
-
-        //Debug Hitbox
-        /*shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(Color.CYAN);
-        for(Barrier barrier : barriers){
-            shapeRenderer.rect(barrier.getHitbox().x, barrier.getHitbox().y,
-                    barrier.getHitbox().width, barrier.getHitbox().height);
-        }
-        shapeRenderer.circle(bird.hitbox.x, bird.hitbox.y, bird.hitbox.radius);
-        shapeRenderer.end();*/
 
         update();
     }
@@ -156,8 +145,8 @@ public class Playscreen implements Screen {
      * Renders all items of an array.
      * @param array The array that should be rendered
      */
-    private void renderArray(Array<PositionTexture> array) {
-        for(PositionTexture item : new Array.ArrayIterator<>(array)) {
+    private void renderArray(Array<Sprite> array) {
+        for(Sprite item : new Array.ArrayIterator<>(array)) {
             game.batch.draw(item.getTexture(), item.getX(), item.getY());
         }
     }
@@ -170,25 +159,28 @@ public class Playscreen implements Screen {
 
         highscoreLabel.setText("Highscore: " + (int)bird.getHighscore());
 
-        for(Barrier barrier : barriers) {
+        for(Barrier barrier : new Array.ArrayIterator<>(barriers)) {
             if (Intersector.overlaps(bird.getHitbox(), barrier.getBarrierSprite().getBoundingRectangle())){
-                game.kielMusik.stop();
+                game.kielMusic.stop();
                 game.setScreen(new StartScreen(game));
                 dispose();
             }
         }
         moveArrayLeft(backgroundLoop, 60f);
-        for(Iterator<PositionTexture> iter = backgroundLoop.iterator(); iter.hasNext(); ) {
-            PositionTexture item = iter.next();
+        for(Iterator<Sprite> iter = new Array.ArrayIterator<>(backgroundLoop); iter.hasNext(); ) {
+            Sprite item = iter.next();
             if(item.getX() + item.getWidth() < -20) {
                 iter.remove();
             }
         }
         if (findRightestPixel(backgroundLoop) < Configuration.ScreenWidth + 100) {
-            backgroundLoop.add(new PositionTexture(backgroundTexture, findRightestPixel(backgroundLoop), 0));
+            Sprite sprite = new Sprite(backgroundTexture);
+            sprite.setX(findRightestPixel(backgroundLoop));
+            sprite.setY(0);
+            backgroundLoop.add(sprite);
         }
-        for(Barrier barrier : barriers) {
-            if(bird.birdSprite.getX() >= barrier.getBarrierSprite().getX() && barrier.getWealth() != 0) {
+        for(Barrier barrier : new Array.ArrayIterator<>(barriers)) {
+            if(bird.getBirdSprite().getX() >= barrier.getBarrierSprite().getX() && barrier.getWealth() != 0) {
                 bird.setHighscore(bird.getHighscore() + barrier.getWealth());
                 barrier.setWealth(0);
             }
@@ -201,7 +193,7 @@ public class Playscreen implements Screen {
                 else{
                     barrier.getBarrierSprite().setY(randomNum - barrier.getBarrierSprite().getHeight() - barrier.getGap());
                 }
-                barrier.getBarrierSprite().setX(barrier.getBarrierSprite().getX() + (barriers.size / 2) * barrier.getDistance());
+                barrier.getBarrierSprite().setX(barrier.getBarrierSprite().getX() + (barriers.size / 2f) * barrier.getDistance());
             }
         }
     }
@@ -211,13 +203,16 @@ public class Playscreen implements Screen {
      * @param array The array that should be moved.
      * @param speed The speed it should be moved.
      */
-    private void moveArrayLeft(Array<PositionTexture> array, float speed) {
+    private void moveArrayLeft(Array<Sprite> array, float speed) {
         float movement = speed * Gdx.graphics.getDeltaTime();
-        for(PositionTexture item : new Array.ArrayIterator<>(array)) {
+        for(Sprite item : new Array.ArrayIterator<>(array)) {
             item.setX(item.getX() - movement);
         }
     }
 
+    /**
+     * Creates the Barriers for the game.
+     */
     public void createBarriers(){
         for(int i = 0; i < 10; i++) {
             int randomNum = ThreadLocalRandom.current().nextInt(
@@ -257,8 +252,5 @@ public class Playscreen implements Screen {
     @Override
     public void dispose() {
         backgroundTexture.dispose();
-        for(PositionTexture texture: backgroundLoop) {
-            texture.dispose();
-        }
     }
 }

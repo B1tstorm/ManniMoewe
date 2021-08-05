@@ -32,4 +32,4 @@ Sollte der Spieler den "Einstellung-Button" drücken, so kann er mit der Maus Ei
 Auf dem "Highscore-Button" kann der Spieler sich die besten 10 Ergebnisse anschauen.
 Wenn der Spieler spielt, so gelangt er erst zurück ins Menu, wenn er verliert.
 Bei den anderen Buttons kann der Spieler durch einen "Zurück-Button" wieder ins Menu gelangen.
-Zum Beenden der Anwendung muss der Spieler das Fenster schließen.
+Zum Beenden der Anwendung muss der Spieler den "Exit-Button" auf dem Start Screen drücken.

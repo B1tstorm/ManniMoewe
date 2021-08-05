@@ -217,16 +217,16 @@ public class PlayScreen implements Screen {
      */
     public void createBarriers(){
         for(int i = 0; i < 10; i++) {
-            Barrier b = new Barrier();
             int randomNum = ThreadLocalRandom.current().nextInt(
-                    (int) (Gdx.graphics.getHeight() - b.getBarrierSprite().getHeight()), Gdx.graphics.getHeight());
-            b.getBarrierSprite().setX(Gdx.graphics.getWidth() + (b.getDistance() * i));
-            b.getBarrierSprite().setY(randomNum);
+                    (int) (Gdx.graphics.getHeight() - new Texture("barrier-down.png").getHeight()),
+                    Gdx.graphics.getHeight());
+            Barrier b = new Barrier(
+                    Gdx.graphics.getWidth() + new Barrier(0,0, "barrier-down.png").getDistance() * i,
+                    randomNum,"barrier-up.png");
             barriers.add(b);
-            Barrier b2 = new Barrier();
+            Barrier b2 = new Barrier(Gdx.graphics.getWidth() + (b.getDistance() * i),
+                    randomNum - b.getBarrierSprite().getHeight() - b.getGap(), "barrier-up.png");
             b2.getBarrierSprite().setRotation(180f);
-            b2.getBarrierSprite().setX(Gdx.graphics.getWidth() + (b.getDistance() * i));
-            b2.getBarrierSprite().setY(randomNum - b2.getBarrierSprite().getHeight() - b2.getGap());
             barriers.add(b2);
         }
     }

@@ -17,6 +17,8 @@ public class Bird {
     private final Texture mannyStraight = new Texture("manny-straight.png");
     private final Texture mannyUp = new Texture("manny-up.png");
     private final Texture mannyDown = new Texture("manny-down.png");
+    private final int width = 350;
+    private float highscore = 0;
     private final Texture mannyStare = new Texture("manny-stare.png");
 
 
@@ -97,6 +99,12 @@ public class Bird {
 
     public void setBirdWidth(int birdWidth) {
         this.birdWidth = birdWidth;
+    }
+
+    public float getHighscore(){return highscore;}
+
+    public void setHighscore(float highscore) {
+        this.highscore = highscore;
     }
 
     /**

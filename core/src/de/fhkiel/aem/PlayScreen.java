@@ -110,8 +110,8 @@ public class PlayScreen implements Screen {
 
     @Override
     public void show() {
-        game.meerMoeweMusik.stop();
-        game.kielMusik.play();
+        game.oceanSeagullMusic.stop();
+        game.kielMusic.play();
     }
 
     /**
@@ -130,10 +130,10 @@ public class PlayScreen implements Screen {
 
 
         for(Barrier barrier : new Array.ArrayIterator<>(barriers)){
-            barrier.render(game.batch, barriers.size / 2);
+            barrier.render(game.batch);
         }
 
-        game.batch.draw(bird.birdSprite, bird.birdSprite.getX(), bird.birdSprite.getY() , bird.getWidth() , bird.getWidth());
+        game.batch.draw(bird.getBirdSprite(), bird.getBirdSprite().getX(), bird.getBirdSprite().getY() , bird.getWidth() , bird.getWidth());
         bird.move();
 
         stage.draw();
@@ -163,7 +163,7 @@ public class PlayScreen implements Screen {
 
         for(Barrier barrier : new Array.ArrayIterator<>(barriers)) {
             if (Intersector.overlaps(bird.getHitbox(), barrier.getBarrierSprite().getBoundingRectangle())){
-                game.kielMusik.stop();
+                game.kielMusic.stop();
                 game.setScreen(new StartScreen(game));
                 dispose();
             }
@@ -182,7 +182,7 @@ public class PlayScreen implements Screen {
             backgroundLoop.add(sprite);
         }
         for(Barrier barrier : new Array.ArrayIterator<>(barriers)) {
-            if(bird.birdSprite.getX() >= barrier.getBarrierSprite().getX() && barrier.getWealth() != 0) {
+            if(bird.getBirdSprite().getX() >= barrier.getBarrierSprite().getX() && barrier.getWealth() != 0) {
                 bird.setHighscore(bird.getHighscore() + barrier.getWealth());
                 barrier.setWealth(0);
             }

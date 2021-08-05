@@ -56,16 +56,16 @@ public class StartScreen implements Screen {
             dispose();
         });
         muteButton = ButtonFactory.CreateImageButton("unmute.png", "mute.png", () -> {
-            if(game.musik){
-                game.musik = false;
-                game.kielMusik.setVolume(0f);
-                game.meerMoeweMusik.pause();
+            if(game.musicShouldPlay){
+                game.musicShouldPlay = false;
+                game.kielMusic.setVolume(0f);
+                game.oceanSeagullMusic.pause();
                 muteButton.setChecked(true);
 
             }   else {
-                game.musik = true;
-                game.kielMusik.setVolume(0.5f);
-                game.meerMoeweMusik.play();
+                game.musicShouldPlay = true;
+                game.kielMusic.setVolume(0.5f);
+                game.oceanSeagullMusic.play();
                 muteButton.setChecked(false);
             }
         });
@@ -85,11 +85,11 @@ public class StartScreen implements Screen {
 
     @Override
     public void show() {
-        if(game.musik) {
-            game.meerMoeweMusik.play();
+        if(game.musicShouldPlay) {
+            game.oceanSeagullMusic.play();
         }
-        if(!game.musik) {
-            game.kielMusik.setVolume(0f);
+        if(!game.musicShouldPlay) {
+            game.kielMusic.setVolume(0f);
             muteButton.setChecked(true);
         }
 

@@ -13,6 +13,7 @@ public class Barrier {
     private float speed = 300;
     private float gap = 350;
     private float distance = 700;
+    private float wealth = 0.5f;
 
 
     public void render(SpriteBatch game, int posXLast){
@@ -36,5 +37,13 @@ public class Barrier {
 
     public float getGap() {
         return gap;
+    }
+
+    public float getWealth() {
+        return wealth;
+    }
+
+    public void setWealth(float wealth) {
+        this.wealth = wealth;
     }
 }

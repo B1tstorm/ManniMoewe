@@ -21,6 +21,7 @@ public class Bird {
     private final Texture mannyUp = new Texture("manny-up.png");
     private final Texture mannyDown = new Texture("manny-down.png");
     private final int width = 100;
+    private float highscore = 0;
 
     //bestimmt die Beschleunigung, in der der Vogel nach iunten fällt
     float fallspeed = 2;
@@ -76,6 +77,12 @@ public class Bird {
 
     public int getWidth() {
         return width;
+    }
+
+    public float getHighscore(){return highscore;}
+
+    public void setHighscore(float highscore) {
+        this.highscore = highscore;
     }
 
     /**

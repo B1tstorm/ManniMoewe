@@ -84,7 +84,6 @@ public class HighscoreScreen implements Screen {
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
 
-
         game.batch.begin();
         stage.draw();
         game.batch.end();

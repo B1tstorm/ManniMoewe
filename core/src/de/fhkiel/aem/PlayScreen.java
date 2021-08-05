@@ -2,7 +2,6 @@ package de.fhkiel.aem;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -15,8 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.TimeUtils;
-import sun.java2d.pipe.SpanClipRenderer;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -25,7 +22,7 @@ import java.util.Iterator;
 /**
  * The screen the game is running on
  */
-public class Playscreen implements Screen {
+public class PlayScreen implements Screen {
 
     private final FlappyBird game;
     private final OrthographicCamera camera;
@@ -40,9 +37,9 @@ public class Playscreen implements Screen {
 
     /**
      * Creates a new PlayScreen where the game is running on.
-     * @param game Gameobject
+     * @param game The game object
      */
-    public Playscreen(FlappyBird game) {
+    public PlayScreen(FlappyBird game) {
 
         shapeRenderer = new ShapeRenderer();
         Label.LabelStyle labelStyle = new Label.LabelStyle();

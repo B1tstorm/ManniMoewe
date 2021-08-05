@@ -22,11 +22,10 @@ public class StartScreen implements Screen {
     private final ImageButton highscoreButton;
     private final ImageButton optionsButton;
     private ImageButton muteButton;
-    private final Table table;
 
 
     /**
-     * Creates an StartScreen depending on the game.
+     * Creates an StartScreen depending on a game.
      * @param game The game
      */
     public StartScreen(final FlappyBird game) {
@@ -37,13 +36,13 @@ public class StartScreen implements Screen {
 
         stage = new Stage();
 
-        table = new Table();
+        Table table = new Table();
         table.setFillParent(true);
         Gdx.input.setInputProcessor(stage);
 
         startButton = ButtonFactory.CreateImageButton("start.png",
                 () -> {
-                    game.setScreen(new Playscreen(game));
+                    game.setScreen(new PlayScreen(game));
                     dispose();
         });
         highscoreButton = ButtonFactory.CreateImageButton("highscore.png",
@@ -53,7 +52,7 @@ public class StartScreen implements Screen {
         });
         optionsButton = ButtonFactory.CreateImageButton("optionen.png",
                 () -> {
-            game.setScreen(new Optionsscreen(game));
+            game.setScreen(new OptionsScreen(game));
             dispose();
         });
         muteButton = ButtonFactory.CreateImageButton("unmute.png", "mute.png", () -> {

@@ -71,7 +71,7 @@ public class StartScreen implements Screen {
         });
         exitButton = ButtonFactory.CreateImageButton("exit.png",
                 () -> {
-
+                    Gdx.app.exit();
         });
 
         muteButton.setProgrammaticChangeEvents(false);

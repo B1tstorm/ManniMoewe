@@ -135,7 +135,7 @@ public class Playscreen implements Screen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
             runGame = true;
         }
-        if (true ) {
+        if (runGame ) {
             bird.move();
             for (Barrier barrier : barriers) {
                 barrier.render(game.batch, barriers.size / 2);

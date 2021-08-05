@@ -2,17 +2,17 @@ package de.fhkiel.aem;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.ScreenUtils;
 import de.fhkiel.aem.utility.ButtonFactory;
 
 
-
+/**
+ * The StartingScreen which is shown at the start and acts as an main menu.
+ */
 public class StartScreen implements Screen {
 
     private final FlappyBird game;
@@ -25,7 +25,10 @@ public class StartScreen implements Screen {
     private final Table table;
 
 
-
+    /**
+     * Creates an StartScreen depending on the game.
+     * @param game The game
+     */
     public StartScreen(final FlappyBird game) {
         this.game = game;
 

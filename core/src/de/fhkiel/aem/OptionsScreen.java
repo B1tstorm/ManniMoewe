@@ -12,14 +12,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.ScreenUtils;
 import de.fhkiel.aem.utility.ButtonFactory;
 
-public class Optionsscreen implements Screen {
+/**
+ * The OptionsScreen where you can change the difficulty and the skin of the Bird.
+ */
+public class OptionsScreen implements Screen {
 
     final FlappyBird game;
     private final OrthographicCamera camera;
     private final Stage stage;
-    private final Table table;
-    private Label headerLabel;
-    private Label.LabelStyle labelStyle;
     private ImageButton backButton;
     private ImageButton easyButton;
     private ImageButton mediumButton;
@@ -29,23 +29,27 @@ public class Optionsscreen implements Screen {
     private ImageButton skinButton3;
 
 
-    public Optionsscreen(FlappyBird game) {
+    /**
+     * Creates an OptionsScreen depending on a game.
+     * @param game The game
+     */
+    public OptionsScreen(FlappyBird game) {
         this.game = game;
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Configuration.ScreenWidth, Configuration.ScreenHeight);
 
         stage = new Stage();
-        table = new Table();
+        Table table = new Table();
         createButtons();
         table.setFillParent(true);
         Gdx.input.setInputProcessor(stage);
 
-        labelStyle = new Label.LabelStyle();
+        Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = new BitmapFont(Gdx.files.internal("title-font-export.fnt"));
         labelStyle.fontColor = Color.WHITE;
 
-        headerLabel = new Label("Options", labelStyle);
+        Label headerLabel = new Label("Options", labelStyle);
 
         table.add(headerLabel).height(200).center().colspan(3);
         table.row();

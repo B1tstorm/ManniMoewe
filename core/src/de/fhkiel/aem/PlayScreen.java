@@ -127,8 +127,6 @@ public class PlayScreen implements Screen {
         game.batch.begin();
         renderArray(backgroundLoop);
 
-
-
         for(Barrier barrier : new Array.ArrayIterator<>(barriers)){
             barrier.render(game.batch);
         }

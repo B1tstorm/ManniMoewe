@@ -47,6 +47,8 @@ public class Bird {
     }
 
     public void move(){
+        birdGetsSmaler();
+
         //fallen und in eine Richtung beschleunigen
         birdSprite.setY(birdSprite.getY() - fallspeed);
 
@@ -76,6 +78,12 @@ public class Bird {
         }
 
 }
+    //zum beginn des playScreens wird der Vogel allmählich klein
+    private void birdGetsSmaler() {
+        if(birdWidth > 100){
+            this.setBirdWidth(this.getBirdWidth()-5);
+        }
+    }
 
     public Circle getHitbox() {
         return hitbox;

@@ -119,9 +119,6 @@ public class Playscreen implements Screen {
         }
 
         game.batch.draw(bird.birdSprite, bird.birdSprite.getX(), bird.birdSprite.getY() , bird.getBirdWidth() , bird.getBirdWidth());
-        if(bird.getBirdWidth() > 100){
-            bird.setBirdWidth(bird.getBirdWidth()-5);
-        }
         bird.move();
 
         game.batch.end();

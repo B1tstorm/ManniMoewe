@@ -14,10 +14,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
-
-import java.util.concurrent.ThreadLocalRandom;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import java.util.Iterator;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * The screen the game is running on
@@ -58,7 +58,8 @@ public class PlayScreen implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Configuration.ScreenWidth, Configuration.ScreenHeight);
 
-        stage = new Stage();
+        stage = new Stage(new FitViewport(Configuration.ScreenWidth, Configuration.ScreenHeight));
+
         Gdx.input.setInputProcessor(stage);
         highscoreLabel = new Label("Highscore: ", labelStyle);
         table.add(highscoreLabel).height(100).center().top().expand();
@@ -250,7 +251,7 @@ public class PlayScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        stage.getViewport().update(width, height);
     }
 
     @Override

@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import de.fhkiel.aem.utility.ButtonFactory;
 
 /**
@@ -28,7 +29,11 @@ public class HighscoreScreen implements Screen {
     public HighscoreScreen(final FlappyBird game) {
 
         this.game = game;
-        stage = new Stage();
+
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, Configuration.ScreenWidth, Configuration.ScreenHeight);
+
+        stage = new Stage(new FitViewport(Configuration.ScreenWidth, Configuration.ScreenHeight));
 
         Table highscoreTable = new Table();
         highscoreTable.setFillParent(true);
@@ -66,11 +71,6 @@ public class HighscoreScreen implements Screen {
         })).colspan(3).center();
 
         stage.addActor(highscoreTable);
-
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, Configuration.ScreenWidth, Configuration.ScreenHeight);
-
-
     }
 
 
@@ -92,7 +92,7 @@ public class HighscoreScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        stage.getViewport().update(width, height);
     }
 
     @Override

@@ -7,7 +7,10 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import de.fhkiel.aem.utility.ButtonFactory;
+
 
 /**
  * The StartingScreen which is shown at the start and acts as an main menu.
@@ -23,6 +26,7 @@ public class StartScreen implements Screen {
     private ImageButton muteButton;
     private ImageButton exitButton;
 
+    protected Viewport viewport;
 
     /**
      * Creates an StartScreen depending on a game.
@@ -34,7 +38,7 @@ public class StartScreen implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Configuration.ScreenWidth, Configuration.ScreenHeight);
 
-        stage = new Stage();
+        stage = new Stage(new FitViewport(Configuration.ScreenWidth, Configuration.ScreenHeight));
 
         Table table = new Table();
         table.setFillParent(true);
@@ -61,7 +65,6 @@ public class StartScreen implements Screen {
                 game.kielMusic.setVolume(0f);
                 game.oceanSeagullMusic.pause();
                 muteButton.setChecked(true);
-
             }   else {
                 game.musicShouldPlay = true;
                 game.kielMusic.setVolume(0.5f);
@@ -116,7 +119,7 @@ public class StartScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        stage.getViewport().update(width, height);
     }
 
     @Override

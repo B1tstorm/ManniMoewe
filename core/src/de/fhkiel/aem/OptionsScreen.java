@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import de.fhkiel.aem.utility.ButtonFactory;
 
 /**
@@ -39,7 +40,7 @@ public class OptionsScreen implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Configuration.ScreenWidth, Configuration.ScreenHeight);
 
-        stage = new Stage();
+        stage = new Stage(new FitViewport(Configuration.ScreenWidth, Configuration.ScreenHeight));
         Table table = new Table();
         createButtons();
         table.setFillParent(true);
@@ -68,36 +69,36 @@ public class OptionsScreen implements Screen {
     }
 
     private void createButtons(){
-        backButton = ButtonFactory.CreateImageButton("back.png",
+        backButton = ButtonFactory.CreateImageButton(Configuration.backImg,
                 () -> {
                     game.setScreen(new StartScreen(game));
                     dispose();
                 });
 
-        easyButton = ButtonFactory.CreateImageButton("difficulty-easy.png",
+        easyButton = ButtonFactory.CreateImageButton(Configuration.difficulty_easyImg,
                 () -> {
                 });
 
-        mediumButton = ButtonFactory.CreateImageButton("difficulty-medium.png",
-                () -> {
-
-                });
-
-        hardButton = ButtonFactory.CreateImageButton("difficulty-hard.png",
+        mediumButton = ButtonFactory.CreateImageButton(Configuration.difficulty_mediumImg,
                 () -> {
 
                 });
 
-        skinButton1 = ButtonFactory.CreateImageButton("flappy1_up.png",
-                () -> {
-                });
-
-        skinButton2 = ButtonFactory.CreateImageButton("flappy1_mid.png",
+        hardButton = ButtonFactory.CreateImageButton(Configuration.difficulty_hardImg,
                 () -> {
 
                 });
 
-        skinButton3 = ButtonFactory.CreateImageButton("flappy1_down.png",
+        skinButton1 = ButtonFactory.CreateImageButton(Configuration.flappy1_upImg,
+                () -> {
+                });
+
+        skinButton2 = ButtonFactory.CreateImageButton(Configuration.flappy1_midImg,
+                () -> {
+
+                });
+
+        skinButton3 = ButtonFactory.CreateImageButton(Configuration.flappy1_downImg,
                 () -> {
 
                 });
@@ -125,7 +126,7 @@ public class OptionsScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        stage.getViewport().update(width, height);
     }
 
     @Override

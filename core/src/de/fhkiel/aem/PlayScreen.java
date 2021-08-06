@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -25,6 +26,10 @@ public class PlayScreen implements Screen {
     private final OrthographicCamera camera;
     private final Stage stage;
     private final Bird bird;
+    private Label.LabelStyle labelStyle;
+    private Table table;
+    private GameOverScreen gameOverScreen;
+    private boolean gameOver = false;
     private final Label highscoreLabel;
     private final Array<Barrier> barriers = new Array<>();
 
@@ -48,7 +53,8 @@ public class PlayScreen implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Configuration.ScreenWidth, Configuration.ScreenHeight);
 
-        stage = new Stage();
+        stage = new Stage(new FitViewport(Configuration.ScreenWidth, Configuration.ScreenHeight));
+
         Gdx.input.setInputProcessor(stage);
         highscoreLabel = new Label("Highscore: ", labelStyle);
         table.add(highscoreLabel).height(100).center().top().expand();
@@ -91,7 +97,22 @@ public class PlayScreen implements Screen {
 
         game.batch.end();
 
-        update();
+        //Debug Hitbox
+        /*shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.setColor(Color.CYAN);
+        for(Barrier barrier : barriers){
+            shapeRenderer.rect(barrier.getHitbox().x, barrier.getHitbox().y,
+                    barrier.getHitbox().width, barrier.getHitbox().height);
+        }
+        shapeRenderer.circle(bird.hitbox.x, bird.hitbox.y, bird.hitbox.radius);
+        shapeRenderer.end();*/
+
+        if(gameOver){
+            gameOverScreen.render(delta);
+        }
+        else {
+            update();
+        }
     }
 
     /**
@@ -105,8 +126,8 @@ public class PlayScreen implements Screen {
         for(Barrier barrier : new Array.ArrayIterator<>(barriers)) {
             if (Intersector.overlaps(bird.getHitbox(), barrier.getBarrierSprite().getBoundingRectangle())){
                 game.kielMusic.stop();
-                game.setScreen(new StartScreen(game));
-                dispose();
+                gameOver = true;
+                gameOverScreen = new GameOverScreen(game);
             }
         }
 
@@ -139,14 +160,14 @@ public class PlayScreen implements Screen {
     public void createBarriers(){
         for(int i = 0; i < 10; i++) {
             int randomNum = ThreadLocalRandom.current().nextInt(
-                    (Gdx.graphics.getHeight() - new Texture("barrier-down.png").getHeight()),
+                    (int) (Gdx.graphics.getHeight() - new Texture(Configuration.barrierdownImg).getHeight()),
                     Gdx.graphics.getHeight());
             Barrier b = new Barrier(
-                    Gdx.graphics.getWidth() + new Barrier(0,0, "barrier-down.png").getDistance() * i,
-                    randomNum,"barrier-up.png");
+                    Gdx.graphics.getWidth() + new Barrier(0,0, Configuration.barrierdownImg).getDistance() * i,
+                    randomNum,Configuration.barrierupImg);
             barriers.add(b);
             Barrier b2 = new Barrier(Gdx.graphics.getWidth() + (b.getDistance() * i),
-                    randomNum - b.getBarrierSprite().getHeight() - b.getGap(), "barrier-up.png");
+                    randomNum - b.getBarrierSprite().getHeight() - b.getGap(), Configuration.barrierupImg);
             b2.getBarrierSprite().setRotation(180f);
             barriers.add(b2);
         }
@@ -154,7 +175,7 @@ public class PlayScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        stage.getViewport().update(width, height);
     }
 
     @Override

@@ -8,10 +8,9 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import de.fhkiel.aem.utility.ButtonFactory;
 
 public class GameOverScreen implements Screen {
@@ -33,7 +32,7 @@ public class GameOverScreen implements Screen {
         camera.setToOrtho(false, Configuration.ScreenWidth, Configuration.ScreenHeight);
 
         shapeRenderer = new ShapeRenderer();
-        stage = new Stage();
+        stage = new Stage(new FitViewport(Configuration.ScreenWidth, Configuration.ScreenHeight));
         Table table = new Table();
         createButtons();
         table.setFillParent(true);
@@ -125,7 +124,7 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        stage.getViewport().update(width, height);
     }
 
     @Override
@@ -133,8 +132,7 @@ public class GameOverScreen implements Screen {
 
     }
 
-    @Override
-    public void resume() {
+    @Override    public void resume() {
 
     }
 

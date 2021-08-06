@@ -11,60 +11,61 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.ScreenUtils;
 import de.fhkiel.aem.utility.ButtonFactory;
 
-
+/**
+ * The HighscoreScreen where the top 10 highscores are displayed.
+ */
 public class HighscoreScreen implements Screen {
 
     final FlappyBird game;
     private final OrthographicCamera camera;
     private final Stage stage;
-    private final Label highscore, platz, name, score;
-    private final Label.LabelStyle labelStyle;
-    private final Table highscoreTabelle;
 
 
+    /**
+     * Creates an HighscoreScreen depending on a game.
+     * @param game The game
+     */
     public HighscoreScreen(final FlappyBird game) {
 
         this.game = game;
-
         stage = new Stage();
 
+        Table highscoreTable = new Table();
+        highscoreTable.setFillParent(true);
 
-        highscoreTabelle = new Table();
-        highscoreTabelle.setFillParent(true);
-
-        labelStyle = new Label.LabelStyle();
+        Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = new BitmapFont(Gdx.files.internal("title-font-export.fnt"));
         labelStyle.fontColor = Color.WHITE;
 
-        highscore = new Label("Highscores: ",labelStyle);
-        name = new Label("Name", labelStyle);
-        platz = new Label("Platz", labelStyle);
-        score = new Label("Score",labelStyle);
+        Label highscore = new Label("Highscores: ", labelStyle);
+        Label name = new Label("Name", labelStyle);
+        Label place = new Label("Platz", labelStyle);
+        Label score = new Label("Score", labelStyle);
 
         Gdx.input.setInputProcessor(stage);
 
-        highscoreTabelle.add(highscore).height(100).colspan(3).center();
+        highscoreTable.add(highscore).height(100).colspan(3).center();
 
-        highscoreTabelle.row();
-        highscoreTabelle.add(platz).expand();
-        highscoreTabelle.add(name).expand();
-        highscoreTabelle.add(score).expand();
+        highscoreTable.row();
+        highscoreTable.add(place).expand();
+        highscoreTable.add(name).expand();
+        highscoreTable.add(score).expand();
 
         for(int i = 0; i<10; i++) {
-            highscoreTabelle.row();
-            highscoreTabelle.add(new Label((i+1) + ".", labelStyle)).expand();
-            highscoreTabelle.add().expand();
-            highscoreTabelle.add().expand();
+            highscoreTable.row();
+            highscoreTable.add(new Label((i+1) + ".", labelStyle)).expand();
+            highscoreTable.add().expand();
+            highscoreTable.add().expand();
         }
 
-        highscoreTabelle.row();
-        highscoreTabelle.add(ButtonFactory.CreateImageButton("back.png",
+        highscoreTable.row();
+        highscoreTable.add(ButtonFactory.CreateImageButton("back.png",
                 () -> {
                     game.setScreen(new StartScreen(game));
                     dispose();
         })).colspan(3).center();
 
-        stage.addActor(highscoreTabelle);
+        stage.addActor(highscoreTable);
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Configuration.ScreenWidth, Configuration.ScreenHeight);

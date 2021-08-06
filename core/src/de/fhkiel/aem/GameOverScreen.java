@@ -81,7 +81,7 @@ public class GameOverScreen implements Screen {
 
         restartButton = ButtonFactory.CreateImageButton("start.png",
                 () -> {
-                    game.setScreen(new Playscreen(game));
+                    game.setScreen(new PlayScreen(game));
                     dispose();
                 });
 

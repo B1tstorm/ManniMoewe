@@ -68,6 +68,15 @@ public class FlappyBird extends Game {
 		}
 	}
 
+	public void resetGameSpeed(){
+		Barrier.speed = 300;
+		Background.FOREGROUNDSPEED = 300;
+		Background.WATERSPEED = 150;
+		Background.CITYSPEED = 75;
+		Background.SKYSPEED = 30;
+		speedMultiplier += 1.0f;
+	}
+
 	public void setMusicVolume(float volume){
 		oceanSeagullMusic.setVolume(volume);
 		kielMusic.setVolume(volume);

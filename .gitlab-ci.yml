@@ -65,10 +65,6 @@ build:
   stage: build
   script:
     - ./gradlew build
-  artifacts:
-    paths:
-      - build/libs/*.jar
-
 
 test:
   stage: test
@@ -78,7 +74,6 @@ test:
 deploy:
   stage: deploy
   script:
-    #- ./deploy
     - ./gradlew dist
 
 after_script:

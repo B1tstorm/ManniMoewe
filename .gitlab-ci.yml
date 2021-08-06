@@ -64,13 +64,11 @@ cache:
 build:
   stage: build
   script:
-    - ./gradlew assemble
+    - ./gradlew build
   artifacts:
     paths:
       - build/libs/*.jar
-    expire_in: 1 week
-  only:
-    - master
+
 
 test:
   stage: test
@@ -80,7 +78,7 @@ test:
 deploy:
   stage: deploy
   script:
-    - ./deploy
+    #- ./deploy
     - ./gradlew dist
 
 after_script:

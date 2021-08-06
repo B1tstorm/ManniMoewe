@@ -11,11 +11,14 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import de.fhkiel.aem.utility.ButtonFactory;
 import jdk.javadoc.internal.tool.Start;
 
 import java.util.Iterator;
@@ -39,6 +42,8 @@ public class PlayScreen implements Screen {
     private final Table tablePressSpace;
     private boolean runGame = false;
     private boolean gameOver = false;
+    private ImageButton ausweichButton, platzhalterButton;
+    private long lastInvisibleTime;
 
     ShapeRenderer shapeRenderer;
 
@@ -67,7 +72,17 @@ public class PlayScreen implements Screen {
 
         Gdx.input.setInputProcessor(stage);
         highscoreLabel = new Label("Highscore: ", labelStyle);
-        table.add(highscoreLabel).height(100).center().top().expand();
+        table.add(ausweichButton = ButtonFactory.CreateImageButton(Configuration.backImg,
+                () -> {
+                        lastInvisibleTime = TimeUtils.nanoTime();
+                        bird.getHitbox().setRadius(0f);
+        })).expand().left().top();
+        table.add(highscoreLabel).expand().height(100).center().top();
+        table.add(platzhalterButton = ButtonFactory.CreateImageButton(Configuration.transparentImg,
+                () -> {})).expand();
+
+
+
         stage.addActor(table);
 
         pressSpaceLable = new Label("Press Space to start...", labelStyle);
@@ -201,6 +216,10 @@ public class PlayScreen implements Screen {
     private void update() {
         int randomNum = 0;
 
+        if(TimeUtils.nanoTime() - lastInvisibleTime > 1500000000) {
+            bird.getHitbox().setRadius(50);
+        }
+
         highscoreLabel.setText("Highscore: " + (int) bird.getHighscore());
 
         for (Barrier barrier : new Array.ArrayIterator<>(barriers)) {
@@ -273,7 +292,7 @@ public class PlayScreen implements Screen {
                     randomNum, Configuration.barrierupImg);
             barriers.add(b);
             Barrier b2 = new Barrier(Gdx.graphics.getWidth() + (b.getDistance() * i),
-                    randomNum - b.getBarrierSprite().getHeight() - b.getGap(), Configuration.barrierupImg);
+                    randomNum - b.getBarrierSprite().getHeight() - b.getGap() , Configuration.barrierupImg);
             b2.getBarrierSprite().setRotation(180f);
             barriers.add(b2);
         }

@@ -28,5 +28,6 @@ public class Configuration {
     public static final String  muteImg = "ATFB-mute.png";
     public static final String  unmuteImg = "ATFB-unmute.png";
     public static final String  optionImg = "ATFB-option.png";
+    public static final String transparentImg = "ATFB-transparent.png";
 
 }

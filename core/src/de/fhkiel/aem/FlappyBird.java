@@ -44,4 +44,9 @@ public class FlappyBird extends Game {
 		oceanSeagullMusic.dispose();
 		kielMusic.dispose();
 	}
+
+	public void setMusicVolume(float volume){
+		oceanSeagullMusic.setVolume(volume);
+		kielMusic.setVolume(volume);
+	}
 }

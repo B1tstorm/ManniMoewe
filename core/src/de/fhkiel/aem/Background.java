@@ -24,10 +24,10 @@ public class Background {
 	private final Array<Sprite> waterLayerLoop;
 	private final Array<Sprite> foregroundLayerLoop;
 
-	private final static float SKYSPEED = 30;
-	private final static float CITYSPEED = 75;
-	private final static float WATERSPEED = 150;
-	private final static float FOREGROUNDSPEED = 300;
+	public static float SKYSPEED = 30;
+	public static float CITYSPEED = 75;
+	public static float WATERSPEED = 150;
+	public static float FOREGROUNDSPEED = 300;
 
 	private int skyCounter = 0;
 	private int cityCounter = 0;
@@ -40,6 +40,11 @@ public class Background {
 	 */
 	public Background(SpriteBatch batch) {
 		this.batch = batch;
+
+		SKYSPEED = 30;
+		CITYSPEED = 75;
+		WATERSPEED = 150;
+		FOREGROUNDSPEED = 300;
 
 		skyLayerTextures = new Array<>();
 		skyLayerTextures.add(new Texture(Gdx.files.internal(Configuration.sky1Img)));

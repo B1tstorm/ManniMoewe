@@ -72,6 +72,9 @@ public class GameOverScreen implements Screen {
 
     }
 
+    /**
+     * Create all used Buttons
+     */
     private void createButtons(){
         backButton = ButtonFactory.CreateImageButton(Configuration.backImg,
                 () -> {

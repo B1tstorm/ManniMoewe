@@ -64,36 +64,36 @@ public class Optionsscreen implements Screen {
     }
 
     private void createButtons(){
-        backButton = ButtonFactory.CreateImageButton("back.png",
+        backButton = ButtonFactory.CreateImageButton(Configuration.backImg,
                 () -> {
                     game.setScreen(new StartScreen(game));
                     dispose();
                 });
 
-        easyButton = ButtonFactory.CreateImageButton("difficulty-easy.png",
+        easyButton = ButtonFactory.CreateImageButton(Configuration.difficulty_easyImg,
                 () -> {
                 });
 
-        mediumButton = ButtonFactory.CreateImageButton("difficulty-medium.png",
-                () -> {
-
-                });
-
-        hardButton = ButtonFactory.CreateImageButton("difficulty-hard.png",
+        mediumButton = ButtonFactory.CreateImageButton(Configuration.difficulty_mediumImg,
                 () -> {
 
                 });
 
-        skinButton1 = ButtonFactory.CreateImageButton("flappy1_up.png",
-                () -> {
-                });
-
-        skinButton2 = ButtonFactory.CreateImageButton("flappy1_mid.png",
+        hardButton = ButtonFactory.CreateImageButton(Configuration.difficulty_hardImg,
                 () -> {
 
                 });
 
-        skinButton3 = ButtonFactory.CreateImageButton("flappy1_down.png",
+        skinButton1 = ButtonFactory.CreateImageButton(Configuration.flappy1_upImg,
+                () -> {
+                });
+
+        skinButton2 = ButtonFactory.CreateImageButton(Configuration.flappy1_midImg,
+                () -> {
+
+                });
+
+        skinButton3 = ButtonFactory.CreateImageButton(Configuration.flappy1_downImg,
                 () -> {
 
                 });

@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class Barrier {
 
 
-    private Sprite barrierSprite = new Sprite(new Texture("barrier.png"));
+    private Sprite barrierSprite = new Sprite(new Texture(Configuration.barrierImg));
     private float speed = 300;
     private float gap = 350;
     private float distance = 700;

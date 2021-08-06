@@ -62,7 +62,7 @@ public class Playscreen implements Screen {
         table.add(highscoreLabel).height(100).center().top().expand();
         stage.addActor(table);
 
-        backgroundTexture = new Texture(Gdx.files.internal("background.png"));
+        backgroundTexture = new Texture(Gdx.files.internal(Configuration.backgroundImg));
         backgroundLoop = new Array<>();
 
         while(!isFilledWithBackgroundImages(backgroundLoop)) {

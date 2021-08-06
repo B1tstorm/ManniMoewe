@@ -73,12 +73,11 @@ public class Bird {
         }
         //stoppe den Vogel am Rand des Bilds
         if (birdSprite.getY() <= 0 ){
-            //fallspeed = 0;
             //! zu testen da.... Damit der Vogel stopp, musst du die vorherige Zeile aktivieren und die folgende löschen
-            sprungNachOben();
+            slide();
         }
 
-    }
+}
 
     /**
      * Gets the Sprite of the bird.
@@ -125,5 +124,15 @@ public class Bird {
         pressTime = TimeUtils.millis();
         birdSprite.setTexture(mannyUp);
         fallSpeed = -13;
+    }
+
+    private void slide(){
+        pressTime = TimeUtils.millis();
+        birdSprite.setTexture(mannyUp);
+        fallSpeed = -7;
+    }
+
+    public void setFallSpeed(float fallSpeed) {
+        this.fallSpeed = fallSpeed;
     }
 }

@@ -1,6 +1,7 @@
 package de.fhkiel.aem;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -15,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import jdk.javadoc.internal.tool.Start;
 
 import java.util.Iterator;
 import java.util.concurrent.ThreadLocalRandom;
@@ -30,30 +32,33 @@ public class PlayScreen implements Screen {
     private final Texture backgroundTexture;
     private final Array<Sprite> backgroundLoop;
     private final Bird bird;
-    private Label.LabelStyle labelStyle;
-    private Table table;
     private GameOverScreen gameOverScreen;
-    private boolean gameOver = false;
     private final Label highscoreLabel;
     private final Array<Barrier> barriers = new Array<>();
+    private Label pressSpaceLable;
+    private final Table tablePressSpace;
+    private boolean runGame = false;
+    private boolean gameOver = false;
 
     ShapeRenderer shapeRenderer;
 
     /**
      * Creates a new PlayScreen where the game is running on.
+     *
      * @param game The game object
      */
     public PlayScreen(FlappyBird game) {
-
         shapeRenderer = new ShapeRenderer();
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = new BitmapFont(Gdx.files.internal("title-font-export.fnt"));
         labelStyle.fontColor = Color.GRAY;
         Table table = new Table();
         table.setFillParent(true);
+        tablePressSpace = new Table();
+        tablePressSpace.setFillParent(true);
 
         this.game = game;
-        bird = new Bird(50, 500 );
+        bird = new Bird(50, 500);
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Configuration.ScreenWidth, Configuration.ScreenHeight);
@@ -65,10 +70,14 @@ public class PlayScreen implements Screen {
         table.add(highscoreLabel).height(100).center().top().expand();
         stage.addActor(table);
 
+        pressSpaceLable = new Label("Press Space to start...", labelStyle);
+        tablePressSpace.add(pressSpaceLable).height(750).center().top().expand();
+        stage.addActor(tablePressSpace);
+
         backgroundTexture = new Texture(Gdx.files.internal(Configuration.backgroundImg));
         backgroundLoop = new Array<>();
 
-        while(!isFilledWithBackgroundImages(backgroundLoop)) {
+        while (!isFilledWithBackgroundImages(backgroundLoop)) {
             Sprite sprite = new Sprite(backgroundTexture);
             sprite.setX(findRightestPixel(backgroundLoop));
             sprite.setY(0);
@@ -81,6 +90,7 @@ public class PlayScreen implements Screen {
 
     /**
      * Checks if the whole Screen is covered by an background image.
+     *
      * @param array The array of background images
      * @return True if the whole width is covered.
      */
@@ -99,13 +109,14 @@ public class PlayScreen implements Screen {
 
     /**
      * Finds the most right position (with its width) of an image array.
+     *
      * @param array The array that is checked
      * @return The most right pixel on the screen
      */
     private float findRightestPixel(Array<Sprite> array) {
         float pixel = 0;
 
-        for (Sprite texture: new Array.ArrayIterator<>(array)) {
+        for (Sprite texture : new Array.ArrayIterator<>(array)) {
             float right = texture.getX() + texture.getWidth();
             if (right > pixel) pixel = right;
         }
@@ -121,26 +132,39 @@ public class PlayScreen implements Screen {
 
     /**
      * Rendering of the all objects on the screen.
+     *
      * @param delta time delta
      */
     @Override
     public void render(float delta) {
-        ScreenUtils.clear(0.443f, 0.772f, 0.811f, 1);
+
+            ScreenUtils.clear(0.443f, 0.772f, 0.811f, 1);
+
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
         renderArray(backgroundLoop);
 
-        for(Barrier barrier : new Array.ArrayIterator<>(barriers)){
+
+        for (Barrier barrier : new Array.ArrayIterator<>(barriers)) {
             barrier.render(game.batch);
         }
 
-        bird.render(game.batch);
-        bird.move();
-
         stage.draw();
-
+        game.batch.draw(bird.getBirdSprite(), bird.getBirdSprite().getX(), bird.getBirdSprite().getY(), bird.getWidth(), bird.getWidth());
+        bird.render(game.batch);
+        //beim Drücken der Leertaste soll die Zeile"press space to ......" verschwenden und das spiel wird in Bewegung gesetzt
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            runGame = true;
+            tablePressSpace.clear();
+        }
+        if (runGame && !gameOver) {
+            bird.move();
+            for (Barrier barrier : new Array.ArrayIterator<>(barriers)) {
+                barrier.move();
+            }
+        }
         game.batch.end();
 
         //Debug Hitbox
@@ -153,20 +177,20 @@ public class PlayScreen implements Screen {
         shapeRenderer.circle(bird.hitbox.x, bird.hitbox.y, bird.hitbox.radius);
         shapeRenderer.end();*/
 
-        if(gameOver){
+        if (gameOver) {
             gameOverScreen.render(delta);
-        }
-        else {
+        } else {
             update();
         }
     }
 
     /**
      * Renders all items of an array.
+     *
      * @param array The array that should be rendered
      */
     private void renderArray(Array<Sprite> array) {
-        for(Sprite item : new Array.ArrayIterator<>(array)) {
+        for (Sprite item : new Array.ArrayIterator<>(array)) {
             game.batch.draw(item.getTexture(), item.getX(), item.getY());
         }
     }
@@ -177,19 +201,25 @@ public class PlayScreen implements Screen {
     private void update() {
         int randomNum = 0;
 
-        highscoreLabel.setText("Highscore: " + (int)bird.getHighscore());
+        highscoreLabel.setText("Highscore: " + (int) bird.getHighscore());
 
-        for(Barrier barrier : new Array.ArrayIterator<>(barriers)) {
-            if (Intersector.overlaps(bird.getHitbox(), barrier.getBarrierSprite().getBoundingRectangle())){
+        for (Barrier barrier : new Array.ArrayIterator<>(barriers)) {
+            if (Intersector.overlaps(bird.getHitbox(), barrier.getBarrierSprite().getBoundingRectangle())) {
                 game.kielMusic.stop();
                 gameOver = true;
+                runGame = false;
                 gameOverScreen = new GameOverScreen(game);
+            }
+            if(bird.getHitbox().y > Configuration.ScreenHeight && barrier.getBarrierSprite().getX() <= bird.getBirdSprite().getX()) {
+                game.kielMusic.stop();
+                game.setScreen(new StartScreen(game));
+                dispose();
             }
         }
         moveArrayLeft(backgroundLoop, 60f);
-        for(Iterator<Sprite> iter = new Array.ArrayIterator<>(backgroundLoop); iter.hasNext(); ) {
+        for (Iterator<Sprite> iter = new Array.ArrayIterator<>(backgroundLoop); iter.hasNext(); ) {
             Sprite item = iter.next();
-            if(item.getX() + item.getWidth() < -20) {
+            if (item.getX() + item.getWidth() < -20) {
                 iter.remove();
             }
         }
@@ -199,18 +229,17 @@ public class PlayScreen implements Screen {
             sprite.setY(0);
             backgroundLoop.add(sprite);
         }
-        for(Barrier barrier : new Array.ArrayIterator<>(barriers)) {
-            if(bird.getBirdSprite().getX() >= barrier.getBarrierSprite().getX() && barrier.getWealth() != 0) {
+        for (Barrier barrier : new Array.ArrayIterator<>(barriers)) {
+            if (bird.getBirdSprite().getX() >= barrier.getBarrierSprite().getX() && barrier.getWealth() != 0) {
                 bird.setHighscore(bird.getHighscore() + barrier.getWealth());
                 barrier.setWealth(0);
             }
             if (barrier.getBarrierSprite().getX() < (0 - barrier.getBarrierSprite().getWidth())) {
-                if(barrier.getBarrierSprite().getRotation() != 180) {
+                if (barrier.getBarrierSprite().getRotation() != 180) {
                     randomNum = ThreadLocalRandom.current().nextInt(
                             (int) (Gdx.graphics.getHeight() - barrier.getBarrierSprite().getHeight()), Gdx.graphics.getHeight());
                     barrier.getBarrierSprite().setY(randomNum);
-                }
-                else{
+                } else {
                     barrier.getBarrierSprite().setY(randomNum - barrier.getBarrierSprite().getHeight() - barrier.getGap());
                 }
                 barrier.getBarrierSprite().setX(barrier.getBarrierSprite().getX() + (barriers.size / 2f) * barrier.getDistance());
@@ -220,12 +249,13 @@ public class PlayScreen implements Screen {
 
     /**
      * Moves an array in the left direction of the screen.
+     *
      * @param array The array that should be moved.
      * @param speed The speed it should be moved.
      */
     private void moveArrayLeft(Array<Sprite> array, float speed) {
         float movement = speed * Gdx.graphics.getDeltaTime();
-        for(Sprite item : new Array.ArrayIterator<>(array)) {
+        for (Sprite item : new Array.ArrayIterator<>(array)) {
             item.setX(item.getX() - movement);
         }
     }
@@ -233,14 +263,14 @@ public class PlayScreen implements Screen {
     /**
      * Creates the Barriers for the game.
      */
-    public void createBarriers(){
-        for(int i = 0; i < 10; i++) {
+    public void createBarriers() {
+        for (int i = 0; i < 10; i++) {
             int randomNum = ThreadLocalRandom.current().nextInt(
                     (int) (Gdx.graphics.getHeight() - new Texture(Configuration.barrierdownImg).getHeight()),
                     Gdx.graphics.getHeight());
             Barrier b = new Barrier(
-                    Gdx.graphics.getWidth() + new Barrier(0,0, Configuration.barrierdownImg).getDistance() * i,
-                    randomNum,Configuration.barrierupImg);
+                    Gdx.graphics.getWidth() + new Barrier(0, 0, Configuration.barrierdownImg).getDistance() * i,
+                    randomNum, Configuration.barrierupImg);
             barriers.add(b);
             Barrier b2 = new Barrier(Gdx.graphics.getWidth() + (b.getDistance() * i),
                     randomNum - b.getBarrierSprite().getHeight() - b.getGap(), Configuration.barrierupImg);

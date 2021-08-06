@@ -43,13 +43,12 @@ public class Barrier {
     public void render(SpriteBatch batch){
         batch.draw(barrierSprite, barrierSprite.getX(), barrierSprite.getY(), barrierSprite.getOriginX(), barrierSprite.getOriginY(),
                 barrierSprite.getWidth(), barrierSprite.getHeight(),1,1, barrierSprite.getRotation());
-        move();
     }
 
     /**
      * Moves the barriers.
      */
-    private void move(){
+    public void move(){
         barrierSprite.setX(barrierSprite.getX() - Gdx.graphics.getDeltaTime() * speed);
         hitbox.setPosition(hitbox.getX() - Gdx.graphics.getDeltaTime() * speed, hitbox.getY());
     }

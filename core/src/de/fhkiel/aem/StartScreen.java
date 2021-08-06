@@ -2,18 +2,17 @@ package de.fhkiel.aem;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.ScreenUtils;
 import de.fhkiel.aem.utility.ButtonFactory;
 
 
-
+/**
+ * The StartingScreen which is shown at the start and acts as an main menu.
+ */
 public class StartScreen implements Screen {
 
     private final FlappyBird game;
@@ -24,10 +23,12 @@ public class StartScreen implements Screen {
     private final ImageButton optionsButton;
     private ImageButton muteButton;
     private ImageButton exitButton;
-    private final Table table;
 
 
-
+    /**
+     * Creates an StartScreen depending on a game.
+     * @param game The game
+     */
     public StartScreen(final FlappyBird game) {
         this.game = game;
 
@@ -36,13 +37,13 @@ public class StartScreen implements Screen {
 
         stage = new Stage();
 
-        table = new Table();
+        Table table = new Table();
         table.setFillParent(true);
         Gdx.input.setInputProcessor(stage);
 
         startButton = ButtonFactory.CreateImageButton("start.png",
                 () -> {
-                    game.setScreen(new Playscreen(game));
+                    game.setScreen(new PlayScreen(game));
                     dispose();
         });
         highscoreButton = ButtonFactory.CreateImageButton("highscore.png",
@@ -52,26 +53,27 @@ public class StartScreen implements Screen {
         });
         optionsButton = ButtonFactory.CreateImageButton("optionen.png",
                 () -> {
-            game.setScreen(new Optionsscreen(game));
+            game.setScreen(new OptionsScreen(game));
             dispose();
         });
         muteButton = ButtonFactory.CreateImageButton("unmute.png", "mute.png", () -> {
-            if(game.musik){
-                game.musik = false;
-                game.kielMusik.setVolume(0f);
-                game.meerMoeweMusik.pause();
+            if(game.musicShouldPlay){
+                game.musicShouldPlay = false;
+                game.kielMusic.setVolume(0f);
+                game.oceanSeagullMusic.pause();
                 muteButton.setChecked(true);
 
             }   else {
-                game.musik = true;
-                game.kielMusik.setVolume(0.5f);
-                game.meerMoeweMusik.play();
+                game.musicShouldPlay = true;
+                game.kielMusic.setVolume(0.5f);
+                game.oceanSeagullMusic.play();
                 muteButton.setChecked(false);
             }
         });
         exitButton = ButtonFactory.CreateImageButton("exit.png",
                 () -> {
                     Gdx.app.exit();
+                    dispose();
         });
 
         muteButton.setProgrammaticChangeEvents(false);
@@ -92,11 +94,11 @@ public class StartScreen implements Screen {
 
     @Override
     public void show() {
-        if(game.musik) {
-            game.meerMoeweMusik.play();
+        if(game.musicShouldPlay) {
+            game.oceanSeagullMusic.play();
         }
-        if(!game.musik) {
-            game.kielMusik.setVolume(0f);
+        if(!game.musicShouldPlay) {
+            game.kielMusic.setVolume(0f);
             muteButton.setChecked(true);
         }
 

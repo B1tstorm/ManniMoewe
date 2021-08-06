@@ -7,13 +7,25 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
+/**
+ * Factory to create ImageButtons
+ */
 public class ButtonFactory {
 
+	/**
+	 * Lambda Function that is run as the button click function.
+	 */
 	@FunctionalInterface
 	public interface ActionFunction {
 		void run();
 	}
 
+	/**
+	 * Creates a new Image Button.
+	 * @param imagePath The imagePath to the Image the button should have
+	 * @param function The function that is called on Click
+	 * @return The newly created Button
+	 */
 	public static ImageButton CreateImageButton(String imagePath, ActionFunction function) {
 		ImageButton button = new ImageButton(
 				new TextureRegionDrawable(new TextureRegion(new Texture(imagePath))));
@@ -26,6 +38,13 @@ public class ButtonFactory {
 		return button;
 	}
 
+	/**
+	 * Creates an new ImageButton with an different Image as the Checked Image.
+	 * @param imagePath The imagePath to the Image the button should have
+	 * @param checkedImagePath The imagePath to the Image the button should have if he is checked
+	 * @param function The function that is called on Click
+	 * @return The newly created Button
+	 */
 	public static ImageButton CreateImageButton(String imagePath, String checkedImagePath, ActionFunction function) {
 		ImageButton button = new ImageButton(
 				new TextureRegionDrawable(new TextureRegion(new Texture(imagePath))),

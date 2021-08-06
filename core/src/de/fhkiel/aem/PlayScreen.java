@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -17,8 +16,6 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-import java.util.Iterator;
-
 /**
  * The screen the game is running on
  */
@@ -27,13 +24,11 @@ public class PlayScreen implements Screen {
     private final FlappyBird game;
     private final OrthographicCamera camera;
     private final Stage stage;
-    private final Texture backgroundTexture;
-    private final Array<Sprite> backgroundLoop;
     private final Bird bird;
     private final Label highscoreLabel;
     private final Array<Barrier> barriers = new Array<>();
 
-    ShapeRenderer shapeRenderer;
+    private final ShapeRenderer shapeRenderer;
 
     /**
      * Creates a new PlayScreen where the game is running on.
@@ -50,7 +45,6 @@ public class PlayScreen implements Screen {
 
         this.game = game;
 
-
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Configuration.ScreenWidth, Configuration.ScreenHeight);
 
@@ -60,55 +54,10 @@ public class PlayScreen implements Screen {
         table.add(highscoreLabel).height(100).center().top().expand();
         stage.addActor(table);
 
-        backgroundTexture = new Texture(Gdx.files.internal("background.png"));
-        backgroundLoop = new Array<>();
-
-        while(!isFilledWithBackgroundImages(backgroundLoop)) {
-            Sprite sprite = new Sprite(backgroundTexture);
-            sprite.setX(findRightestPixel(backgroundLoop));
-            sprite.setY(0);
-            backgroundLoop.add(sprite);
-        }
-
         bird = new Bird(50, 250 );
-
         bird.getBirdSprite().setTexture(bird.getMannyStraight());
 
         createBarriers();
-    }
-
-    /**
-     * Checks if the whole Screen is covered by an background image.
-     * @param array The array of background images
-     * @return True if the whole width is covered.
-     */
-    private boolean isFilledWithBackgroundImages(Array<Sprite> array) {
-        float pixel = 0;
-
-        for (Sprite positionTexture : new Array.ArrayIterator<>(array)) {
-            if (positionTexture.getX() < 0) {
-                pixel += positionTexture.getWidth() - positionTexture.getX();
-            } else {
-                pixel += positionTexture.getWidth();
-            }
-        }
-        return pixel > Configuration.ScreenWidth;
-    }
-
-    /**
-     * Finds the most right position (with its width) of an image array.
-     * @param array The array that is checked
-     * @return The most right pixel on the screen
-     */
-    private float findRightestPixel(Array<Sprite> array) {
-        float pixel = 0;
-
-        for (Sprite texture: new Array.ArrayIterator<>(array)) {
-            float right = texture.getX() + texture.getWidth();
-            if (right > pixel) pixel = right;
-        }
-
-        return pixel;
     }
 
     @Override
@@ -128,12 +77,13 @@ public class PlayScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
-        renderArray(backgroundLoop);
+        game.background.renderBackground();
 
         for(Barrier barrier : new Array.ArrayIterator<>(barriers)){
             barrier.render(game.batch);
         }
 
+        game.background.renderForeground();
         bird.render(game.batch);
         bird.move();
 
@@ -142,16 +92,6 @@ public class PlayScreen implements Screen {
         game.batch.end();
 
         update();
-    }
-
-    /**
-     * Renders all items of an array.
-     * @param array The array that should be rendered
-     */
-    private void renderArray(Array<Sprite> array) {
-        for(Sprite item : new Array.ArrayIterator<>(array)) {
-            game.batch.draw(item.getTexture(), item.getX(), item.getY());
-        }
     }
 
     /**
@@ -169,19 +109,9 @@ public class PlayScreen implements Screen {
                 dispose();
             }
         }
-        moveArrayLeft(backgroundLoop, 60f);
-        for(Iterator<Sprite> iter = new Array.ArrayIterator<>(backgroundLoop); iter.hasNext(); ) {
-            Sprite item = iter.next();
-            if(item.getX() + item.getWidth() < -20) {
-                iter.remove();
-            }
-        }
-        if (findRightestPixel(backgroundLoop) < Configuration.ScreenWidth + 100) {
-            Sprite sprite = new Sprite(backgroundTexture);
-            sprite.setX(findRightestPixel(backgroundLoop));
-            sprite.setY(0);
-            backgroundLoop.add(sprite);
-        }
+
+        game.background.move();
+
         for(Barrier barrier : new Array.ArrayIterator<>(barriers)) {
             if(bird.getBirdSprite().getX() >= barrier.getBarrierSprite().getX() && barrier.getWealth() != 0) {
                 bird.setHighscore(bird.getHighscore() + barrier.getWealth());
@@ -201,17 +131,7 @@ public class PlayScreen implements Screen {
         }
     }
 
-    /**
-     * Moves an array in the left direction of the screen.
-     * @param array The array that should be moved.
-     * @param speed The speed it should be moved.
-     */
-    private void moveArrayLeft(Array<Sprite> array, float speed) {
-        float movement = speed * Gdx.graphics.getDeltaTime();
-        for(Sprite item : new Array.ArrayIterator<>(array)) {
-            item.setX(item.getX() - movement);
-        }
-    }
+
 
     /**
      * Creates the Barriers for the game.
@@ -254,6 +174,6 @@ public class PlayScreen implements Screen {
 
     @Override
     public void dispose() {
-        backgroundTexture.dispose();
+
     }
 }

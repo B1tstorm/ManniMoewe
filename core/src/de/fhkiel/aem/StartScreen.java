@@ -92,6 +92,8 @@ public class StartScreen implements Screen {
         table.add(optionsButton).center().fillX();
 
         stage.addActor(table);
+
+        game.background = new Background(game.batch);
     }
 
     @Override
@@ -113,9 +115,15 @@ public class StartScreen implements Screen {
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
+
+        game.background.renderBackground();
+        game.background.renderForeground();
+
         stage.draw();
         game.batch.draw(bird.getBirdSprite(), bird.getBirdSprite().getX(), bird.getBirdSprite().getY() , bird.getBirdWidth() , bird.getBirdWidth());
         game.batch.end();
+
+        game.background.move();
     }
 
     @Override

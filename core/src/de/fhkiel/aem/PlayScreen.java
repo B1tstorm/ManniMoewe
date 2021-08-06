@@ -195,6 +195,7 @@ public class PlayScreen implements Screen {
                     barrier.getBarrierSprite().setY(randomNum - barrier.getBarrierSprite().getHeight() - barrier.getGap());
                 }
                 barrier.getBarrierSprite().setX(barrier.getBarrierSprite().getX() + (barriers.size / 2f) * barrier.getDistance());
+                barrier.setWealth(game.getDifficulty() / 2.0f);
             }
         }
     }

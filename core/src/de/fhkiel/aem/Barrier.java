@@ -13,12 +13,12 @@ public class Barrier {
 
 
     private final Sprite barrierSprite;
-    private float speed = 300;
+    public static float speed = 300;
     private float gap = 450;
     private float distance = 850;
     private float wealth;
     private Rectangle hitbox;
-    private int hitboxKorrektur;
+    private int hitboxKorrektur = 10;
 
     /**
      * Creates a new Barrier on the given location.

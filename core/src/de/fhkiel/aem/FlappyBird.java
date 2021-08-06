@@ -17,6 +17,8 @@ public class FlappyBird extends Game {
 	private int difficulty = 2;
 	public boolean musicShouldPlay = true;
 	public Background background;
+	private static float speedMultiplier = 1.0f;
+
 
 	@Override
 	public void create () {
@@ -50,6 +52,29 @@ public class FlappyBird extends Game {
 		oceanSeagullMusic.dispose();
 		kielMusic.dispose();
 		background.dispose();
+	}
+
+	/**
+	 * increases the Speed of the Game
+	 */
+	public void increaseGameSpeed(){
+		if(speedMultiplier <= 3){
+			Barrier.speed = Barrier.speed / speedMultiplier * (speedMultiplier + 0.01f);
+			Background.FOREGROUNDSPEED = Background.FOREGROUNDSPEED / speedMultiplier  * (speedMultiplier + 0.01f);
+			Background.WATERSPEED = Background.WATERSPEED / speedMultiplier  * (speedMultiplier + 0.01f);
+			Background.CITYSPEED = Background.CITYSPEED / speedMultiplier  * (speedMultiplier + 0.01f);
+			Background.SKYSPEED = Background.SKYSPEED / speedMultiplier  * (speedMultiplier + 0.01f);
+			speedMultiplier += 0.01f;
+		}
+	}
+
+	public void resetGameSpeed(){
+		Barrier.speed = 300;
+		Background.FOREGROUNDSPEED = 300;
+		Background.WATERSPEED = 150;
+		Background.CITYSPEED = 75;
+		Background.SKYSPEED = 30;
+		speedMultiplier += 1.0f;
 	}
 
 	public void setMusicVolume(float volume){

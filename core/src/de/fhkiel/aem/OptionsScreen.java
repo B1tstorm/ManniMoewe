@@ -93,6 +93,9 @@ public class OptionsScreen implements Screen {
 
     }
 
+    /**
+     * Creates all shown Buttons
+     */
     private void createButtons(){
         backButton = ButtonFactory.CreateImageButton(Configuration.backImg,
                 () -> {

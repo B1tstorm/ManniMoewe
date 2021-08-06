@@ -81,7 +81,7 @@ public class Bird {
             pressTime = 0;
         }
         //stoppe den Vogel am Rand des Bilds
-        if (birdSprite.getY() <= 0 ){
+        if (birdSprite.getY() <= 25 ){
             //! zu testen da.... Damit der Vogel stopp, musst du die vorherige Zeile aktivieren und die folgende löschen
             slide();
         }

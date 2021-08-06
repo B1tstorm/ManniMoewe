@@ -14,6 +14,7 @@ public class FlappyBird extends Game {
 	public BitmapFont font;
 	public Music oceanSeagullMusic;
 	public Music kielMusic;
+	private int difficulty = 2;
 	public boolean musicShouldPlay = true;
 
 	@Override
@@ -48,5 +49,11 @@ public class FlappyBird extends Game {
 	public void setMusicVolume(float volume){
 		oceanSeagullMusic.setVolume(volume);
 		kielMusic.setVolume(volume);
+	}
+
+	public int getDifficulty(){return difficulty;}
+
+	public void setDifficulty(int difficulty) {
+		this.difficulty = difficulty;
 	}
 }

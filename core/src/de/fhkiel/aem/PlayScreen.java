@@ -142,6 +142,7 @@ public class PlayScreen implements Screen {
         shapeRenderer.end();*/
 
         if (gameOver) {
+            game.resetGameSpeed();
             gameOverScreen.render(delta);
         } else {
             update();

@@ -25,6 +25,7 @@ public class StartScreen implements Screen {
     private final ImageButton optionsButton;
     private ImageButton muteButton;
     private ImageButton exitButton;
+    private final Bird bird;
 
     protected Viewport viewport;
 
@@ -39,6 +40,7 @@ public class StartScreen implements Screen {
         camera.setToOrtho(false, Configuration.ScreenWidth, Configuration.ScreenHeight);
 
         stage = new Stage(new FitViewport(Configuration.ScreenWidth, Configuration.ScreenHeight));
+        bird = new Bird(50, 250 );
 
         Table table = new Table();
         table.setFillParent(true);
@@ -92,6 +94,8 @@ public class StartScreen implements Screen {
         table.add(optionsButton).center().fillX();
 
         stage.addActor(table);
+
+        game.background = new Background(game.batch);
     }
 
     @Override
@@ -113,8 +117,16 @@ public class StartScreen implements Screen {
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
+
+        game.background.renderBackground();
+        game.background.renderForeground();
+
+        game.batch.draw(bird.getBirdSprite(), bird.getBirdSprite().getX(), bird.getBirdSprite().getY() , bird.getBirdWidth() , bird.getBirdWidth());
+
         stage.draw();
         game.batch.end();
+
+        game.background.move();
     }
 
     @Override

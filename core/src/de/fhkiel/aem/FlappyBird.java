@@ -14,10 +14,13 @@ public class FlappyBird extends Game {
 	public BitmapFont font;
 	public Music oceanSeagullMusic;
 	public Music kielMusic;
+	private int difficulty = 2;
 	public boolean musicShouldPlay = true;
+	public Background background;
 
 	@Override
 	public void create () {
+
 		oceanSeagullMusic = Gdx.audio.newMusic(Gdx.files.internal("Meer_Möwe.mp3"));
 		oceanSeagullMusic.setLooping(true);
 		oceanSeagullMusic.setVolume(0.5f);
@@ -28,6 +31,9 @@ public class FlappyBird extends Game {
 
 		batch = new SpriteBatch();
 		font = new BitmapFont();
+
+		background = new Background(batch);
+
 		this.setScreen(new StartScreen(this));
 
 	}
@@ -43,10 +49,17 @@ public class FlappyBird extends Game {
 		font.dispose();
 		oceanSeagullMusic.dispose();
 		kielMusic.dispose();
+		background.dispose();
 	}
 
 	public void setMusicVolume(float volume){
 		oceanSeagullMusic.setVolume(volume);
 		kielMusic.setVolume(volume);
+	}
+
+	public int getDifficulty(){return difficulty;}
+
+	public void setDifficulty(int difficulty) {
+		this.difficulty = difficulty;
 	}
 }

@@ -49,6 +49,8 @@ public class PlayScreen implements Screen {
      */
     public PlayScreen(FlappyBird game) {
         shapeRenderer = new ShapeRenderer();
+        gameOver = false;
+        runGame = false;
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = new BitmapFont(Gdx.files.internal("title-font-export.fnt"));
         labelStyle.fontColor = Color.GRAY;

@@ -144,6 +144,7 @@ public class PlayScreen implements Screen {
         if (gameOver) {
             game.resetGameSpeed();
             gameOverScreen.render(delta);
+            bird.birdDies();
         } else {
             update();
         }
@@ -171,6 +172,7 @@ public class PlayScreen implements Screen {
                 gameOver = true;
                 runGame = false;
                 gameOverScreen = new GameOverScreen(game);
+                bird.setDieTime(TimeUtils.millis());
             }
             if(bird.getHitbox().y > Configuration.ScreenHeight && barrier.getBarrierSprite().getX() <= bird.getBirdSprite().getX()) {
                 game.kielMusic.stop();

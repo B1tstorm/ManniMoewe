@@ -17,10 +17,21 @@ public class Bird {
     private final Texture mannyStraight = new Texture(Gdx.files.internal(Configuration.manny_straightImg));
     private final Texture mannyUp = new Texture(Gdx.files.internal(Configuration.manny_upImg));
     private final Texture mannyDown = new Texture(Gdx.files.internal(Configuration.manny_downImg));
+
+    private final Texture mannyOuch2 = new Texture(Gdx.files.internal(Configuration.mannyOuch2));
+    private final Texture mannyOuch3 = new Texture(Gdx.files.internal(Configuration.mannyOuch3));
+    private final Texture mannyOuch4 = new Texture(Gdx.files.internal(Configuration.mannyOuch4));
+    private final Texture mannyOuch5 = new Texture(Gdx.files.internal(Configuration.mannyOuch5));
+    private final Texture mannyOuch6 = new Texture(Gdx.files.internal(Configuration.mannyOuch6));
+    private final Texture mannyOuch7 = new Texture(Gdx.files.internal(Configuration.mannyOuch7));
+    private final Texture mannyOuch8 = new Texture(Gdx.files.internal(Configuration.mannyOuch8));
+
     private final int width = 100;
     private float highscore = 0;
 
     private int birdWidth = 350;
+
+    private long dieTime;
 
 
     public Texture getMannyStraight() {
@@ -158,8 +169,35 @@ public class Bird {
         birdSprite.setTexture(mannyUp);
         fallSpeed = -7;
     }
+    //!hier
+    public void birdDies(){
+        if(TimeUtils.millis() >= dieTime + 100 && TimeUtils.millis() < dieTime + 200){
+            birdSprite.setTexture(mannyOuch2);
+        }else if (TimeUtils.millis() >= dieTime + 200 && TimeUtils.millis() < dieTime + 300){
+            birdSprite.setTexture(mannyOuch3);
+        }else if (TimeUtils.millis() >= dieTime + 300 && TimeUtils.millis() < dieTime + 400){
+            birdSprite.setTexture(mannyOuch4);
+        }else if (TimeUtils.millis() >= dieTime + 400 && TimeUtils.millis() < dieTime + 500){
+            birdSprite.setTexture(mannyOuch5);
+        }else if (TimeUtils.millis() >= dieTime + 500 && TimeUtils.millis() < dieTime + 600){
+            birdSprite.setTexture(mannyOuch6);
+        }else if (TimeUtils.millis() >= dieTime + 600 && TimeUtils.millis() < dieTime + 700){
+            birdSprite.setTexture(mannyOuch7);
+        }else if (TimeUtils.millis() >= dieTime + 700 && TimeUtils.millis() < dieTime + 800){
+            birdSprite.setTexture(mannyOuch8);
+        }
+
+    }
 
     public void setFallSpeed(float fallSpeed) {
         this.fallSpeed = fallSpeed;
+    }
+
+    public long getDieTime() {
+        return dieTime;
+    }
+
+    public void setDieTime(long dieTime) {
+        this.dieTime = dieTime;
     }
 }

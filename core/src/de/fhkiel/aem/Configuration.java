@@ -6,7 +6,7 @@ package de.fhkiel.aem;
 public class Configuration {
     public final static int ScreenWidth = 1920;
     public final static int ScreenHeight = 1080;
-    public static  boolean fullscreen = true;
+    public static  boolean fullscreen = false;
 
     public static final String startImg = "ATFB-start.png";
     public static final String backImg = "ATFB-back.png";
@@ -26,6 +26,13 @@ public class Configuration {
     public static final String manny_stareImg = "ATFB-manny-stare.png";
     public static final String manny_straightImg = "ATFB-manny-straight.png";
     public static final String manny_upImg = "ATFB-manny-up.png";
+    public static final String mannyOuch2 = "ATFB-manny-ouch-2.png";
+    public static final String mannyOuch3 = "ATFB-manny-ouch-3.png";
+    public static final String mannyOuch4 = "ATFB-manny-ouch-4.png";
+    public static final String mannyOuch5 = "ATFB-manny-ouch-5.png";
+    public static final String mannyOuch6 = "ATFB-manny-ouch-6.png";
+    public static final String mannyOuch7 = "ATFB-manny-ouch-7.png";
+    public static final String mannyOuch8 = "ATFB-manny-ouch-8.png";
     public static final String muteImg = "ATFB-mute.png";
     public static final String unmuteImg = "ATFB-unmute.png";
     public static final String optionImg = "ATFB-option.png";

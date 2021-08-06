@@ -6,15 +6,13 @@ package de.fhkiel.aem;
 public class Configuration {
     public final static int ScreenWidth = 1920;
     public final static int ScreenHeight = 1080;
-    public static  boolean fullscreen = false;
+    public static  boolean fullscreen = true;
 
     public static final String startImg = "ATFB-start.png";
     public static final String backImg = "ATFB-back.png";
     public static final String backgroundImg = "ATFB-background.png";
-    public static final String barrierImg = "ATFB-barrier.png";
     public static final String barrierdownImg = "ATFB-barrier-down.png";
     public static final String barrierupImg = "ATFB-barrier-up.png";
-    public static final String defaultpngImg = "ATFB-default.png";
     public static final String difficulty_easyImg = "ATFB-difficulty-easy.png";
     public static final String difficulty_mediumImg = "ATFB-difficulty-medium.png";
     public static final String difficulty_hardImg = "ATFB-difficulty-hard.png";
@@ -31,7 +29,6 @@ public class Configuration {
     public static final String muteImg = "ATFB-mute.png";
     public static final String unmuteImg = "ATFB-unmute.png";
     public static final String optionImg = "ATFB-option.png";
-    public static final String optionenImg = "ATFB-optionen.png";
     public static final String sky1Img = "ATFB-himmel1.png";
     public static final String sky2Img = "ATFB-himmel2.png";
     public static final String sky3Img = "ATFB-himmel3.png";
@@ -44,4 +41,5 @@ public class Configuration {
     public static final String city1Img = "ATFB-stadt1.png";
     public static final String city2Img = "ATFB-stadt2.png";
     public static final String city3Img = "ATFB-stadt3.png";
+    public static final String transparentImg = "ATFB-transparent.png";
 }

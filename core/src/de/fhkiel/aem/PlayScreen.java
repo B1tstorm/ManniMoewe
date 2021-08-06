@@ -1,6 +1,7 @@
 package de.fhkiel.aem;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -9,11 +10,14 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import de.fhkiel.aem.utility.ButtonFactory;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -26,12 +30,15 @@ public class PlayScreen implements Screen {
     private final OrthographicCamera camera;
     private final Stage stage;
     private final Bird bird;
-    private Label.LabelStyle labelStyle;
-    private Table table;
     private GameOverScreen gameOverScreen;
-    private boolean gameOver = false;
     private final Label highscoreLabel;
     private final Array<Barrier> barriers = new Array<>();
+    private Label pressSpaceLable;
+    private final Table tablePressSpace;
+    private boolean runGame = false;
+    private boolean gameOver = false;
+    private ImageButton ausweichButton, platzhalterButton;
+    private long lastInvisibleTime;
 
     private final ShapeRenderer shapeRenderer;
 
@@ -40,15 +47,19 @@ public class PlayScreen implements Screen {
      * @param game The game object
      */
     public PlayScreen(FlappyBird game) {
-
         shapeRenderer = new ShapeRenderer();
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = new BitmapFont(Gdx.files.internal("title-font-export.fnt"));
         labelStyle.fontColor = Color.GRAY;
         Table table = new Table();
         table.setFillParent(true);
+        tablePressSpace = new Table();
+        tablePressSpace.setFillParent(true);
 
         this.game = game;
+
+        bird = new Bird(50, 250 );
+        bird.getBirdSprite().setTexture(bird.getMannyStraight());
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Configuration.ScreenWidth, Configuration.ScreenHeight);
@@ -57,11 +68,22 @@ public class PlayScreen implements Screen {
 
         Gdx.input.setInputProcessor(stage);
         highscoreLabel = new Label("Highscore: ", labelStyle);
-        table.add(highscoreLabel).height(100).center().top().expand();
+        table.add(ausweichButton = ButtonFactory.CreateImageButton(Configuration.backImg,
+                () -> {
+                        lastInvisibleTime = TimeUtils.nanoTime();
+                        bird.getHitbox().setRadius(0f);
+        })).expand().left().top();
+        table.add(highscoreLabel).expand().height(100).center().top();
+        table.add(platzhalterButton = ButtonFactory.CreateImageButton(Configuration.transparentImg,
+                () -> {})).expand();
+
+
+
         stage.addActor(table);
 
-        bird = new Bird(50, 250 );
-        bird.getBirdSprite().setTexture(bird.getMannyStraight());
+        pressSpaceLable = new Label("Press Space to start...", labelStyle);
+        tablePressSpace.add(pressSpaceLable).height(750).center().top().expand();
+        stage.addActor(tablePressSpace);
 
         createBarriers();
     }
@@ -86,15 +108,25 @@ public class PlayScreen implements Screen {
         game.background.renderBackground();
         game.background.renderForeground();
 
-        for(Barrier barrier : new Array.ArrayIterator<>(barriers)){
+        for(Barrier barrier : new Array.ArrayIterator<>(barriers)) {
             barrier.render(game.batch);
         }
 
-        bird.render(game.batch);
-        bird.move();
-
         stage.draw();
+        game.batch.draw(bird.getBirdSprite(), bird.getBirdSprite().getX(), bird.getBirdSprite().getY(), bird.getWidth(), bird.getWidth());
+        bird.render(game.batch);
 
+        //beim Drücken der Leertaste soll die Zeile"press space to ......" verschwenden und das spiel wird in Bewegung gesetzt
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            runGame = true;
+            tablePressSpace.clear();
+        }
+        if (runGame && !gameOver) {
+            bird.move();
+            for (Barrier barrier : new Array.ArrayIterator<>(barriers)) {
+                barrier.move();
+            }
+        }
         game.batch.end();
 
         //Debug Hitbox
@@ -107,10 +139,9 @@ public class PlayScreen implements Screen {
         shapeRenderer.circle(bird.hitbox.x, bird.hitbox.y, bird.hitbox.radius);
         shapeRenderer.end();*/
 
-        if(gameOver){
+        if (gameOver) {
             gameOverScreen.render(delta);
-        }
-        else {
+        } else {
             update();
         }
     }
@@ -121,13 +152,23 @@ public class PlayScreen implements Screen {
     private void update() {
         int randomNum = 0;
 
-        highscoreLabel.setText("Highscore: " + (int)bird.getHighscore());
+        if(TimeUtils.nanoTime() - lastInvisibleTime > 1500000000) {
+            bird.getHitbox().setRadius(50);
+        }
 
-        for(Barrier barrier : new Array.ArrayIterator<>(barriers)) {
-            if (Intersector.overlaps(bird.getHitbox(), barrier.getBarrierSprite().getBoundingRectangle())){
+        highscoreLabel.setText("Highscore: " + (int) bird.getHighscore());
+
+        for (Barrier barrier : new Array.ArrayIterator<>(barriers)) {
+            if (Intersector.overlaps(bird.getHitbox(), barrier.getBarrierSprite().getBoundingRectangle())) {
                 game.kielMusic.stop();
                 gameOver = true;
+                runGame = false;
                 gameOverScreen = new GameOverScreen(game);
+            }
+            if(bird.getHitbox().y > Configuration.ScreenHeight && barrier.getBarrierSprite().getX() <= bird.getBirdSprite().getX()) {
+                game.kielMusic.stop();
+                game.setScreen(new StartScreen(game));
+                dispose();
             }
         }
 
@@ -143,8 +184,7 @@ public class PlayScreen implements Screen {
                     randomNum = ThreadLocalRandom.current().nextInt(
                             (int) (Gdx.graphics.getHeight() - barrier.getBarrierSprite().getHeight()), Gdx.graphics.getHeight());
                     barrier.getBarrierSprite().setY(randomNum);
-                }
-                else{
+                } else {
                     barrier.getBarrierSprite().setY(randomNum - barrier.getBarrierSprite().getHeight() - barrier.getGap());
                 }
                 barrier.getBarrierSprite().setX(barrier.getBarrierSprite().getX() + (barriers.size / 2f) * barrier.getDistance());
@@ -157,17 +197,17 @@ public class PlayScreen implements Screen {
     /**
      * Creates the Barriers for the game.
      */
-    public void createBarriers(){
+    public void createBarriers() {
         for(int i = 0; i < 10; i++) {
             int randomNum = ThreadLocalRandom.current().nextInt(
                     (int) (Gdx.graphics.getHeight() - new Texture(Configuration.barrierdownImg).getHeight()),
                     Gdx.graphics.getHeight());
             Barrier b = new Barrier(
-                    Gdx.graphics.getWidth() + new Barrier(0,0, Configuration.barrierdownImg).getDistance() * i,
-                    randomNum,Configuration.barrierupImg);
+                    Gdx.graphics.getWidth() + new Barrier(0, 0, Configuration.barrierdownImg, game.getDifficulty()).getDistance() * i,
+                    randomNum, Configuration.barrierupImg, game.getDifficulty());
             barriers.add(b);
             Barrier b2 = new Barrier(Gdx.graphics.getWidth() + (b.getDistance() * i),
-                    randomNum - b.getBarrierSprite().getHeight() - b.getGap(), Configuration.barrierupImg);
+                    randomNum - b.getBarrierSprite().getHeight() - b.getGap(), Configuration.barrierupImg, game.getDifficulty());
             b2.getBarrierSprite().setRotation(180f);
             barriers.add(b2);
         }

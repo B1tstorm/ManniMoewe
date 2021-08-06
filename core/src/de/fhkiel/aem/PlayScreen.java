@@ -288,11 +288,11 @@ public class PlayScreen implements Screen {
                     (int) (Gdx.graphics.getHeight() - new Texture(Configuration.barrierdownImg).getHeight()),
                     Gdx.graphics.getHeight());
             Barrier b = new Barrier(
-                    Gdx.graphics.getWidth() + new Barrier(0, 0, Configuration.barrierdownImg).getDistance() * i,
-                    randomNum, Configuration.barrierupImg);
+                    Gdx.graphics.getWidth() + new Barrier(0, 0, Configuration.barrierdownImg, game.getDifficulty()).getDistance() * i,
+                    randomNum, Configuration.barrierupImg, game.getDifficulty());
             barriers.add(b);
             Barrier b2 = new Barrier(Gdx.graphics.getWidth() + (b.getDistance() * i),
-                    randomNum - b.getBarrierSprite().getHeight() - b.getGap() , Configuration.barrierupImg);
+                    randomNum - b.getBarrierSprite().getHeight() - b.getGap(), Configuration.barrierupImg, game.getDifficulty());
             b2.getBarrierSprite().setRotation(180f);
             barriers.add(b2);
         }

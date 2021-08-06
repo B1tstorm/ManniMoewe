@@ -35,6 +35,7 @@ public class HighscoreScreen implements Screen {
 
         stage = new Stage(new FitViewport(Configuration.ScreenWidth, Configuration.ScreenHeight));
 
+
         Table highscoreTable = new Table();
         highscoreTable.setFillParent(true);
 

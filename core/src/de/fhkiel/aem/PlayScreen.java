@@ -237,7 +237,7 @@ public class PlayScreen implements Screen {
             if (barrier.getBarrierSprite().getX() < (0 - barrier.getBarrierSprite().getWidth())) {
                 if (barrier.getBarrierSprite().getRotation() != 180) {
                     randomNum = ThreadLocalRandom.current().nextInt(
-                            (int) (Gdx.graphics.getHeight() -200 - barrier.getBarrierSprite().getHeight()), Gdx.graphics.getHeight() +200);
+                            (int) (Gdx.graphics.getHeight() - barrier.getBarrierSprite().getHeight()) +200, Gdx.graphics.getHeight());
                     barrier.getBarrierSprite().setY(randomNum);
                 } else {
                     barrier.getBarrierSprite().setY(randomNum - barrier.getBarrierSprite().getHeight() - barrier.getGap());
@@ -266,8 +266,7 @@ public class PlayScreen implements Screen {
     public void createBarriers() {
         for (int i = 0; i < 10; i++) {
             int randomNum = ThreadLocalRandom.current().nextInt(
-                    (int) (Gdx.graphics.getHeight() -200 - new Texture(Configuration.barrierdownImg).getHeight()) +200,
-                    Gdx.graphics.getHeight());
+                    Gdx.graphics.getHeight() - new Texture(Configuration.barrierdownImg).getHeight() +200,Gdx.graphics.getHeight());
 //            randomNum = 200;
 //            if(randomNum <200){
 //                i--;

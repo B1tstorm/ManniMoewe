@@ -113,7 +113,6 @@ public class PlayScreen implements Screen {
         }
 
         stage.draw();
-        game.batch.draw(bird.getBirdSprite(), bird.getBirdSprite().getX(), bird.getBirdSprite().getY(), bird.getWidth(), bird.getWidth());
         bird.render(game.batch);
 
         //beim Drücken der Leertaste soll die Zeile"press space to ......" verschwenden und das spiel wird in Bewegung gesetzt
@@ -167,8 +166,9 @@ public class PlayScreen implements Screen {
             }
             if(bird.getHitbox().y > Configuration.ScreenHeight && barrier.getBarrierSprite().getX() <= bird.getBirdSprite().getX()) {
                 game.kielMusic.stop();
-                game.setScreen(new StartScreen(game));
-                dispose();
+                gameOver = true;
+                runGame = false;
+                gameOverScreen = new GameOverScreen(game);
             }
         }
 

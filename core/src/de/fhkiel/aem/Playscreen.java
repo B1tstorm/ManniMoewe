@@ -2,7 +2,6 @@ package de.fhkiel.aem;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -14,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.TimeUtils;
+
 import java.util.concurrent.ThreadLocalRandom;
 
 import java.util.Iterator;
@@ -181,7 +180,7 @@ public class Playscreen implements Screen {
             if (Intersector.overlaps(bird.getHitbox(), barrier.getBarrierSprite().getBoundingRectangle())){
                 game.kielMusik.stop();
                 gameOver = true;
-                gameOverScreen = new GameOverScreen(game, bird.getHighscore());
+                gameOverScreen = new GameOverScreen(game);
             }
         }
         moveArrayLeft(backgroundLoop, 60f);

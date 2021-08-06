@@ -44,6 +44,7 @@ public class PlayScreen implements Screen {
     private boolean gameOver = false;
     private ImageButton ausweichButton, platzhalterButton;
     private long lastInvisibleTime;
+    private long currtime;
 
     ShapeRenderer shapeRenderer;
 
@@ -153,7 +154,7 @@ public class PlayScreen implements Screen {
     @Override
     public void render(float delta) {
 
-            ScreenUtils.clear(0.443f, 0.772f, 0.811f, 1);
+        ScreenUtils.clear(0.443f, 0.772f, 0.811f, 1);
 
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
@@ -173,6 +174,7 @@ public class PlayScreen implements Screen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             runGame = true;
             tablePressSpace.clear();
+            currtime = TimeUtils.nanoTime();
         }
         if (runGame && !gameOver) {
             bird.move();
@@ -218,6 +220,10 @@ public class PlayScreen implements Screen {
 
         if(TimeUtils.nanoTime() - lastInvisibleTime > 1500000000) {
             bird.getHitbox().setRadius(50);
+        }
+        if(runGame && TimeUtils.nanoTime() - currtime > 500000000){
+            game.increaseGameSpeed();
+            currtime = TimeUtils.nanoTime();
         }
 
         highscoreLabel.setText("Highscore: " + (int) bird.getHighscore());

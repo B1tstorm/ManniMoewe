@@ -16,6 +16,8 @@ public class FlappyBird extends Game {
 	public Music kielMusic;
 	private int difficulty = 2;
 	public boolean musicShouldPlay = true;
+	private static float speedMultiplier = 1.0f;
+
 
 	@Override
 	public void create () {
@@ -44,6 +46,16 @@ public class FlappyBird extends Game {
 		font.dispose();
 		oceanSeagullMusic.dispose();
 		kielMusic.dispose();
+	}
+
+	/**
+	 * increases the Speed of the Game
+	 */
+	public void increaseGameSpeed(){
+		if(speedMultiplier <= 2){
+			Barrier.speed = Barrier.speed / speedMultiplier * (speedMultiplier + 0.01f);
+			speedMultiplier += 0.01f;
+		}
 	}
 
 	public void setMusicVolume(float volume){

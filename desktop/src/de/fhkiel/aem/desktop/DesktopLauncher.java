@@ -14,5 +14,5 @@ public class DesktopLauncher {
         config.width = Configuration.ScreenWidth;
         config.height = Configuration.ScreenHeight;
         config.fullscreen = Configuration.fullscreen;
-
+    }
 }

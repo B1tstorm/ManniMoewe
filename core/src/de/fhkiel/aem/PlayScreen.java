@@ -31,6 +31,10 @@ public class PlayScreen implements Screen {
     private final Texture backgroundTexture;
     private final Array<Sprite> backgroundLoop;
     private final Bird bird;
+    private Label.LabelStyle labelStyle;
+    private Table table;
+    private GameOverScreen gameOverScreen;
+    private boolean gameOver = false;
     private final Label highscoreLabel;
     private final Array<Barrier> barriers = new Array<>();
 
@@ -140,7 +144,22 @@ public class PlayScreen implements Screen {
 
         game.batch.end();
 
-        update();
+        //Debug Hitbox
+        /*shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.setColor(Color.CYAN);
+        for(Barrier barrier : barriers){
+            shapeRenderer.rect(barrier.getHitbox().x, barrier.getHitbox().y,
+                    barrier.getHitbox().width, barrier.getHitbox().height);
+        }
+        shapeRenderer.circle(bird.hitbox.x, bird.hitbox.y, bird.hitbox.radius);
+        shapeRenderer.end();*/
+
+        if(gameOver){
+            gameOverScreen.render(delta);
+        }
+        else {
+            update();
+        }
     }
 
     /**
@@ -164,8 +183,8 @@ public class PlayScreen implements Screen {
         for(Barrier barrier : new Array.ArrayIterator<>(barriers)) {
             if (Intersector.overlaps(bird.getHitbox(), barrier.getBarrierSprite().getBoundingRectangle())){
                 game.kielMusic.stop();
-                game.setScreen(new StartScreen(game));
-                dispose();
+                gameOver = true;
+                gameOverScreen = new GameOverScreen(game);
             }
             if(bird.getHitbox().y > Configuration.ScreenHeight && barrier.getBarrierSprite().getX() <= bird.getBirdSprite().getX()) {
                 game.kielMusic.stop();

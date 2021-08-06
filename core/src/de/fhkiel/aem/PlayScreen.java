@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import jdk.javadoc.internal.tool.Start;
 
 import java.util.Iterator;
 import java.util.concurrent.ThreadLocalRandom;
@@ -208,6 +209,11 @@ public class PlayScreen implements Screen {
                 gameOver = true;
                 runGame = false;
                 gameOverScreen = new GameOverScreen(game);
+            }
+            if(bird.getHitbox().y > Configuration.ScreenHeight && barrier.getBarrierSprite().getX() <= bird.getBirdSprite().getX()) {
+                game.kielMusic.stop();
+                game.setScreen(new StartScreen(game));
+                dispose();
             }
         }
         moveArrayLeft(backgroundLoop, 60f);

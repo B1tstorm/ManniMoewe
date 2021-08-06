@@ -267,12 +267,7 @@ public class PlayScreen implements Screen {
         for (int i = 0; i < 10; i++) {
             int randomNum = ThreadLocalRandom.current().nextInt(
                     Gdx.graphics.getHeight() - new Texture(Configuration.barrierdownImg).getHeight() +200,Gdx.graphics.getHeight());
-//            randomNum = 200;
-//            if(randomNum <200){
-//                i--;
-//                continue;
-//            }
-
+            
             Barrier b = new Barrier(
                     Gdx.graphics.getWidth() + new Barrier(0, 0, Configuration.barrierdownImg).getDistance() * i,
                     randomNum, Configuration.barrierupImg);

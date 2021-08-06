@@ -15,10 +15,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
-
-import java.util.concurrent.ThreadLocalRandom;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import java.util.Iterator;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * The screen the game is running on
@@ -60,7 +60,8 @@ public class PlayScreen implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Configuration.ScreenWidth, Configuration.ScreenHeight);
 
-        stage = new Stage();
+        stage = new Stage(new FitViewport(Configuration.ScreenWidth, Configuration.ScreenHeight));
+
         Gdx.input.setInputProcessor(stage);
         highscoreLabel = new Label("Highscore: ", labelStyle);
         table.add(highscoreLabel).height(100).center().top().expand();
@@ -69,7 +70,8 @@ public class PlayScreen implements Screen {
         pressSpaceLable = new Label("Press Space to start...", labelStyle);
         tablePressSpace.add(pressSpaceLable).height(750).center().top().expand();
         stage.addActor(tablePressSpace);
-        backgroundTexture = new Texture(Gdx.files.internal("background.png"));
+
+        backgroundTexture = new Texture(Gdx.files.internal(Configuration.backgroundImg));
         backgroundLoop = new Array<>();
 
         while(!isFilledWithBackgroundImages(backgroundLoop)) {
@@ -138,7 +140,6 @@ public class PlayScreen implements Screen {
 
         stage.draw();
 
-
         game.batch.draw(bird.getBirdSprite(), bird.getBirdSprite().getX(), bird.getBirdSprite().getY() , bird.getWidth() , bird.getWidth());
         bird.render(game.batch);
         //beim Drücken der Leertaste soll die Zeile"press space to ......" verschwenden und das spiel wird in Bewegung gesetzt
@@ -152,11 +153,7 @@ public class PlayScreen implements Screen {
                 barrier.render(game.batch);
             }
         }
-
-        stage.draw();
-
         game.batch.end();
-
         update();
     }
 
@@ -235,14 +232,14 @@ public class PlayScreen implements Screen {
     public void createBarriers(){
         for(int i = 0; i < 10; i++) {
             int randomNum = ThreadLocalRandom.current().nextInt(
-                    (int) (Gdx.graphics.getHeight() - new Texture("barrier-down.png").getHeight()),
+                    (int) (Gdx.graphics.getHeight() - new Texture(Configuration.barrierdownImg).getHeight()),
                     Gdx.graphics.getHeight());
             Barrier b = new Barrier(
-                    Gdx.graphics.getWidth() + new Barrier(0,0, "barrier-down.png").getDistance() * i,
-                    randomNum,"barrier-up.png");
+                    Gdx.graphics.getWidth() + new Barrier(0,0, Configuration.barrierdownImg).getDistance() * i,
+                    randomNum,Configuration.barrierupImg);
             barriers.add(b);
             Barrier b2 = new Barrier(Gdx.graphics.getWidth() + (b.getDistance() * i),
-                    randomNum - b.getBarrierSprite().getHeight() - b.getGap(), "barrier-up.png");
+                    randomNum - b.getBarrierSprite().getHeight() - b.getGap(), Configuration.barrierupImg);
             b2.getBarrierSprite().setRotation(180f);
             barriers.add(b2);
         }
@@ -250,7 +247,7 @@ public class PlayScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        stage.getViewport().update(width, height);
     }
 
     @Override

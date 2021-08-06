@@ -73,19 +73,19 @@ public class GameOverScreen implements Screen {
     }
 
     private void createButtons(){
-        backButton = ButtonFactory.CreateImageButton("back.png",
+        backButton = ButtonFactory.CreateImageButton(Configuration.backImg,
                 () -> {
                     game.setScreen(new StartScreen(game));
                     dispose();
                 });
 
-        restartButton = ButtonFactory.CreateImageButton("start.png",
+        restartButton = ButtonFactory.CreateImageButton(Configuration.startImg,
                 () -> {
                     game.setScreen(new PlayScreen(game));
                     dispose();
                 });
 
-        highscoreButton = ButtonFactory.CreateImageButton("highscore.png",
+        highscoreButton = ButtonFactory.CreateImageButton(Configuration.highscoreImg,
                 () -> {
                     game.setScreen(new HighscoreScreen(game));
                     dispose();

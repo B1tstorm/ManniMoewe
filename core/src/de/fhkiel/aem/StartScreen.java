@@ -55,16 +55,11 @@ public class StartScreen implements Screen {
             game.setScreen(new OptionsScreen(game));
             dispose();
         });
-        muteButton = ButtonFactory.CreateImageButton("unmute.png", "mute.png", () -> {
+        muteButton = ButtonFactory.CreateImageButton(Configuration.unmuteImg, Configuration.muteImg, () -> {
             if(game.musicShouldPlay){
                 game.musicShouldPlay = false;
                 game.kielMusic.setVolume(0f);
                 game.oceanSeagullMusic.pause();
-        muteButton = ButtonFactory.CreateImageButton(Configuration.unmuteImg, Configuration.muteImg, () -> {
-            if(game.musik){
-                game.musik = false;
-                game.kielMusik.setVolume(0f);
-                game.meerMoeweMusik.pause();
                 muteButton.setChecked(true);
 
             }   else {

@@ -235,14 +235,14 @@ public class PlayScreen implements Screen {
     public void createBarriers(){
         for(int i = 0; i < 10; i++) {
             int randomNum = ThreadLocalRandom.current().nextInt(
-                    (int) (Gdx.graphics.getHeight() - new Texture("barrier-down.png").getHeight()),
+                    (int) (Gdx.graphics.getHeight() - new Texture(Configuration.barrierdownImg).getHeight()),
                     Gdx.graphics.getHeight());
             Barrier b = new Barrier(
-                    Gdx.graphics.getWidth() + new Barrier(0,0, "barrier-down.png").getDistance() * i,
-                    randomNum,"barrier-up.png");
+                    Gdx.graphics.getWidth() + new Barrier(0,0, Configuration.barrierdownImg).getDistance() * i,
+                    randomNum,Configuration.barrierupImg);
             barriers.add(b);
             Barrier b2 = new Barrier(Gdx.graphics.getWidth() + (b.getDistance() * i),
-                    randomNum - b.getBarrierSprite().getHeight() - b.getGap(), "barrier-up.png");
+                    randomNum - b.getBarrierSprite().getHeight() - b.getGap(), Configuration.barrierupImg);
             b2.getBarrierSprite().setRotation(180f);
             barriers.add(b2);
         }

@@ -14,11 +14,6 @@ import com.badlogic.gdx.utils.TimeUtils;
 public class Bird {
     private final Sprite birdSprite;
     private final Circle hitbox;
-    private final Texture mannyStraight = new Texture("manny-straight.png");
-    private final Texture mannyUp = new Texture("manny-up.png");
-    private final Texture mannyDown = new Texture("manny-down.png");
-    Sprite birdSprite;
-    Circle hitbox;
     private final Texture mannyStraight = new Texture(Configuration.manny_straightImg);
     private final Texture mannyUp = new Texture(Configuration.manny_upImg);
     private final Texture mannyDown = new Texture(Configuration.manny_downImg);

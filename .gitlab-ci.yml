@@ -81,6 +81,7 @@ deploy:
   stage: deploy
   script:
     - ./deploy
+    - ./gradlew dist
 
 after_script:
   - echo "End CI"

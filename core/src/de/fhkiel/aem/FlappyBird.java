@@ -48,5 +48,6 @@ public class FlappyBird extends Game {
 		font.dispose();
 		oceanSeagullMusic.dispose();
 		kielMusic.dispose();
+		background.dispose();
 	}
 }

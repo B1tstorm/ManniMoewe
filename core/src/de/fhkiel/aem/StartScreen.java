@@ -121,8 +121,9 @@ public class StartScreen implements Screen {
         game.background.renderBackground();
         game.background.renderForeground();
 
-        stage.draw();
         game.batch.draw(bird.getBirdSprite(), bird.getBirdSprite().getX(), bird.getBirdSprite().getY() , bird.getBirdWidth() , bird.getBirdWidth());
+
+        stage.draw();
         game.batch.end();
 
         game.background.move();

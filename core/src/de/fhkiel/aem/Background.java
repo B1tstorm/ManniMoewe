@@ -1,6 +1,7 @@
 package de.fhkiel.aem;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
@@ -13,10 +14,10 @@ import java.util.Iterator;
 public class Background {
 	private final SpriteBatch batch;
 
-	private final Array<Sprite> skyLayerSprites;
-	private final Array<Sprite> cityLayerSprites;
-	private final Array<Sprite> waterLayerSprites;
-	private final Array<Sprite> foregroundLayerSprites;
+	private final Array<Texture> skyLayerTextures;
+	private final Array<Texture> cityLayerTextures;
+	private final Array<Texture> waterLayerTextures;
+	private final Array<Texture> foregroundLayerTextures;
 
 	private final Array<Sprite> skyLayerLoop;
 	private final Array<Sprite> cityLayerLoop;
@@ -36,34 +37,35 @@ public class Background {
 	public Background(SpriteBatch batch) {
 		this.batch = batch;
 
-		skyLayerSprites = new Array<>();
-		skyLayerSprites.add(new Sprite());
+		skyLayerTextures = new Array<>();
+		skyLayerTextures.add(new Texture(Gdx.files.internal(Configuration.sky1Img)));
+		skyLayerTextures.add(new Texture(Gdx.files.internal(Configuration.sky2Img)));
+		skyLayerTextures.add(new Texture(Gdx.files.internal(Configuration.sky3Img)));
 
-		cityLayerSprites = new Array<>();
-		cityLayerSprites.add(new Sprite());
-		cityLayerSprites.add(new Sprite());
-		cityLayerSprites.add(new Sprite());
+		cityLayerTextures = new Array<>();
+		cityLayerTextures.add(new Texture(Gdx.files.internal(Configuration.city1Img)));
+		cityLayerTextures.add(new Texture(Gdx.files.internal(Configuration.city2Img)));
+		cityLayerTextures.add(new Texture(Gdx.files.internal(Configuration.city3Img)));
 
-		waterLayerSprites = new Array<>();
-		waterLayerSprites.add(new Sprite());
-		waterLayerSprites.add(new Sprite());
-		waterLayerSprites.add(new Sprite());
+		waterLayerTextures = new Array<>();
+		waterLayerTextures.add(new Texture(Gdx.files.internal(Configuration.water1Img)));
+		waterLayerTextures.add(new Texture(Gdx.files.internal(Configuration.water2Img)));
+		waterLayerTextures.add(new Texture(Gdx.files.internal(Configuration.water3Img)));
 
-		foregroundLayerSprites = new Array<>();
-		foregroundLayerSprites.add(new Sprite());
-		foregroundLayerSprites.add(new Sprite());
-		foregroundLayerSprites.add(new Sprite());
+		foregroundLayerTextures = new Array<>();
+		foregroundLayerTextures.add(new Texture(Gdx.files.internal(Configuration.kiel1Img)));
+		foregroundLayerTextures.add(new Texture(Gdx.files.internal(Configuration.kiel2Img)));
+		foregroundLayerTextures.add(new Texture(Gdx.files.internal(Configuration.kiel3Img)));
 
 		skyLayerLoop = new Array<>();
 		cityLayerLoop = new Array<>();
 		waterLayerLoop = new Array<>();
 		foregroundLayerLoop = new Array<>();
 
-
-		skyCounter = initialLoopFill(skyLayerSprites, skyLayerLoop, 0, skyCounter);
-		cityCounter = initialLoopFill(cityLayerSprites, cityLayerSprites, waterLayerSprites.get(0).getRegionHeight(), cityCounter);
-		waterCounter =  initialLoopFill(waterLayerSprites, waterLayerLoop, 0, waterCounter);
-		foregroundCounter =  initialLoopFill(foregroundLayerSprites, foregroundLayerLoop, 0, foregroundCounter);
+		skyCounter = initialLoopFill(skyLayerLoop, skyLayerTextures, 0, skyCounter);
+		cityCounter = initialLoopFill (cityLayerLoop, cityLayerTextures,  0, cityCounter);
+		waterCounter =  initialLoopFill(waterLayerLoop, waterLayerTextures,0, waterCounter);
+		foregroundCounter =  initialLoopFill(foregroundLayerLoop, foregroundLayerTextures, 0, foregroundCounter);
 	}
 
 	public void renderBackground() {
@@ -80,17 +82,17 @@ public class Background {
 		moveArrayLeft(skyLayerLoop, SKYSPEED);
 		moveArrayLeft(cityLayerLoop, CITYSPEED);
 		moveArrayLeft(waterLayerLoop, WATERSPEED);
-		moveArrayLeft(skyLayerLoop, FOREGROUNDSPEED);
+		moveArrayLeft(foregroundLayerLoop, FOREGROUNDSPEED);
 
-		skyCounter = updateArray(skyLayerLoop, skyLayerSprites, skyCounter);
-		cityCounter = updateArray(cityLayerLoop, cityLayerSprites, cityCounter);
-		waterCounter = updateArray(waterLayerLoop, waterLayerSprites, waterCounter);
-		foregroundCounter = updateArray(foregroundLayerLoop, foregroundLayerSprites, foregroundCounter);
+		skyCounter = updateArray(skyLayerLoop, skyLayerTextures, skyCounter);
+		cityCounter = updateArray(cityLayerLoop, cityLayerTextures, cityCounter);
+		waterCounter = updateArray(waterLayerLoop, waterLayerTextures, waterCounter);
+		foregroundCounter = updateArray(foregroundLayerLoop, foregroundLayerTextures, foregroundCounter);
 	}
 
-	private int updateArray(Array<Sprite> loop, Array<Sprite> sprites, int counter) {
+	private int updateArray(Array<Sprite> loop, Array<Texture> textures, int counter) {
 		 if (findRightestPixel(loop) < Configuration.ScreenWidth + 100) {
-            Sprite sprite = new Sprite(sprites.get(counter++ % sprites.size));
+            Sprite sprite = new Sprite(textures.get(counter++ % textures.size));
             sprite.setX(findRightestPixel(loop));
             sprite.setY(0);
             loop.add(sprite);
@@ -104,9 +106,9 @@ public class Background {
 		return counter;
 	}
 
-	private int initialLoopFill(Array<Sprite> sprites, Array<Sprite> loop, int drawHeight, int counter) {
+	private int initialLoopFill(Array<Sprite> loop, Array<Texture> textures, int drawHeight, int counter) {
 		while(!isFilledWithBackgroundImages(loop)) {
-			Sprite sprite = new Sprite(sprites.get(counter++ % sprites.size));
+			Sprite sprite = new Sprite(textures.get(counter++ % textures.size));
 			sprite.setX(findRightestPixel(loop));
 			sprite.setY(drawHeight);
 			loop.add(sprite);
@@ -169,5 +171,21 @@ public class Background {
 		}
 
 		return pixel;
+	}
+
+	public void dispose() {
+
+		for(Texture texture: new Array.ArrayIterator<>(cityLayerTextures)) {
+			texture.dispose();
+		}
+		for(Texture texture: new Array.ArrayIterator<>(waterLayerTextures)) {
+			texture.dispose();
+		}
+		for(Texture texture: new Array.ArrayIterator<>(foregroundLayerTextures)) {
+			texture.dispose();
+		}
+		for(Texture texture: new Array.ArrayIterator<>(skyLayerTextures)) {
+			texture.dispose();
+		}
 	}
 }

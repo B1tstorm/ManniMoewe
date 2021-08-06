@@ -14,12 +14,11 @@ import com.badlogic.gdx.utils.TimeUtils;
 public class Bird {
     private final Sprite birdSprite;
     private final Circle hitbox;
-    private final Texture mannyStraight = new Texture("manny-straight.png");
-    private final Texture mannyUp = new Texture("manny-up.png");
-    private final Texture mannyDown = new Texture("manny-down.png");
-    private final int width = 350;
+    private final Texture mannyStraight = new Texture(Gdx.files.internal(Configuration.manny_straightImg));
+    private final Texture mannyUp = new Texture(Gdx.files.internal(Configuration.manny_upImg));
+    private final Texture mannyDown = new Texture(Gdx.files.internal(Configuration.manny_downImg));
+    private final int width = 100;
     private float highscore = 0;
-
 
     private int birdWidth = 350;
 
@@ -38,7 +37,7 @@ public class Bird {
      * @param yPos y position of the bird
      */
     public Bird(float xPos, float yPos) {
-        Texture mannyStare = new Texture("manny-stare.png");
+        Texture mannyStare = new Texture(Gdx.files.internal(Configuration.manny_stareImg));
         birdSprite = new Sprite(mannyStare);
 
         birdSprite.setX(xPos);
@@ -53,7 +52,7 @@ public class Bird {
      */
     public void render(SpriteBatch batch){
         batch.draw(birdSprite, birdSprite.getX(), birdSprite.getY(), birdSprite.getOriginX(), birdSprite.getOriginY(),
-                getWidth(), getWidth(),1,1, birdSprite.getRotation());
+                getBirdWidth(), getBirdWidth(),1,1, birdSprite.getRotation());
     }
 
     /**
@@ -88,7 +87,7 @@ public class Bird {
             sprungNachOben();
         }
 
-}
+    }
     //zum beginn des playScreens wird der Vogel allmählich klein
     private void birdGetsSmaler() {
         if(birdWidth > 100){

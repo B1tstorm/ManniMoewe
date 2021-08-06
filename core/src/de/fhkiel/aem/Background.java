@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.Array;
 import java.util.Iterator;
 
 /**
- * The Background of the game
+ * The Background of the game.
  */
 public class Background {
 	private final SpriteBatch batch;
@@ -34,6 +34,10 @@ public class Background {
 	private int waterCounter = 0;
 	private int foregroundCounter = 0;
 
+	/**
+	 * Creates a new Background.
+	 * @param batch SpriteBatch the background is rendered on
+	 */
 	public Background(SpriteBatch batch) {
 		this.batch = batch;
 
@@ -62,22 +66,31 @@ public class Background {
 		waterLayerLoop = new Array<>();
 		foregroundLayerLoop = new Array<>();
 
-		skyCounter = initialLoopFill(skyLayerLoop, skyLayerTextures, 0, skyCounter);
-		cityCounter = initialLoopFill (cityLayerLoop, cityLayerTextures,  0, cityCounter);
-		waterCounter =  initialLoopFill(waterLayerLoop, waterLayerTextures,0, waterCounter);
-		foregroundCounter =  initialLoopFill(foregroundLayerLoop, foregroundLayerTextures, 0, foregroundCounter);
+		skyCounter = initialLoopFill(skyLayerLoop, skyLayerTextures, skyCounter);
+		cityCounter = initialLoopFill (cityLayerLoop, cityLayerTextures, cityCounter);
+		waterCounter =  initialLoopFill(waterLayerLoop, waterLayerTextures, waterCounter);
+		foregroundCounter =  initialLoopFill(foregroundLayerLoop, foregroundLayerTextures, foregroundCounter);
 	}
 
+	/**
+	 * Renders the background.
+	 */
 	public void renderBackground() {
 		renderArray(skyLayerLoop);
 		renderArray(cityLayerLoop);
 		renderArray(waterLayerLoop);
 	}
 
+	/**
+	 * Renders the foreground elements.
+	 */
 	public void renderForeground() {
 		renderArray(foregroundLayerLoop);
 	}
 
+	/**
+	 * Moves the background.
+	 */
 	public void move() {
 		moveArrayLeft(skyLayerLoop, SKYSPEED);
 		moveArrayLeft(cityLayerLoop, CITYSPEED);
@@ -90,6 +103,13 @@ public class Background {
 		foregroundCounter = updateArray(foregroundLayerLoop, foregroundLayerTextures, foregroundCounter);
 	}
 
+	/**
+	 * Updates the array loop. Removes images that are
+	 * @param loop The background image loop
+	 * @param textures The Texture array
+	 * @param counter The current Sprite counter
+	 * @return The new counter value
+	 */
 	private int updateArray(Array<Sprite> loop, Array<Texture> textures, int counter) {
 		 if (findRightestPixel(loop) < Configuration.ScreenWidth + 100) {
             Sprite sprite = new Sprite(textures.get(counter++ % textures.size));
@@ -106,11 +126,18 @@ public class Background {
 		return counter;
 	}
 
-	private int initialLoopFill(Array<Sprite> loop, Array<Texture> textures, int drawHeight, int counter) {
+	/**
+	 * Updates the array loop. Removes images that are
+	 * @param loop The background image loop
+	 * @param textures The Texture array
+	 * @param counter The current Sprite counter
+	 * @return The new counter value
+	 */
+	private int initialLoopFill(Array<Sprite> loop, Array<Texture> textures, int counter) {
 		while(!isFilledWithBackgroundImages(loop)) {
 			Sprite sprite = new Sprite(textures.get(counter++ % textures.size));
 			sprite.setX(findRightestPixel(loop));
-			sprite.setY(drawHeight);
+			sprite.setY(0);
 			loop.add(sprite);
 		}
 		return counter;
@@ -173,6 +200,9 @@ public class Background {
 		return pixel;
 	}
 
+	/**
+	 * Disposes the Background textures.
+	 */
 	public void dispose() {
 
 		for(Texture texture: new Array.ArrayIterator<>(cityLayerTextures)) {

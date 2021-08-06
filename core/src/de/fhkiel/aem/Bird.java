@@ -131,4 +131,8 @@ public class Bird {
         birdSprite.setTexture(mannyUp);
         fallSpeed = -7;
     }
+
+    public void setFallSpeed(float fallSpeed) {
+        this.fallSpeed = fallSpeed;
+    }
 }

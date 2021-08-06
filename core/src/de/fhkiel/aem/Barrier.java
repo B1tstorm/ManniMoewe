@@ -14,9 +14,9 @@ public class Barrier {
 
     private final Sprite barrierSprite;
     private float speed = 300;
-    private float gap = 350;
-    private float distance = 700;
-    private float wealth = 0.5f;
+    private float gap = 450;
+    private float distance = 850;
+    private float wealth;
     private Rectangle hitbox;
     private int hitboxKorrektur;
 
@@ -26,10 +26,14 @@ public class Barrier {
      * @param y Y position
      * @param imagePath The image of the barrier
      */
-    public Barrier(float x, float y, String imagePath){
+    public Barrier(float x, float y, String imagePath, int difficulty){
         barrierSprite = new Sprite(new Texture(imagePath));
         barrierSprite.setX(x);
         barrierSprite.setY(y);
+
+        distance -= difficulty * 100;
+        gap -= difficulty * 50;
+        wealth = difficulty / 2.0f;
 
         hitbox = new Rectangle(barrierSprite.getX() + hitboxKorrektur, barrierSprite.getY(),
                 barrierSprite.getWidth() - hitboxKorrektur, barrierSprite.getHeight());
@@ -99,4 +103,5 @@ public class Barrier {
     public void setWealth(float wealth) {
         this.wealth = wealth;
     }
+
 }

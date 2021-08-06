@@ -60,6 +60,10 @@ public class FlappyBird extends Game {
 	public void increaseGameSpeed(){
 		if(speedMultiplier <= 2){
 			Barrier.speed = Barrier.speed / speedMultiplier * (speedMultiplier + 0.01f);
+			Background.FOREGROUNDSPEED = Background.FOREGROUNDSPEED / speedMultiplier  * (speedMultiplier + 0.01f);
+			Background.WATERSPEED = Background.WATERSPEED / speedMultiplier  * (speedMultiplier + 0.01f);
+			Background.CITYSPEED = Background.CITYSPEED / speedMultiplier  * (speedMultiplier + 0.01f);
+			Background.SKYSPEED = Background.SKYSPEED / speedMultiplier  * (speedMultiplier + 0.01f);
 			speedMultiplier += 0.01f;
 		}
 	}

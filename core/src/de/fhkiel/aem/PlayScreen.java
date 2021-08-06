@@ -32,12 +32,12 @@ public class PlayScreen implements Screen {
     private final Array<Sprite> backgroundLoop;
     private final Bird bird;
     private GameOverScreen gameOverScreen;
-    private boolean gameOver = false;
     private final Label highscoreLabel;
     private final Array<Barrier> barriers = new Array<>();
     private Label pressSpaceLable;
     private final Table tablePressSpace;
     private boolean runGame = false;
+    private boolean gameOver = false;
 
     ShapeRenderer shapeRenderer;
 
@@ -158,7 +158,7 @@ public class PlayScreen implements Screen {
             runGame = true;
             tablePressSpace.clear();
         }
-        if (runGame) {
+        if (runGame && !gameOver) {
             bird.move();
             for (Barrier barrier : new Array.ArrayIterator<>(barriers)) {
                 barrier.move();

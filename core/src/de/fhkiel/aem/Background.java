@@ -122,7 +122,7 @@ public class Background {
             sprite.setY(0);
             loop.add(sprite);
         }
-		for(Iterator<Sprite> iter = new Array.ArrayIterator<>(loop); iter.hasNext(); ) {
+		for(Iterator<Sprite> iter = loop.iterator(); iter.hasNext(); ) {
 			Sprite item = iter.next();
 			if(item.getX() + item.getWidth() < -20) {
 				iter.remove();

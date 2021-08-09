@@ -5,15 +5,15 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.utils.Array;
 
 public class Item {
     private final Sprite itemSprite;
     private final Circle hitbox;
     private final int radius = 25;
+    public static float ITEMSPEED = 300;
 
-    public Item(float xPos, float yPos, Texture itemTexture) {
-        itemSprite = new Sprite(itemTexture);
+    public Item(float xPos, float yPos, String itemTexture) {
+        itemSprite = new Sprite(new Texture(Gdx.files.internal(itemTexture)));
 
         itemSprite.setX(xPos);
         itemSprite.setY(yPos);
@@ -28,12 +28,16 @@ public class Item {
                 getRadius()*2, getRadius()*2,1,1, itemSprite.getRotation());
     }
 
-    private void moveArrayLeft(Array<Sprite> array, float speed) {
-        float movement = speed * Gdx.graphics.getDeltaTime();
-        for(Sprite item : new Array.ArrayIterator<>(array)) {
-            item.setX(item.getX() - movement);
-        }
+    public void move() {
+        hitbox.setPosition(itemSprite.getX() + radius, itemSprite.getY() + radius);
+        movePommesLeft(itemSprite, ITEMSPEED);
     }
+
+    private void movePommesLeft(Sprite pommesItem, float speed) {
+        float movement = speed * Gdx.graphics.getDeltaTime();
+        pommesItem.setX(pommesItem.getX() - movement);
+    }
+
 
     public Sprite getItemSprite() {
         return itemSprite;
@@ -46,4 +50,6 @@ public class Item {
     public int getRadius() {
         return radius;
     }
+
+
 }

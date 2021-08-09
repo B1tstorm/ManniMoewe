@@ -42,4 +42,13 @@ public class Configuration {
     public static final String city2Img = "ATFB-stadt2.png";
     public static final String city3Img = "ATFB-stadt3.png";
     public static final String transparentImg = "ATFB-transparent.png";
+    public static final String item_godmodeImg = "ATFB-item-godmode.png";
+    public static final String pommesImg = "ATFB-pommes.png";
+    public static final String pommespackung_leerImg = "ATFB-pommespackung-leer.png";
+    public static final String pommespackung_einsImg = "ATFB-pommespackung-eins.png";
+    public static final String pommespackung_zweiImg = "ATFB-pommespackung-zwei.png";
+    public static final String pommespackung_dreiImg = "ATFB-pommespackung-drei.png";
+
+
+
 }

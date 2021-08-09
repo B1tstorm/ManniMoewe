@@ -19,6 +19,7 @@ public class Bird {
     private final Texture mannyDown = new Texture(Gdx.files.internal(Configuration.manny_downImg));
     private final int width = 100;
     private float highscore = 0;
+    private int  scoreCollectable = 0;
 
     private int birdWidth = 350;
 
@@ -159,5 +160,11 @@ public class Bird {
 
     public void setFallSpeed(float fallSpeed) {
         this.fallSpeed = fallSpeed;
+    }
+
+    public int getScoreCollectable() {return scoreCollectable;}
+
+    public void setScoreCollectable(int scoreCollectable) {
+        this.scoreCollectable = scoreCollectable;
     }
 }

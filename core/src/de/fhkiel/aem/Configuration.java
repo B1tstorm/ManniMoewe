@@ -21,6 +21,7 @@ public class Configuration {
     public static final String flappy1_midImg = "ATFB-flappy1_mid.png";
     public static final String flappy1_upImg = "ATFB-flappy1_up.png";
     public static final String highscoreImg = "ATFB-highscore.png";
+    public static final String highscoreInputImg = "AFTB-highscore-input.png";
     public static final String manny_downImg = "ATFB-manny-down.png";
     public static final String manny_heyImg = "ATFB-manny-hey.png";
     public static final String manny_stareImg = "ATFB-manny-stare.png";

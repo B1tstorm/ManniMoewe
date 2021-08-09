@@ -291,10 +291,10 @@ public class PlayScreen implements Screen {
                  200,Gdx.graphics.getHeight()-200);
         int randomNum2 = ThreadLocalRandom.current().nextInt(0, 100);
 
-        if(randomNum2 < 20){
+        if(randomNum2 < 15){
             items.add(new Fries(xPos, randomNum1));
         }
-        if(randomNum2 < 15){
+        else if(randomNum2 < 25){
             items.add(new Multiplier(xPos, randomNum1));
         }
     }

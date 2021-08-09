@@ -12,7 +12,28 @@ public class Highscore {
 	public Array<HighscoreEntry> medium;
 	public Array<HighscoreEntry> hard;
 
-	public void setHighscore(final int difficulty, final HighscoreEntry highscore) {
+	/**
+	 * Creates a new Highscore with empty lists for each difficulty.
+	 */
+	public Highscore() {
+		easy = new Array<>();
+		medium = new Array<>();
+		hard = new Array<>();
+
+		easy.add(new HighscoreEntry("Name 1", 100));
+		easy.add(new HighscoreEntry("Name 2", 200));
+		easy.add(new HighscoreEntry("Name 3", 300));
+		easy.add(new HighscoreEntry("Name 4", 400));
+
+		easy.sort(Comparator.comparingInt(highscoreEntry -> -highscoreEntry.highscore));
+	}
+
+	/**
+	 * Adds a new HighscoreEntry to the list.
+	 * @param difficulty difficulty value
+	 * @param highscore HighscoreEntry
+	 */
+	public void addHighscore(final int difficulty, final HighscoreEntry highscore) {
 		switch(difficulty) {
 			case 1:
 				addHighscore(easy, highscore);
@@ -28,7 +49,7 @@ public class Highscore {
 
 	private void addHighscore(Array<HighscoreEntry> array, HighscoreEntry highscore) {
 		array.add(highscore);
-		array.sort(Comparator.comparingInt(highscoreEntry -> highscoreEntry.highscore));
+		array.sort(Comparator.comparingInt(highscoreEntry -> -highscoreEntry.highscore));
 		if(array.size > 10) {
 			array.removeIndex(10);
 		}

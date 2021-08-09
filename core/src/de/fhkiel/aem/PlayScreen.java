@@ -175,6 +175,10 @@ public class PlayScreen implements Screen {
         if(TimeUtils.nanoTime() - bird.getLastMultiplierTime() > 10000000000L) {
             bird.setMultiplier(1);
         }
+        if(TimeUtils.nanoTime() - bird.getLastShrinkTime() > 10000000000L) {
+            bird.getHitbox().setRadius(bird.getWidth() / 2);
+            bird.setBirdWidth(bird.getWidth());
+        }
         if(runGame && TimeUtils.nanoTime() - currentTime > 500000000){
             game.increaseGameSpeed();
             currentTime = TimeUtils.nanoTime();
@@ -294,6 +298,9 @@ public class PlayScreen implements Screen {
         }
         else if(randomNum2 < 25){
             items.add(new Multiplier(xPos, randomNum1));
+        }
+        else if(randomNum2 < 100){
+            items.add(new Shrink(xPos, randomNum1));
         }
     }
 

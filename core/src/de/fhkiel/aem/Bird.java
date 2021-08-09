@@ -21,8 +21,9 @@ public class Bird {
     private float highscore = 0;
     private int  scoreCollectable = 0;
     private boolean invincible = false;
-    private boolean multiply = false;
+    private int multiplier = 1;
     private int birdWidth = 350;
+    private long lastMultiplierTime;
 
 
     public Texture getMannyStraight() {
@@ -195,5 +196,21 @@ public class Bird {
 
     public void setPressTime(long pressTime) {
         this.pressTime = pressTime;
+    }
+
+    public int getMultiplier() {
+        return multiplier;
+    }
+
+    public void setMultiplier(int multiplier) {
+        this.multiplier = multiplier;
+    }
+
+    public long getLastMultiplierTime() {
+        return lastMultiplierTime;
+    }
+
+    public void setLastMultiplierTime(long lastMultiplierTime) {
+        this.lastMultiplierTime = lastMultiplierTime;
     }
 }

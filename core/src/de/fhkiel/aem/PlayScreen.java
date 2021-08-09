@@ -81,8 +81,12 @@ public class PlayScreen implements Screen {
         this.game = game;
 
         bird = new Bird(50, 250 );
-        bird.getBirdSprite().setTexture(bird.getMannyStraight());
-
+        if(bird.isHelmetactive()){
+            bird.getBirdSprite().setTexture(bird.getMannyStraightHelm());
+        }
+        else {
+            bird.getBirdSprite().setTexture(bird.getMannyStraight());
+        }
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Configuration.ScreenWidth, Configuration.ScreenHeight);
 
@@ -165,8 +169,10 @@ public class PlayScreen implements Screen {
     private void update() {
         int randomNum = 0;
 
+
         if(TimeUtils.nanoTime() - lastInvisibleTime > 1500000000) {
             bird.setInvincible(false);
+            bird.setHelmetactive(false);
         }
         if(runGame && TimeUtils.nanoTime() - currentTime > 500000000){
             game.increaseGameSpeed();

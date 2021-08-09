@@ -10,5 +10,8 @@ public class Fries extends Item{
         if(bird.getScoreCollectable() < 3) {
             bird.setScoreCollectable(bird.getScoreCollectable() + 1);
         }
+        if(bird.getScoreCollectable() >= 3){
+            bird.setHelmetactive(true);
+        }
     }
 }

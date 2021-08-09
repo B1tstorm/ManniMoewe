@@ -18,12 +18,13 @@ public class Bird {
     private final Texture mannyUp = new Texture(Gdx.files.internal(Configuration.manny_upImg));
     private final Texture mannyDown = new Texture(Gdx.files.internal(Configuration.manny_downImg));
     private final Texture mannyStraightHelm = new Texture(Configuration.manny_straight_helmImg);
-    private final Texture mannyDownHelm = new Texture(Configuration.manny_downImg);
+    private final Texture mannyDownHelm = new Texture(Configuration.manny_down_HelmImg);
     private final Texture mannyUpHelm = new Texture(Configuration.manny_up_helmImg);
     private final int width = 100;
     private float highscore = 0;
     private int  scoreCollectable = 0;
     private boolean invincible = false;
+    private boolean helmetactive = false;
     private boolean multiply = false;
     private int birdWidth = 350;
 
@@ -74,7 +75,7 @@ public class Bird {
 
         //nach xxxx millisec nachdem der button betätigt wurde, fällt der Vogel auf 2 Phasen wieder runter
         if (pressTime != 0 &&( fallSpeed < 0  && TimeUtils.millis() >= (pressTime + 200))){
-            if(invincible){
+            if(helmetactive){
                 birdSprite.setTexture(mannyStraightHelm);
             } else {
                 birdSprite.setTexture(mannyStraight);
@@ -82,12 +83,11 @@ public class Bird {
             fallSpeed = 4;
         }
         if (pressTime != 0 && fallSpeed > 0  && TimeUtils.millis() >= (pressTime + 300)){
-            if(invincible){
+            if(helmetactive){
                 birdSprite.setTexture(mannyDownHelm);
             } else {
                 birdSprite.setTexture(mannyDown);
             }
-
             fallSpeed = 6;
             pressTime = 0;
         }
@@ -160,7 +160,7 @@ public class Bird {
      */
     private void sprungNachOben(){
         pressTime = TimeUtils.millis();
-        if(invincible){
+        if(helmetactive){
             birdSprite.setTexture(mannyUpHelm);
         } else {
             birdSprite.setTexture(mannyUp);
@@ -170,7 +170,7 @@ public class Bird {
 
     private void slide(){
         pressTime = TimeUtils.millis();
-        if(invincible){
+        if(helmetactive){
             birdSprite.setTexture(mannyUpHelm);
         }
         else {
@@ -227,5 +227,21 @@ public class Bird {
 
     public Texture getMannyUpHelm() {
         return mannyUpHelm;
+    }
+
+    public boolean isHelmetactive() {
+        return helmetactive;
+    }
+
+    public void setHelmetactive(boolean helmetactive) {
+        this.helmetactive = helmetactive;
+    }
+
+    public boolean isMultiply() {
+        return multiply;
+    }
+
+    public void setMultiply(boolean multiply) {
+        this.multiply = multiply;
     }
 }

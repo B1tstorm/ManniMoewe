@@ -19,5 +19,6 @@ public class NetworkHandler {
 
 	public String getFromServer() {
 
+		return "";
 	}
 }

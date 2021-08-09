@@ -15,7 +15,7 @@ public class FlappyBird extends Game {
 	public Music oceanSeagullMusic;
 	public Music kielMusic;
 	public boolean musicShouldPlay = true;
-	public String playerName;
+	public String playerName = "Enter your Name";
 
 	@Override
 	public void create () {

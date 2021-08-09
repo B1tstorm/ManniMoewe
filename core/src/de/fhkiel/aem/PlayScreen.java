@@ -118,7 +118,7 @@ public class PlayScreen implements Screen {
 
         stage.draw();
         bird.render(game.batch);
-
+        bird.birdGetSmaller();
         //beim Drücken der Leertaste soll die Zeile"press space to ......" verschwenden und das spiel wird in Bewegung gesetzt
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             runGame = true;

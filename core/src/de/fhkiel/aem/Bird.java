@@ -67,8 +67,8 @@ public class Bird {
     /**
      * Moves the Bird.
      */
-    public void move() {
-        birdGetsSmaler();
+    public void move(){
+        birdGetSmaller();
 
         birdSprite.setY(birdSprite.getY() - fallSpeed);
         hitbox.setPosition(birdSprite.getX() + width / 2f, birdSprite.getY() + width / 2f);
@@ -97,9 +97,9 @@ public class Bird {
     }
 
     //zum beginn des playScreens wird der Vogel allmählich klein
-    private void birdGetsSmaler() {
-        if (birdWidth > 100) {
-            this.setBirdWidth(this.getBirdWidth() - 5);
+    public void birdGetSmaller() {
+        if(birdWidth > 100){
+            this.setBirdWidth(this.getBirdWidth()-5);
         }
     }
 
@@ -176,16 +176,16 @@ public class Bird {
      * the Bird dies and the Animation changes
      */
     public void birdDies() {
-        fallSpeed = 2;
+        fallSpeed = 1;
         birdSprite.setY(birdSprite.getY() - fallSpeed);
+
         int dieStep = dieStep();
         if (dieStep < 8) {
             birdSprite.setTexture(animationMap.get(dieStep));
-        } else {
-            fallSpeed = 5;
+        }else {
+            fallSpeed = 4;
             birdSprite.setY(birdSprite.getY() - fallSpeed);
         }
-        ;
     }
 
     /**

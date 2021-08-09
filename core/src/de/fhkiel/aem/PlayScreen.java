@@ -49,6 +49,8 @@ public class PlayScreen implements Screen {
      */
     public PlayScreen(FlappyBird game) {
         shapeRenderer = new ShapeRenderer();
+        gameOver = false;
+        runGame = false;
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = new BitmapFont(Gdx.files.internal("title-font-export.fnt"));
         labelStyle.fontColor = Color.GRAY;
@@ -116,7 +118,7 @@ public class PlayScreen implements Screen {
 
         stage.draw();
         bird.render(game.batch);
-
+        bird.birdGetSmaller();
         //beim Drücken der Leertaste soll die Zeile"press space to ......" verschwenden und das spiel wird in Bewegung gesetzt
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             runGame = true;

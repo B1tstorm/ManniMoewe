@@ -167,10 +167,12 @@ public class PlayScreen implements Screen {
     private void update() {
         int randomNum = 0;
 
+        if(bird.getScoreCollectable() < 3){
+            bird.setHelmetactive(false);
+        }
 
         if(TimeUtils.nanoTime() - lastInvisibleTime > 1500000000) {
             bird.setInvincible(false);
-            bird.setHelmetactive(false);
         }
         if(TimeUtils.nanoTime() - bird.getLastMultiplierTime() > 10000000000L) {
             bird.setMultiplier(1);
@@ -289,10 +291,10 @@ public class PlayScreen implements Screen {
                  200,Gdx.graphics.getHeight()-200);
         int randomNum2 = ThreadLocalRandom.current().nextInt(0, 100);
 
-        if(randomNum2 < 100){
+        if(randomNum2 < 20){
             items.add(new Fries(xPos, randomNum1));
         }
-        if(randomNum2 > 15){
+        if(randomNum2 < 15){
             items.add(new Multiplier(xPos, randomNum1));
         }
     }

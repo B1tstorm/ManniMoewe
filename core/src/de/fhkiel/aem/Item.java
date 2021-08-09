@@ -6,11 +6,11 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Circle;
 
-public class Item {
+public abstract class Item {
     private final Sprite itemSprite;
     private final Circle hitbox;
     private final int radius = 25;
-    public static float ITEMSPEED = 300;
+    public static float itemspeed = 300;
 
     public Item(float xPos, float yPos, String itemTexture) {
         itemSprite = new Sprite(new Texture(Gdx.files.internal(itemTexture)));
@@ -30,14 +30,13 @@ public class Item {
 
     public void move() {
         hitbox.setPosition(itemSprite.getX() + radius, itemSprite.getY() + radius);
-        movePommesLeft(itemSprite, ITEMSPEED);
+        float movement = itemspeed * Gdx.graphics.getDeltaTime();
+        itemSprite.setX(itemSprite.getX() - movement);
     }
 
-    private void movePommesLeft(Sprite pommesItem, float speed) {
-        float movement = speed * Gdx.graphics.getDeltaTime();
-        pommesItem.setX(pommesItem.getX() - movement);
-    }
+    public void collide(Bird bird){
 
+    }
 
     public Sprite getItemSprite() {
         return itemSprite;

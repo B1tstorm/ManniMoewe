@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -20,6 +21,10 @@ public class HighscoreScreen implements Screen {
     final FlappyBird game;
     private final OrthographicCamera camera;
     private final Stage stage;
+    private final ImageButton easyButton;
+    private final ImageButton mediumButton;
+    private final ImageButton hardButton;
+    private int shownDifficulty;
 
 
     /**
@@ -34,6 +39,12 @@ public class HighscoreScreen implements Screen {
         camera.setToOrtho(false, Configuration.ScreenWidth, Configuration.ScreenHeight);
 
         stage = new Stage(new FitViewport(Configuration.ScreenWidth, Configuration.ScreenHeight));
+
+        shownDifficulty = game.getDifficulty();
+
+        easyButton = ButtonFactory.CreateImageButton(Configuration.difficulty_easyImg, () -> {shownDifficulty = 1;});
+        mediumButton = ButtonFactory.CreateImageButton(Configuration.difficulty_mediumImg, () -> {shownDifficulty = 2;});
+        hardButton = ButtonFactory.CreateImageButton(Configuration.difficulty_hardImg, () -> {shownDifficulty = 3;});
 
 
         Table highscoreTable = new Table();
@@ -52,6 +63,10 @@ public class HighscoreScreen implements Screen {
 
         highscoreTable.add(highscore).height(100).colspan(3).center();
 
+        highscoreTable.row();
+        highscoreTable.add(easyButton).fillX();
+        highscoreTable.add(mediumButton).fillX();
+        highscoreTable.add(hardButton).fillX();
         highscoreTable.row();
         highscoreTable.add(place).expand();
         highscoreTable.add(name).expand();

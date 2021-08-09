@@ -14,7 +14,11 @@ public class FlappyBird extends Game {
 	public BitmapFont font;
 	public Music oceanSeagullMusic;
 	public Music kielMusic;
+	private int difficulty = 2;
 	public boolean musicShouldPlay = true;
+	public Background background;
+	private static float speedMultiplier = 1.0f;
+
 	public String playerName = "Enter your Name";
 
 	@Override
@@ -29,6 +33,9 @@ public class FlappyBird extends Game {
 
 		batch = new SpriteBatch();
 		font = new BitmapFont();
+
+		background = new Background(batch);
+
 		this.setScreen(new StartScreen(this));
 
 	}
@@ -44,5 +51,40 @@ public class FlappyBird extends Game {
 		font.dispose();
 		oceanSeagullMusic.dispose();
 		kielMusic.dispose();
+		background.dispose();
+	}
+
+	/**
+	 * increases the Speed of the Game
+	 */
+	public void increaseGameSpeed(){
+		if(speedMultiplier <= 3){
+			Barrier.speed = Barrier.speed / speedMultiplier * (speedMultiplier + 0.01f);
+			Background.FOREGROUNDSPEED = Background.FOREGROUNDSPEED / speedMultiplier  * (speedMultiplier + 0.01f);
+			Background.WATERSPEED = Background.WATERSPEED / speedMultiplier  * (speedMultiplier + 0.01f);
+			Background.CITYSPEED = Background.CITYSPEED / speedMultiplier  * (speedMultiplier + 0.01f);
+			Background.SKYSPEED = Background.SKYSPEED / speedMultiplier  * (speedMultiplier + 0.01f);
+			speedMultiplier += 0.01f;
+		}
+	}
+
+	public void resetGameSpeed(){
+		Barrier.speed = 300;
+		Background.FOREGROUNDSPEED = 300;
+		Background.WATERSPEED = 150;
+		Background.CITYSPEED = 75;
+		Background.SKYSPEED = 30;
+		speedMultiplier += 1.0f;
+	}
+
+	public void setMusicVolume(float volume){
+		oceanSeagullMusic.setVolume(volume);
+		kielMusic.setVolume(volume);
+	}
+
+	public int getDifficulty(){return difficulty;}
+
+	public void setDifficulty(int difficulty) {
+		this.difficulty = difficulty;
 	}
 }

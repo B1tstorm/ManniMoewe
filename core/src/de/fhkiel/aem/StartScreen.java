@@ -7,6 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import de.fhkiel.aem.utility.ButtonFactory;
 
 
@@ -23,7 +25,9 @@ public class StartScreen implements Screen {
     private final ImageButton optionsButton;
     private ImageButton muteButton;
     private ImageButton exitButton;
+    private final Bird bird;
 
+    protected Viewport viewport;
 
     /**
      * Creates an StartScreen depending on a game.
@@ -35,34 +39,34 @@ public class StartScreen implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Configuration.ScreenWidth, Configuration.ScreenHeight);
 
-        stage = new Stage();
+        stage = new Stage(new FitViewport(Configuration.ScreenWidth, Configuration.ScreenHeight));
+        bird = new Bird(50, 250 );
 
         Table table = new Table();
         table.setFillParent(true);
         Gdx.input.setInputProcessor(stage);
 
-        startButton = ButtonFactory.CreateImageButton("start.png",
+        startButton = ButtonFactory.CreateImageButton(Configuration.startImg,
                 () -> {
                     game.setScreen(new PlayScreen(game));
                     dispose();
         });
-        highscoreButton = ButtonFactory.CreateImageButton("highscore.png",
+        highscoreButton = ButtonFactory.CreateImageButton(Configuration.highscoreImg,
                 () -> {
                     game.setScreen(new HighscoreScreen(game));
                     dispose();
         });
-        optionsButton = ButtonFactory.CreateImageButton("optionen.png",
+        optionsButton = ButtonFactory.CreateImageButton(Configuration.optionImg,
                 () -> {
             game.setScreen(new OptionsScreen(game));
             dispose();
         });
-        muteButton = ButtonFactory.CreateImageButton("unmute.png", "mute.png", () -> {
+        muteButton = ButtonFactory.CreateImageButton(Configuration.unmuteImg, Configuration.muteImg, () -> {
             if(game.musicShouldPlay){
                 game.musicShouldPlay = false;
                 game.kielMusic.setVolume(0f);
                 game.oceanSeagullMusic.pause();
                 muteButton.setChecked(true);
-
             }   else {
                 game.musicShouldPlay = true;
                 game.kielMusic.setVolume(0.5f);
@@ -70,7 +74,7 @@ public class StartScreen implements Screen {
                 muteButton.setChecked(false);
             }
         });
-        exitButton = ButtonFactory.CreateImageButton("exit.png",
+        exitButton = ButtonFactory.CreateImageButton(Configuration.exitImg,
                 () -> {
                     Gdx.app.exit();
                     dispose();
@@ -90,6 +94,8 @@ public class StartScreen implements Screen {
         table.add(optionsButton).center().fillX();
 
         stage.addActor(table);
+
+        game.background = new Background(game.batch);
     }
 
     @Override
@@ -111,13 +117,21 @@ public class StartScreen implements Screen {
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
+
+        game.background.renderBackground();
+        game.background.renderForeground();
+
+        game.batch.draw(bird.getBirdSprite(), bird.getBirdSprite().getX(), bird.getBirdSprite().getY() , bird.getBirdWidth() , bird.getBirdWidth());
+
         stage.draw();
         game.batch.end();
+
+        game.background.move();
     }
 
     @Override
     public void resize(int width, int height) {
-
+        stage.getViewport().update(width, height);
     }
 
     @Override

@@ -14,11 +14,18 @@ import com.badlogic.gdx.utils.TimeUtils;
 public class Bird {
     private final Sprite birdSprite;
     private final Circle hitbox;
-    private final Texture mannyStraight = new Texture("manny-straight.png");
-    private final Texture mannyUp = new Texture("manny-up.png");
-    private final Texture mannyDown = new Texture("manny-down.png");
+    private final Texture mannyStraight = new Texture(Gdx.files.internal(Configuration.manny_straightImg));
+    private final Texture mannyUp = new Texture(Gdx.files.internal(Configuration.manny_upImg));
+    private final Texture mannyDown = new Texture(Gdx.files.internal(Configuration.manny_downImg));
     private final int width = 100;
     private float highscore = 0;
+
+    private int birdWidth = 350;
+
+
+    public Texture getMannyStraight() {
+        return mannyStraight;
+    }
 
     //bestimmt die Beschleunigung, in der der Vogel nach unten fällt
     private float fallSpeed = 2;
@@ -30,7 +37,8 @@ public class Bird {
      * @param yPos y position of the bird
      */
     public Bird(float xPos, float yPos) {
-        birdSprite = new Sprite(mannyStraight);
+        Texture mannyStare = new Texture(Gdx.files.internal(Configuration.manny_stareImg));
+        birdSprite = new Sprite(mannyStare);
 
         birdSprite.setX(xPos);
         birdSprite.setY(yPos);
@@ -44,14 +52,15 @@ public class Bird {
      */
     public void render(SpriteBatch batch){
         batch.draw(birdSprite, birdSprite.getX(), birdSprite.getY(), birdSprite.getOriginX(), birdSprite.getOriginY(),
-                getWidth(), getWidth(),1,1, birdSprite.getRotation());
+                getBirdWidth(), getBirdWidth(),1,1, birdSprite.getRotation());
     }
 
     /**
      * Moves the Bird.
      */
     public void move(){
-        //fallen und in eine Richtung beschleunigen
+        birdGetsSmaler();
+
         birdSprite.setY(birdSprite.getY() - fallSpeed);
         hitbox.setPosition(birdSprite.getX() + width / 2f, birdSprite.getY() + width / 2f);
         fallSpeed +=0.3;
@@ -72,12 +81,18 @@ public class Bird {
             pressTime = 0;
         }
         //stoppe den Vogel am Rand des Bilds
-        if (birdSprite.getY() <= 0 ){
-            //fallspeed = 0;
+        if (birdSprite.getY() <= 25 ){
             //! zu testen da.... Damit der Vogel stopp, musst du die vorherige Zeile aktivieren und die folgende löschen
-            sprungNachOben();
+            slide();
         }
 
+    }
+
+    //zum beginn des playScreens wird der Vogel allmählich klein
+    private void birdGetsSmaler() {
+        if(birdWidth > 100){
+            this.setBirdWidth(this.getBirdWidth()-5);
+        }
     }
 
     /**
@@ -104,11 +119,22 @@ public class Bird {
         return width;
     }
 
+
+    public int getBirdWidth() {
+        return birdWidth;
+    }
+
+    public void setBirdWidth(int birdWidth) {
+        this.birdWidth = birdWidth;
+    }
+
     /**
      * Gets the highscore.
      * @return The highscore
      */
-    public float getHighscore(){return highscore;}
+    public float getHighscore(){
+        return highscore;
+    }
 
     /**
      * Sets the highscore to a new value.
@@ -125,5 +151,15 @@ public class Bird {
         pressTime = TimeUtils.millis();
         birdSprite.setTexture(mannyUp);
         fallSpeed = -13;
+    }
+
+    private void slide(){
+        pressTime = TimeUtils.millis();
+        birdSprite.setTexture(mannyUp);
+        fallSpeed = -7;
+    }
+
+    public void setFallSpeed(float fallSpeed) {
+        this.fallSpeed = fallSpeed;
     }
 }

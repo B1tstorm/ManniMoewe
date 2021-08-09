@@ -20,21 +20,13 @@ public class Bird {
     private final Texture mannyUp = new Texture(Gdx.files.internal(Configuration.manny_upImg));
     private final Texture mannyDown = new Texture(Gdx.files.internal(Configuration.manny_downImg));
 
-    private final Texture mannyOuch2 = new Texture(Gdx.files.internal(Configuration.mannyOuch2));
-    private final Texture mannyOuch3 = new Texture(Gdx.files.internal(Configuration.mannyOuch3));
-    private final Texture mannyOuch4 = new Texture(Gdx.files.internal(Configuration.mannyOuch4));
-    private final Texture mannyOuch5 = new Texture(Gdx.files.internal(Configuration.mannyOuch5));
-    private final Texture mannyOuch6 = new Texture(Gdx.files.internal(Configuration.mannyOuch6));
-    private final Texture mannyOuch7 = new Texture(Gdx.files.internal(Configuration.mannyOuch7));
-    private final Texture mannyOuch8 = new Texture(Gdx.files.internal(Configuration.mannyOuch8));
-
     private final int width = 100;
     private float highscore = 0;
 
     private int birdWidth = 350;
 
     private long dieTime;
-    private static HashMap <Integer, Texture> animation = new HashMap<>();
+    private static HashMap <Integer, Texture> animationMap = new HashMap<>();
 
 
     public Texture getMannyStraight() {
@@ -97,7 +89,6 @@ public class Bird {
         }
         //stoppe den Vogel am Rand des Bilds
         if (birdSprite.getY() <= 25 ){
-            //! zu testen da.... Damit der Vogel stopp, musst du die vorherige Zeile aktivieren und die folgende löschen
             slide();
         }
 
@@ -171,57 +162,21 @@ public class Bird {
     private void slide(){
         pressTime = TimeUtils.millis();
         birdSprite.setTexture(mannyUp);
-        fallSpeed = -7;
+        fallSpeed = -6;
     }
-    //!hier
+    /**
+     * the Bird dies and the Animation changes
+     * */
     public void birdDies(){
-//        if(TimeUtils.millis() >= dieTime + 100 && TimeUtils.millis() < dieTime + 200){
-//            System.out.println("die time"+dieTime);
-//            birdSprite.setTexture(mannyOuch2);
-//            System.out.println(dieStep());
-//        }else if (TimeUtils.millis() >= dieTime + 200 && TimeUtils.millis() < dieTime + 300){
-//            birdSprite.setTexture(mannyOuch3);
-//            System.out.println(TimeUtils.millis());
-//            System.out.println(dieStep());
-//
-//        }else if (TimeUtils.millis() >= dieTime + 300 && TimeUtils.millis() < dieTime + 400){
-//            birdSprite.setTexture(mannyOuch4);
-//            System.out.println(TimeUtils.millis());
-//            System.out.println(dieStep());
-//
-//        }else if (TimeUtils.millis() >= dieTime + 400 && TimeUtils.millis() < dieTime + 500){
-//            birdSprite.setTexture(mannyOuch5);
-//            System.out.println(TimeUtils.millis());
-//            System.out.println(dieStep());
-//
-//        }else if (TimeUtils.millis() >= dieTime + 500 && TimeUtils.millis() < dieTime + 600){
-//            birdSprite.setTexture(mannyOuch6);
-//            System.out.println(TimeUtils.millis());
-//            System.out.println(dieStep());
-//
-//        }else if (TimeUtils.millis() >= dieTime + 600 && TimeUtils.millis() < dieTime + 700){
-//            birdSprite.setTexture(mannyOuch7);
-//            System.out.println(TimeUtils.millis());
-//            System.out.println(dieStep());
-//
-//        }else if (TimeUtils.millis() >= dieTime + 700 && TimeUtils.millis() < dieTime + 800){
-//            birdSprite.setTexture(mannyOuch8);
-//            System.out.println(TimeUtils.millis());
-//            System.out.println(dieStep());
-//
-//        }
-
-//        if(TimeUtils.millis() >= dieTime + 700 && TimeUtils.millis() < dieTime + 800){
-//            birdSprite.setTexture(mannyOuch8);
-//            System.out.println(TimeUtils.millis());
-//            System.out.println(dieStep());
-//        }
         int dieStep = dieStep();
-        if (dieStep >2 && dieStep < 9){
-        birdSprite.setTexture(animation.get(dieStep));
+       if(dieStep < 7){
+        birdSprite.setTexture(animationMap.get(dieStep));
         }
     }
-
+    /**
+     * return an integer based on the time of the collision
+     * the return number presents the dying step
+     * */
     private int dieStep(){
         return (int) ((TimeUtils.millis() -dieTime)/100);
     }
@@ -238,13 +193,16 @@ public class Bird {
         this.dieTime = dieTime;
     }
 
+    /**
+     * fill the Hashmap with the animation assetss
+     * */
     private void initializeAnimation(){
-        animation.put(2,new Texture(Gdx.files.internal(Configuration.mannyOuch2)));
-        animation.put(3,new Texture(Gdx.files.internal(Configuration.mannyOuch3)));
-        animation.put(4,new Texture(Gdx.files.internal(Configuration.mannyOuch4)));
-        animation.put(5,new Texture(Gdx.files.internal(Configuration.mannyOuch5)));
-        animation.put(6,new Texture(Gdx.files.internal(Configuration.mannyOuch6)));
-        animation.put(7,new Texture(Gdx.files.internal(Configuration.mannyOuch7)));
-        animation.put(8,new Texture(Gdx.files.internal(Configuration.mannyOuch8)));
+        animationMap.put(0,new Texture(Gdx.files.internal(Configuration.mannyOuch2)));
+        animationMap.put(1,new Texture(Gdx.files.internal(Configuration.mannyOuch3)));
+        animationMap.put(2,new Texture(Gdx.files.internal(Configuration.mannyOuch4)));
+        animationMap.put(3,new Texture(Gdx.files.internal(Configuration.mannyOuch5)));
+        animationMap.put(4,new Texture(Gdx.files.internal(Configuration.mannyOuch6)));
+        animationMap.put(5,new Texture(Gdx.files.internal(Configuration.mannyOuch7)));
+        animationMap.put(6,new Texture(Gdx.files.internal(Configuration.mannyOuch8)));
     }
 }

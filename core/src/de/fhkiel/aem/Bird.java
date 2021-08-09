@@ -28,6 +28,7 @@ public class Bird {
     private int multiplier = 1;
     private int birdWidth = 350;
     private long lastMultiplierTime;
+    private long lastShrinkTime;
 
 
     public Texture getMannyStraight() {
@@ -253,4 +254,14 @@ public class Bird {
     public void setLastMultiplierTime(long lastMultiplierTime) {
         this.lastMultiplierTime = lastMultiplierTime;
     }
+
+    public long getLastShrinkTime() {
+        return lastShrinkTime;
+    }
+
+    public void setLastShrinkTime(long lastShrinkTime) {
+        this.lastShrinkTime = lastShrinkTime;
+    }
+
+
 }

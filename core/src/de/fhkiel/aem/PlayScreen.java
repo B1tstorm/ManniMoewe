@@ -166,7 +166,7 @@ public class PlayScreen implements Screen {
         int randomNum = 0;
 
         if(TimeUtils.nanoTime() - lastInvisibleTime > 1500000000) {
-            bird.getHitbox().setRadius(50);
+            bird.setInvincible(false);
         }
         if(runGame && TimeUtils.nanoTime() - currentTime > 500000000){
             game.increaseGameSpeed();
@@ -186,23 +186,25 @@ public class PlayScreen implements Screen {
         }
 
         for (Barrier barrier : new Array.ArrayIterator<>(barriers)) {
-            if (Intersector.overlaps(bird.getHitbox(), barrier.getBarrierSprite().getBoundingRectangle())) {
-                if(bird.getScoreCollectable() == 3){
-                    lastInvisibleTime = TimeUtils.nanoTime();
-                    bird.getHitbox().setRadius(0f);
-                    bird.setScoreCollectable(0);
-                } else {
+            if(!bird.isInvincible()){
+                if (Intersector.overlaps(bird.getHitbox(), barrier.getBarrierSprite().getBoundingRectangle())) {
+                    if(bird.getScoreCollectable() == 3){
+                        lastInvisibleTime = TimeUtils.nanoTime();
+                        bird.setInvincible(true);
+                        bird.setScoreCollectable(0);
+                    } else {
+                        game.kielMusic.stop();
+                        gameOver = true;
+                        runGame = false;
+                        gameOverScreen = new GameOverScreen(game);
+                    }
+                }
+                if(bird.getHitbox().y > Configuration.ScreenHeight && barrier.getBarrierSprite().getX() <= bird.getBirdSprite().getX()) {
                     game.kielMusic.stop();
                     gameOver = true;
                     runGame = false;
                     gameOverScreen = new GameOverScreen(game);
                 }
-            }
-            if(bird.getHitbox().y > Configuration.ScreenHeight && barrier.getBarrierSprite().getX() <= bird.getBirdSprite().getX()) {
-                game.kielMusic.stop();
-                gameOver = true;
-                runGame = false;
-                gameOverScreen = new GameOverScreen(game);
             }
         }
         for(Iterator<Item> iter = items.iterator(); iter.hasNext(); ) {
@@ -250,6 +252,7 @@ public class PlayScreen implements Screen {
                 }
                 barrier.getBarrierSprite().setX(barrier.getBarrierSprite().getX() + (barriers.size / 2f) * barrier.getDistance());
                 barrier.setWealth(game.getDifficulty() / 2.0f);
+                createItems(barrier.getBarrierSprite().getX() + (barriers.size / 2f) * barrier.getDistance());
             }
         }
     }
@@ -281,7 +284,7 @@ public class PlayScreen implements Screen {
                  200,Gdx.graphics.getHeight()-200);
         int randomNum2 = ThreadLocalRandom.current().nextInt(0, 100);
 
-        if(randomNum2 < 50){
+        if(randomNum2 < 15){
             items.add(new Item(xPos, randomNum1, Configuration.pommesImg));
         }
     }

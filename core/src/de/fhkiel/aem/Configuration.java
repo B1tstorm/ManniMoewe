@@ -48,6 +48,9 @@ public class Configuration {
     public static final String pommespackung_einsImg = "ATFB-pommespackung-eins.png";
     public static final String pommespackung_zweiImg = "ATFB-pommespackung-zwei.png";
     public static final String pommespackung_dreiImg = "ATFB-pommespackung-drei.png";
+    public static final String item_miniImg = "ATFB-item-mini.png";
+    public static final String item_multipyImg = "ATFB-item-multiply.png";
+    public static final String item_slowmoImg = "ATFB-item-slowmo.png";
 
 
 

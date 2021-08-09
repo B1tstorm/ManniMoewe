@@ -20,7 +20,7 @@ public class Bird {
     private final int width = 100;
     private float highscore = 0;
     private int  scoreCollectable = 0;
-
+    private boolean invincible = false;
     private int birdWidth = 350;
 
 
@@ -166,5 +166,33 @@ public class Bird {
 
     public void setScoreCollectable(int scoreCollectable) {
         this.scoreCollectable = scoreCollectable;
+    }
+
+    public Texture getMannyUp() {
+        return mannyUp;
+    }
+
+    public Texture getMannyDown() {
+        return mannyDown;
+    }
+
+    public boolean isInvincible() {
+        return invincible;
+    }
+
+    public void setInvincible(boolean invincible) {
+        this.invincible = invincible;
+    }
+
+    public float getFallSpeed() {
+        return fallSpeed;
+    }
+
+    public long getPressTime() {
+        return pressTime;
+    }
+
+    public void setPressTime(long pressTime) {
+        this.pressTime = pressTime;
     }
 }

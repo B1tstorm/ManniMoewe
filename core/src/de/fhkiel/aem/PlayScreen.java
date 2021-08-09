@@ -210,9 +210,7 @@ public class PlayScreen implements Screen {
         for(Iterator<Item> iter = items.iterator(); iter.hasNext(); ) {
             Item item = iter.next();
             if (Intersector.overlaps(bird.getHitbox(), item.getHitbox())) {
-                if(bird.getScoreCollectable() < 3){
-                    bird.setScoreCollectable(bird.getScoreCollectable()+1);
-                }
+                item.collide(bird);
                 iter.remove();
             }
             if(item.getItemSprite().getX() < -item.getItemSprite().getWidth()) {
@@ -252,7 +250,7 @@ public class PlayScreen implements Screen {
                 }
                 barrier.getBarrierSprite().setX(barrier.getBarrierSprite().getX() + (barriers.size / 2f) * barrier.getDistance());
                 barrier.setWealth(game.getDifficulty() / 2.0f);
-                createItems(barrier.getBarrierSprite().getX() + (barriers.size / 2f) * barrier.getDistance());
+                createItems(barrier.getBarrierSprite().getX() + (barriers.size / 2f) * barrier.getDistance() + barrier.getDistance() / 2);
             }
         }
     }
@@ -285,7 +283,7 @@ public class PlayScreen implements Screen {
         int randomNum2 = ThreadLocalRandom.current().nextInt(0, 100);
 
         if(randomNum2 < 15){
-            items.add(new Item(xPos, randomNum1, Configuration.pommesImg));
+            items.add(new Fries(xPos, randomNum1));
         }
     }
 

@@ -21,6 +21,7 @@ public class Bird {
     private float highscore = 0;
     private int  scoreCollectable = 0;
     private boolean invincible = false;
+    private boolean multiply = false;
     private int birdWidth = 350;
 
 

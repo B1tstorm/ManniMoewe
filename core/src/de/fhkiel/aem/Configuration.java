@@ -51,6 +51,9 @@ public class Configuration {
     public static final String item_miniImg = "ATFB-item-mini.png";
     public static final String item_multipyImg = "ATFB-item-multiply.png";
     public static final String item_slowmoImg = "ATFB-item-slowmo.png";
+    public static final String manny_down_helmImg = "ATFB-manny-down-helm.png";
+    public static final String manny_straight_helmImg = "ATFB-manny-straight-helm.png";
+    public static final String manny_up_helmImg = "ATFB-manny-up-helm.png";
 
 
 

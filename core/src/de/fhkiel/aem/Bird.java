@@ -22,7 +22,8 @@ public class Bird {
 
     private final int width = 100;
     private float highscore = 0;
-
+    private int birdRotation = 0;
+    private boolean birdMayRotate = false;
     private int birdWidth = 350;
 
     private long dieTime;
@@ -60,8 +61,8 @@ public class Bird {
      * @param batch spriteBatch it rendered on
      */
     public void render(SpriteBatch batch) {
-        batch.draw(birdSprite, birdSprite.getX(), birdSprite.getY(), birdSprite.getOriginX(), birdSprite.getOriginY(),
-                getBirdWidth(), getBirdWidth(), 1, 1, birdSprite.getRotation());
+        batch.draw(birdSprite, birdSprite.getX(), birdSprite.getY(), birdSprite.getX(), birdSprite.getX(),
+                getBirdWidth(), getBirdWidth(), 1, 1, birdRotation);
     }
 
     /**
@@ -70,6 +71,14 @@ public class Bird {
     public void move(){
         birdGetSmaller();
 
+        //bird rotiert nach oben bis er seine Grenze erreicht und dann wieder zurück
+        if (birdMayRotate && birdRotation < 25) {
+            birdRotation += 4;
+        } else if (birdRotation > 0) {
+            birdRotation-=2d;
+        }
+
+        //bird Fällt nach unten mit einer Beschleunigung
         birdSprite.setY(birdSprite.getY() - fallSpeed);
         hitbox.setPosition(birdSprite.getX() + width / 2f, birdSprite.getY() + width / 2f);
         fallSpeed += 0.3;
@@ -82,10 +91,10 @@ public class Bird {
         if (pressTime != 0 && (fallSpeed < 0 && TimeUtils.millis() >= (pressTime + 200))) {
             birdSprite.setTexture(mannyStraight);
             fallSpeed = 4;
+            birdMayRotate = false;
         }
         if (pressTime != 0 && fallSpeed > 0 && TimeUtils.millis() >= (pressTime + 300)) {
             birdSprite.setTexture(mannyDown);
-
             fallSpeed = 6;
             pressTime = 0;
         }
@@ -98,8 +107,8 @@ public class Bird {
 
     //zum beginn des playScreens wird der Vogel allmählich klein
     public void birdGetSmaller() {
-        if(birdWidth > 100){
-            this.setBirdWidth(this.getBirdWidth()-5);
+        if (birdWidth > 100) {
+            this.setBirdWidth(this.getBirdWidth() - 5);
         }
     }
 
@@ -161,6 +170,9 @@ public class Bird {
      * The bird jumps up.
      */
     private void sprungNachOben() {
+        if (birdRotation < 25) {
+            birdMayRotate = true;
+        }
         pressTime = TimeUtils.millis();
         birdSprite.setTexture(mannyUp);
         fallSpeed = -13;
@@ -174,6 +186,8 @@ public class Bird {
 
     /**
      * the Bird dies and the Animation changes
+     * eine Reihe an Bildern wird abgespielt
+     * und der Vogel dreht sich um seine x Achse beim Fallen
      */
     public void birdDies() {
         fallSpeed = 1;
@@ -182,10 +196,12 @@ public class Bird {
         int dieStep = dieStep();
         if (dieStep < 8) {
             birdSprite.setTexture(animationMap.get(dieStep));
-        }else {
+        } else {
             fallSpeed = 4;
             birdSprite.setY(birdSprite.getY() - fallSpeed);
         }
+        birdMayRotate = true;
+        birdRotation+=8;
     }
 
     /**

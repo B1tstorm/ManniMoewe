@@ -41,6 +41,7 @@ public class FlappyBird extends Game {
 
 		networkHandler = new NetworkHandler();
 		highscore = networkHandler.getFromServer();
+		networkHandler.sendToServer(highscore);
 
 		this.setScreen(new StartScreen(this));
 

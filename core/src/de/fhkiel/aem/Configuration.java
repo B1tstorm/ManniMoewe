@@ -6,7 +6,7 @@ package de.fhkiel.aem;
 public class Configuration {
     public final static int ScreenWidth = 1920;
     public final static int ScreenHeight = 1080;
-    public static  boolean fullscreen = false;
+    public static  boolean fullscreen = true;
 
     public static final String startImg = "ATFB-start.png";
     public static final String backImg = "ATFB-back.png";

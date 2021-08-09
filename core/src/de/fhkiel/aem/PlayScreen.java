@@ -193,6 +193,9 @@ public class PlayScreen implements Screen {
         else if(bird.getScoreCollectable() == 3) {
             table.getCells().get(0).setActor(new Image(pommespackung_drei));
         }
+        else {
+            table.getCells().get(0).setActor(new Image(pommespackung_leer));
+        }
 
         for (Barrier barrier : new Array.ArrayIterator<>(barriers)) {
             if(!bird.isInvincible()){
@@ -254,12 +257,12 @@ public class PlayScreen implements Screen {
                     randomNum = ThreadLocalRandom.current().nextInt(
                             (int) (Gdx.graphics.getHeight() - barrier.getBarrierSprite().getHeight()) +200, Gdx.graphics.getHeight());
                     barrier.getBarrierSprite().setY(randomNum);
+                    createItems(barrier.getBarrierSprite().getX() + ((barriers.size / 2f) * barrier.getDistance())+ (barrier.getDistance() / 2));
                 } else {
                     barrier.getBarrierSprite().setY(randomNum - barrier.getBarrierSprite().getHeight() - barrier.getGap());
                 }
                 barrier.getBarrierSprite().setX(barrier.getBarrierSprite().getX() + (barriers.size / 2f) * barrier.getDistance());
                 barrier.setWealth(game.getDifficulty() / 2.0f);
-                createItems(barrier.getBarrierSprite().getX() + (barriers.size / 2f) * barrier.getDistance() + barrier.getDistance() / 2);
             }
         }
     }
@@ -291,7 +294,7 @@ public class PlayScreen implements Screen {
                  200,Gdx.graphics.getHeight()-200);
         int randomNum2 = ThreadLocalRandom.current().nextInt(0, 100);
 
-        if(randomNum2 < 15){
+        if(randomNum2 < 100){
             items.add(new Fries(xPos, randomNum1));
         }
         else if(randomNum2 < 25){

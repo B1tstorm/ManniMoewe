@@ -4,21 +4,21 @@ import de.fhkiel.aem.model.Highscore;
 
 public class NetworkHandler {
 
-	public void writeJson() {
+	private void writeJson() {
 
 	}
 
-	public Highscore readJson() {
+	private Highscore readJson() {
 
 		return null;
 	}
 
-	public void sendToServer() {
+	public void sendToServer(Highscore highscore) {
 
 	}
 
-	public String getFromServer() {
+	public Highscore getFromServer() {
 
-		return "";
+		return new Highscore();
 	}
 }

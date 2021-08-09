@@ -57,7 +57,7 @@ public class GameOverScreen implements Screen {
 
         textFieldStyle.cursor = new Image(new Texture(cursorColor)).getDrawable();
 
-        nameTextField = new TextField("Enter your Name", textFieldStyle);
+        nameTextField = new TextField(game.getPlayerName(), textFieldStyle);
 
         table.add(overLabel).height(200).top().center().colspan(3).expand();
         table.row();
@@ -78,18 +78,21 @@ public class GameOverScreen implements Screen {
         backButton = ButtonFactory.CreateImageButton(Configuration.backImg,
                 () -> {
                     game.setScreen(new StartScreen(game));
+                    game.setPlayerName(nameTextField.getText());
                     dispose();
                 });
 
         restartButton = ButtonFactory.CreateImageButton(Configuration.startImg,
                 () -> {
                     game.setScreen(new PlayScreen(game));
+                    game.setPlayerName(nameTextField.getText());
                     dispose();
                 });
 
         highscoreButton = ButtonFactory.CreateImageButton(Configuration.highscoreImg,
                 () -> {
                     game.setScreen(new HighscoreScreen(game));
+                    game.setPlayerName(nameTextField.getText());
                     dispose();
                 });
     }

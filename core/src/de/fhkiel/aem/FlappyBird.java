@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import de.fhkiel.aem.model.Highscore;
 
 /**
  * The game object which handles Screen general behavior.
@@ -17,9 +18,11 @@ public class FlappyBird extends Game {
 	private int difficulty = 2;
 	public boolean musicShouldPlay = true;
 	public Background background;
-	private static float speedMultiplier = 1.0f;
 
-	public String playerName = "Enter your Name";
+	private static float speedMultiplier = 1.0f;
+	private String playerName = "Enter your Name";
+	private Highscore highscore;
+	private NetworkHandler networkHandler;
 
 	@Override
 	public void create () {
@@ -35,6 +38,9 @@ public class FlappyBird extends Game {
 		font = new BitmapFont();
 
 		background = new Background(batch);
+
+		networkHandler = new NetworkHandler();
+		highscore = networkHandler.getFromServer();
 
 		this.setScreen(new StartScreen(this));
 
@@ -55,7 +61,7 @@ public class FlappyBird extends Game {
 	}
 
 	/**
-	 * increases the Speed of the Game
+	 * Increases the Speed of the Game.
 	 */
 	public void increaseGameSpeed(){
 		if(speedMultiplier <= 3){
@@ -68,23 +74,70 @@ public class FlappyBird extends Game {
 		}
 	}
 
+	/**
+	 * Resets the Speed of the Game.
+	 */
 	public void resetGameSpeed(){
 		Barrier.speed = 300;
 		Background.FOREGROUNDSPEED = 300;
 		Background.WATERSPEED = 150;
 		Background.CITYSPEED = 75;
 		Background.SKYSPEED = 30;
-		speedMultiplier += 1.0f;
+		speedMultiplier = 1.0f;
 	}
 
+	/**
+	 * Sets the music volume.
+	 * @param volume volume
+	 */
 	public void setMusicVolume(float volume){
 		oceanSeagullMusic.setVolume(volume);
 		kielMusic.setVolume(volume);
 	}
 
+	/**
+	 * Gets the difficulty of the game.
+	 * @return Difficulty level
+	 */
 	public int getDifficulty(){return difficulty;}
 
+	/**
+	 * Sets the difficulty of the game.
+	 * @param difficulty Difficulty level
+	 */
 	public void setDifficulty(int difficulty) {
 		this.difficulty = difficulty;
+	}
+
+	/**
+	 * Gets the playername.
+	 * @return playername
+	 */
+	public String getPlayerName() {
+		return playerName;
+	}
+
+	/**
+	 * Sets the playername.
+	 * @param playerName New playername
+	 */
+	public void setPlayerName(String playerName) {
+		this.playerName = playerName;
+	}
+
+	/**
+	 * Gets the NetworkHandler.
+	 * @return The NetworkHandler
+	 */
+	public NetworkHandler getNetworkHandler() {
+		return networkHandler;
+	}
+
+	/**
+	 * Gets the Highscore.
+	 * @return The Highscore
+	 */
+	public Highscore getHighscore() {
+		return highscore;
 	}
 }

@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -19,7 +18,6 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import jdk.nashorn.internal.runtime.regexp.joni.Config;
 
 import java.util.Iterator;
 import java.util.concurrent.ThreadLocalRandom;
@@ -174,6 +172,9 @@ public class PlayScreen implements Screen {
             bird.setInvincible(false);
             bird.setHelmetactive(false);
         }
+        if(TimeUtils.nanoTime() - bird.getLastMultiplierTime() > 10000000000L) {
+            bird.setMultiplier(1);
+        }
         if(runGame && TimeUtils.nanoTime() - currentTime > 500000000){
             game.increaseGameSpeed();
             currentTime = TimeUtils.nanoTime();
@@ -243,7 +244,7 @@ public class PlayScreen implements Screen {
 
         for(Barrier barrier : new Array.ArrayIterator<>(barriers)) {
             if(bird.getBirdSprite().getX() >= barrier.getBarrierSprite().getX() && barrier.getWealth() != 0) {
-                bird.setHighscore(bird.getHighscore() + barrier.getWealth());
+                bird.setHighscore(bird.getHighscore() + (barrier.getWealth() * bird.getMultiplier()));
                 barrier.setWealth(0);
             }
             if (barrier.getBarrierSprite().getX() < (0 - barrier.getBarrierSprite().getWidth())) {
@@ -290,6 +291,9 @@ public class PlayScreen implements Screen {
 
         if(randomNum2 < 100){
             items.add(new Fries(xPos, randomNum1));
+        }
+        if(randomNum2 > 15){
+            items.add(new Multiplier(xPos, randomNum1));
         }
     }
 

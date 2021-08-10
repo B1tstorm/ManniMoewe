@@ -32,7 +32,7 @@ public class PlayScreen implements Screen {
     private final Stage stage;
     private final Bird bird;
     private GameOverScreen gameOverScreen;
-    private final Label highscoreLabel, collectableLabel;
+    private final Label highscoreLabel, collectableLabel, speedLabel;
     private final Array<Barrier> barriers = new Array<>();
     private Label pressSpaceLable;
     private final Table table;
@@ -51,6 +51,7 @@ public class PlayScreen implements Screen {
 
     /**
      * Creates a new PlayScreen where the game is running on.
+     *
      * @param game The game object
      */
     public PlayScreen(FlappyBird game) {
@@ -77,12 +78,11 @@ public class PlayScreen implements Screen {
 
         this.game = game;
 
-        bird = new Bird(50, 250 );
+        bird = new Bird(50, 250);
 
-        if(bird.isHelmetactive()){
+        if (bird.isHelmetactive()) {
             bird.getBirdSprite().setTexture(bird.getMannyStraightHelm());
-        }
-        else {
+        } else {
             bird.getBirdSprite().setTexture(bird.getMannyStraight());
         }
 
@@ -94,12 +94,14 @@ public class PlayScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
 
         highscoreLabel = new Label("Highscore: ", labelStyle);
-        collectableLabel = new Label( "" + bird.getScoreCollectable() + " / 3",labelStyle);
+        collectableLabel = new Label("" + bird.getScoreCollectable() + " / 3", labelStyle);
+        speedLabel = new Label("Speed: " + game.getSpeedMultiplier() * 60 + "km/h", labelStyle);
 
         table.add(pommespackungImg = new Image(pommespackung_leer)).top().left().maxHeight(55).maxWidth(55);
         table.add(collectableLabel).expand().center().top().left().padLeft(20);
 
         table.add(highscoreLabel).expand().height(100).center().top();
+        table.add(speedLabel).expand().height(100).center().top();
 
         table.add().expand().padRight(75 + collectableLabel.getWidth());
         stage.addActor(table);
@@ -119,6 +121,7 @@ public class PlayScreen implements Screen {
 
     /**
      * Rendering of the all objects on the screen.
+     *
      * @param delta time delta
      */
     @Override
@@ -132,7 +135,7 @@ public class PlayScreen implements Screen {
         game.background.renderBackground();
         game.background.renderForeground();
 
-        for(Barrier barrier : new Array.ArrayIterator<>(barriers)) {
+        for (Barrier barrier : new Array.ArrayIterator<>(barriers)) {
             barrier.render(game.batch);
         }
 
@@ -142,7 +145,7 @@ public class PlayScreen implements Screen {
 
         bird.birdGetSmaller();
 
-        for (Item item: items) {
+        for (Item item : items) {
             item.render(game.batch);
         }
 
@@ -174,14 +177,14 @@ public class PlayScreen implements Screen {
     private void update() {
         int randomNum = 0;
 
-        if(bird.getScoreCollectable() < 3){
+        if (bird.getScoreCollectable() < 3) {
             bird.setHelmetactive(false);
         }
 
-        if(TimeUtils.nanoTime() - lastInvisibleTime > 1500000000) {
+        if (TimeUtils.nanoTime() - lastInvisibleTime > 1500000000) {
             bird.setInvincible(false);
         }
-        if(TimeUtils.nanoTime() - bird.getLastMultiplierTime() > 10000000000L) {
+        if (TimeUtils.nanoTime() - bird.getLastMultiplierTime() > 10000000000L) {
             bird.setMultiplier(1);
         }
 
@@ -200,36 +203,39 @@ public class PlayScreen implements Screen {
             }
         }
 
-        if(TimeUtils.nanoTime() - bird.getLastShrinkTime() > 10000000000L) {
+        if (TimeUtils.nanoTime() - bird.getLastShrinkTime() > 10000000000L) {
             bird.getHitbox().setRadius(50);
-            if(bird.getBirdWidth() < 100) {
+            if (bird.getBirdWidth() < 100) {
                 bird.setBirdWidth((int) (bird.getHitbox().radius * 2));
             }
         }
-        if(runGame && TimeUtils.nanoTime() - currentTime > 500000000){
+        if (runGame && TimeUtils.nanoTime() - currentTime > 500000000) {
             game.increaseGameSpeed();
             currentTime = TimeUtils.nanoTime();
         }
 
         highscoreLabel.setText("Highscore: " + (int) bird.getHighscore() /*+ " " + Background.FOREGROUNDSPEED*/);
         collectableLabel.setText(bird.getScoreCollectable() + " / 3");
-        if(bird.getScoreCollectable() == 1) {
+
+        float speed = game.getSpeedMultiplier() * 60;
+        double roundOff = Math.round(speed * 100.0) / 100.0;
+
+        speedLabel.setText(String.format("Speed: " + roundOff + "km/h", "%.2f"));
+
+        if (bird.getScoreCollectable() == 1) {
             table.getCells().get(0).setActor(new Image(pommespackung_eins));
-        }
-        else if(bird.getScoreCollectable() == 2) {
+        } else if (bird.getScoreCollectable() == 2) {
             table.getCells().get(0).setActor(new Image(pommespackung_zwei));
-        }
-        else if(bird.getScoreCollectable() == 3) {
+        } else if (bird.getScoreCollectable() == 3) {
             table.getCells().get(0).setActor(new Image(pommespackung_drei));
-        }
-        else {
+        } else {
             table.getCells().get(0).setActor(new Image(pommespackung_leer));
         }
 
         for (Barrier barrier : new Array.ArrayIterator<>(barriers)) {
-            if(!bird.isInvincible()){
+            if (!bird.isInvincible()) {
                 if (Intersector.overlaps(bird.getHitbox(), barrier.getBarrierSprite().getBoundingRectangle())) {
-                    if(bird.getScoreCollectable() == 3){
+                    if (bird.getScoreCollectable() == 3) {
                         lastInvisibleTime = TimeUtils.nanoTime();
                         bird.setInvincible(true);
                         bird.setScoreCollectable(0);
@@ -241,7 +247,7 @@ public class PlayScreen implements Screen {
                         bird.setDieTime(TimeUtils.millis());
                     }
                 }
-                if(bird.getHitbox().y > Configuration.ScreenHeight && barrier.getBarrierSprite().getX() <= bird.getBirdSprite().getX()) {
+                if (bird.getHitbox().y > Configuration.ScreenHeight && barrier.getBarrierSprite().getX() <= bird.getBirdSprite().getX()) {
                     game.kielMusic.stop();
                     gameOver = true;
                     runGame = false;
@@ -250,13 +256,13 @@ public class PlayScreen implements Screen {
                 }
             }
         }
-        for(Iterator<Item> iter = items.iterator(); iter.hasNext(); ) {
+        for (Iterator<Item> iter = items.iterator(); iter.hasNext(); ) {
             Item item = iter.next();
             if (Intersector.overlaps(bird.getHitbox(), item.getHitbox())) {
                 item.collide(bird, game);
                 iter.remove();
             }
-            if(item.getItemSprite().getX() < -item.getItemSprite().getWidth()) {
+            if (item.getItemSprite().getX() < -item.getItemSprite().getWidth()) {
                 iter.remove();
             }
         }
@@ -268,7 +274,7 @@ public class PlayScreen implements Screen {
         }
         if (runGame && !gameOver) {
             bird.move();
-            for (Item item: items) {
+            for (Item item : items) {
                 item.move();
             }
             for (Barrier barrier : new Array.ArrayIterator<>(barriers)) {
@@ -278,17 +284,17 @@ public class PlayScreen implements Screen {
 
         game.background.move();
 
-        for(Barrier barrier : new Array.ArrayIterator<>(barriers)) {
-            if(bird.getBirdSprite().getX() >= barrier.getBarrierSprite().getX() && barrier.getWealth() != 0) {
+        for (Barrier barrier : new Array.ArrayIterator<>(barriers)) {
+            if (bird.getBirdSprite().getX() >= barrier.getBarrierSprite().getX() && barrier.getWealth() != 0) {
                 bird.setHighscore(bird.getHighscore() + (barrier.getWealth() * bird.getMultiplier()));
                 barrier.setWealth(0);
             }
             if (barrier.getBarrierSprite().getX() < (0 - barrier.getBarrierSprite().getWidth())) {
-                if(barrier.getBarrierSprite().getRotation() != 180) {
+                if (barrier.getBarrierSprite().getRotation() != 180) {
                     randomNum = ThreadLocalRandom.current().nextInt(
-                            (int) (Gdx.graphics.getHeight() - barrier.getBarrierSprite().getHeight()) +200, Gdx.graphics.getHeight());
+                            (int) (Gdx.graphics.getHeight() - barrier.getBarrierSprite().getHeight()) + 200, Gdx.graphics.getHeight());
                     barrier.getBarrierSprite().setY(randomNum);
-                    createItems(barrier.getBarrierSprite().getX() + ((barriers.size / 2f) * barrier.getDistance())+ (barrier.getDistance() / 2));
+                    createItems(barrier.getBarrierSprite().getX() + ((barriers.size / 2f) * barrier.getDistance()) + (barrier.getDistance() / 2));
                 } else {
                     barrier.getBarrierSprite().setY(randomNum - barrier.getBarrierSprite().getHeight() - barrier.getGap());
                 }
@@ -299,14 +305,13 @@ public class PlayScreen implements Screen {
     }
 
 
-
     /**
      * Creates the Barriers for the game.
      */
     public void createBarriers() {
-        for(int i = 0; i < 10; i++) {
+        for (int i = 0; i < 10; i++) {
             int randomNum = ThreadLocalRandom.current().nextInt(
-                    200,Gdx.graphics.getHeight());
+                    200, Gdx.graphics.getHeight());
 
             Barrier b = new Barrier(
                     Gdx.graphics.getWidth() + new Barrier(0, 0, Configuration.barrierdownImg, game.getDifficulty()).getDistance() * i,
@@ -316,26 +321,23 @@ public class PlayScreen implements Screen {
                     randomNum - b.getBarrierSprite().getHeight() - b.getGap(), Configuration.barrierupImg, game.getDifficulty());
             b2.getBarrierSprite().setRotation(180f);
             barriers.add(b2);
-            createItems(b.getBarrierSprite().getX() + b.getDistance()/2);
+            createItems(b.getBarrierSprite().getX() + b.getDistance() / 2);
         }
     }
 
     private void createItems(float xPos) {
         int randomNum1 = ThreadLocalRandom.current().nextInt(
-                 200,Gdx.graphics.getHeight()-200);
+                200, Gdx.graphics.getHeight() - 200);
         int randomNum2 = ThreadLocalRandom.current().nextInt(0, 100);
 
-        if(randomNum2 < 15){
+        if (randomNum2 < 15) {
             items.add(new Fries(xPos, randomNum1));
-        }
-        else if(randomNum2 < 20){
+        } else if (randomNum2 < 20) {
             items.add(new Multiplier(xPos, randomNum1));
-        }
-        else if(randomNum2 < 25){
+        } else if (randomNum2 < 25) {
             items.add(new Shrink(xPos, randomNum1));
-        }
-        else if(randomNum2 < 30){
-            items.add(new Slow(xPos,randomNum1));
+        } else if (randomNum2 < 30) {
+            items.add(new Slow(xPos, randomNum1));
         }
     }
 

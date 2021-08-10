@@ -118,7 +118,7 @@ public class StartScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        ScreenUtils.clear(0, 0, 0.5f, 1);
+        ScreenUtils.clear(0, 0, 0, 1);
 
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);

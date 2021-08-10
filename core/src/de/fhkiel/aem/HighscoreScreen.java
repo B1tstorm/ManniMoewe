@@ -24,9 +24,9 @@ public class HighscoreScreen implements Screen {
     final FlappyBird game;
     private final OrthographicCamera camera;
     private final Stage stage;
-    private final ImageButton easyButton;
-    private final ImageButton mediumButton;
-    private final ImageButton hardButton;
+    private ImageButton easyButton;
+    private ImageButton mediumButton;
+    private ImageButton hardButton;
     private int shownDifficulty;
     private Table highscoreTable;
 
@@ -47,22 +47,35 @@ public class HighscoreScreen implements Screen {
 
         shownDifficulty = game.getDifficulty();
 
-        easyButton = ButtonFactory.CreateImageButton(Configuration.difficulty_easyImg,
+        easyButton = ButtonFactory.CreateImageButton(Configuration.difficulty_easy, true,
                 () -> {
                     shownDifficulty = 1;
                     updateTable();
+                    easyButton.setChecked(true);
+                    mediumButton.setChecked(false);
+                    hardButton.setChecked(false);
         });
-        mediumButton = ButtonFactory.CreateImageButton(Configuration.difficulty_mediumImg,
+        mediumButton = ButtonFactory.CreateImageButton(Configuration.difficulty_medium, true,
                 () -> {
                     shownDifficulty = 2;
                     updateTable();
+                    easyButton.setChecked(false);
+                    mediumButton.setChecked(true);
+                    hardButton.setChecked(false);
                 });
-        hardButton = ButtonFactory.CreateImageButton(Configuration.difficulty_hardImg,
+        hardButton = ButtonFactory.CreateImageButton(Configuration.difficulty_hard, true,
                 () -> {
                     shownDifficulty = 3;
                     updateTable();
-                });
+                    easyButton.setChecked(false);
+                    mediumButton.setChecked(false);
+                    hardButton.setChecked(true);
+        });
 
+
+        easyButton.setProgrammaticChangeEvents(false);
+        mediumButton.setProgrammaticChangeEvents(false);
+        hardButton.setProgrammaticChangeEvents(false);
 
         highscoreTable = new Table();
         highscoreTable.setFillParent(true);
@@ -97,7 +110,7 @@ public class HighscoreScreen implements Screen {
         }
 
         highscoreTable.row();
-        highscoreTable.add(ButtonFactory.CreateImageButton(Configuration.backImg, Configuration.backImgPressed, Configuration.backImg,
+        highscoreTable.add(ButtonFactory.CreateImageButton(Configuration.back, false,
                 () -> {
                     game.setScreen(new StartScreen(game));
                     dispose();
@@ -105,6 +118,20 @@ public class HighscoreScreen implements Screen {
 
         updateTable();
         stage.addActor(highscoreTable);
+
+        switch(game.getDifficulty()) {
+            case 1:
+                easyButton.setChecked(true);
+                break;
+            case 2:
+                mediumButton.setChecked(true);
+                break;
+            case 3:
+                hardButton.setChecked(true);
+                break;
+            default:
+                break;
+        }
     }
 
     private void updateTable() {
@@ -142,8 +169,10 @@ public class HighscoreScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
-        stage.draw();
         game.batch.end();
+
+        stage.draw();
+        stage.act();
     }
 
     @Override

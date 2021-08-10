@@ -82,7 +82,7 @@ public class GameOverScreen implements Screen {
      * Create all used Buttons
      */
     private void createButtons() {
-        backButton = ButtonFactory.CreateImageButton(Configuration.backImg,
+        backButton = ButtonFactory.CreateImageButton(Configuration.back, false,
                 () -> {
                     game.setHighscore(game.getNetworkHandler().getFromServer());
                     game.setPlayerName(nameTextField.getText());
@@ -92,7 +92,7 @@ public class GameOverScreen implements Screen {
                     dispose();
                 });
 
-        restartButton = ButtonFactory.CreateImageButton(Configuration.startImg,
+        restartButton = ButtonFactory.CreateImageButton(Configuration.start, false,
                 () -> {
                     game.setHighscore(game.getNetworkHandler().getFromServer());
                     game.setPlayerName(nameTextField.getText());
@@ -102,7 +102,7 @@ public class GameOverScreen implements Screen {
                     dispose();
                 });
 
-        highscoreButton = ButtonFactory.CreateImageButton(Configuration.highscoreImg,
+        highscoreButton = ButtonFactory.CreateImageButton(Configuration.highscore, false,
                 () -> {
                     game.setHighscore(game.getNetworkHandler().getFromServer());
                     game.setPlayerName(nameTextField.getText());
@@ -131,13 +131,10 @@ public class GameOverScreen implements Screen {
         }
 
         game.batch.begin();
-
-        stage.draw();
-
         game.batch.end();
 
-
-
+        stage.draw();
+        stage.act();
     }
 
     @Override

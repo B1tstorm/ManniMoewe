@@ -64,6 +64,8 @@ public class Configuration {
     public static final String city1Img = "ATFB-stadt1.png";
     public static final String city2Img = "ATFB-stadt2.png";
     public static final String city3Img = "ATFB-stadt3.png";
+
+    // Item Assets
     public static final String transparentImg = "ATFB-transparent.png";
     public static final String item_godmodeImg = "ATFB-item-godmode.png";
     public static final String pommesImg = "ATFB-pommes.png";
@@ -77,6 +79,7 @@ public class Configuration {
     public static final String manny_down_HelmImg = "ATFB-manny-down-helm.png";
     public static final String manny_straight_helmImg = "ATFB-manny-straight-helm.png";
     public static final String manny_up_helmImg = "ATFB-manny-up-helm.png";
+    public static final String reduceScoreImg = "ATFB-reduceScore.png";
 
 
 

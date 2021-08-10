@@ -65,7 +65,7 @@ public class HighscoreScreen implements Screen {
         }
 
         highscoreTable.row();
-        highscoreTable.add(ButtonFactory.CreateImageButton(Configuration.backImg,
+        highscoreTable.add(ButtonFactory.CreateImageButton(Configuration.backImg, Configuration.backImgPressed, Configuration.backImg,
                 () -> {
                     game.setScreen(new StartScreen(game));
                     dispose();

@@ -97,37 +97,37 @@ public class OptionsScreen implements Screen {
      * Creates all shown Buttons
      */
     private void createButtons(){
-        backButton = ButtonFactory.CreateImageButton(Configuration.backImg,
+        backButton = ButtonFactory.CreateImageButton(Configuration.backImg, Configuration.backImgPressed, Configuration.backImg,
                 () -> {
                     game.setScreen(new StartScreen(game));
                     dispose();
                 });
 
-        easyButton = ButtonFactory.CreateImageButton(Configuration.difficulty_easyImg,
+        easyButton = ButtonFactory.CreateImageButton(Configuration.difficulty_easyImg, Configuration.difficulty_easyImgPressed, Configuration.difficulty_easyImg,
                 () -> {
                     game.setDifficulty(1);
                 });
 
-        mediumButton = ButtonFactory.CreateImageButton(Configuration.difficulty_mediumImg,
+        mediumButton = ButtonFactory.CreateImageButton(Configuration.difficulty_mediumImg, Configuration.difficulty_mediumImgPressed,Configuration.difficulty_mediumImg,
                 () -> {
                     game.setDifficulty(2);
                 });
 
-        hardButton = ButtonFactory.CreateImageButton(Configuration.difficulty_hardImg,
+        hardButton = ButtonFactory.CreateImageButton(Configuration.difficulty_hardImg, Configuration.difficulty_hardImgPressed, Configuration.difficulty_hardImg,
                 () -> {
                     game.setDifficulty(3);
                 });
 
-        skinButton1 = ButtonFactory.CreateImageButton(Configuration.flappy1_upImg,
+        skinButton1 = ButtonFactory.CreateImageButton(Configuration.manny_stareImg,
                 () -> {
                 });
 
-        skinButton2 = ButtonFactory.CreateImageButton(Configuration.flappy1_midImg,
+        skinButton2 = ButtonFactory.CreateImageButton(Configuration.manny_heyImg,
                 () -> {
 
                 });
 
-        skinButton3 = ButtonFactory.CreateImageButton(Configuration.flappy1_downImg,
+        skinButton3 = ButtonFactory.CreateImageButton(Configuration.manny_heyImg,
                 () -> {
 
                 });

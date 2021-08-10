@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -17,8 +18,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import de.fhkiel.aem.utility.ButtonFactory;
 
+import java.util.Iterator;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -31,15 +32,20 @@ public class PlayScreen implements Screen {
     private final Stage stage;
     private final Bird bird;
     private GameOverScreen gameOverScreen;
-    private final Label highscoreLabel;
+    private final Label highscoreLabel, collectableLabel;
     private final Array<Barrier> barriers = new Array<>();
     private Label pressSpaceLable;
+    private final Table table;
     private final Table tablePressSpace;
     private boolean runGame = false;
     private boolean gameOver = false;
     private ImageButton ausweichButton, platzhalterButton;
     private long lastInvisibleTime;
-    private long currtime;
+    private long currentTime;
+    private final Array<Item> items;
+    private Texture pommespackung_leer, pommespackung_eins, pommespackung_zwei, pommespackung_drei;
+    private Image pommespackungImg;
+
 
     private final ShapeRenderer shapeRenderer;
 
@@ -51,37 +57,49 @@ public class PlayScreen implements Screen {
         shapeRenderer = new ShapeRenderer();
         gameOver = false;
         runGame = false;
+
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = new BitmapFont(Gdx.files.internal("title-font-export.fnt"));
         labelStyle.fontColor = Color.GRAY;
-        Table table = new Table();
+
+        table = new Table();
         table.setFillParent(true);
         tablePressSpace = new Table();
         tablePressSpace.setFillParent(true);
+        //table.debug();
+
+        items = new Array<>();
+
+        pommespackung_leer = new Texture(Configuration.pommespackung_leerImg);
+        pommespackung_eins = new Texture(Configuration.pommespackung_einsImg);
+        pommespackung_zwei = new Texture(Configuration.pommespackung_zweiImg);
+        pommespackung_drei = new Texture(Configuration.pommespackung_dreiImg);
 
         this.game = game;
 
         bird = new Bird(50, 250 );
-        bird.getBirdSprite().setTexture(bird.getMannyStraight());
-
+        if(bird.isHelmetactive()){
+            bird.getBirdSprite().setTexture(bird.getMannyStraightHelm());
+        }
+        else {
+            bird.getBirdSprite().setTexture(bird.getMannyStraight());
+        }
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Configuration.ScreenWidth, Configuration.ScreenHeight);
 
         stage = new Stage(new FitViewport(Configuration.ScreenWidth, Configuration.ScreenHeight));
 
         Gdx.input.setInputProcessor(stage);
+
         highscoreLabel = new Label("Highscore: ", labelStyle);
-        table.add(ausweichButton = ButtonFactory.CreateImageButton(Configuration.backImg,
-                () -> {
-                        lastInvisibleTime = TimeUtils.nanoTime();
-                        bird.getHitbox().setRadius(0f);
-        })).expand().left().top();
+        collectableLabel = new Label( "" + bird.getScoreCollectable() + " / 3",labelStyle);
+
+        table.add(pommespackungImg = new Image(pommespackung_leer)).top().left().maxHeight(55).maxWidth(55);
+        table.add(collectableLabel).expand().center().top().left().padLeft(20);
+
         table.add(highscoreLabel).expand().height(100).center().top();
-        table.add(platzhalterButton = ButtonFactory.CreateImageButton(Configuration.transparentImg,
-                () -> {})).expand();
 
-
-
+        table.add().expand().padRight(75 + collectableLabel.getWidth());
         stage.addActor(table);
 
         pressSpaceLable = new Label("Press Space to start...", labelStyle);
@@ -117,20 +135,15 @@ public class PlayScreen implements Screen {
         }
 
         stage.draw();
+
         bird.render(game.batch);
+
+        for (Item item: items) {
+            item.render(game.batch);
+        }
+
         bird.birdGetSmaller();
-        //beim Drücken der Leertaste soll die Zeile"press space to ......" verschwenden und das spiel wird in Bewegung gesetzt
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            runGame = true;
-            tablePressSpace.clear();
-            currtime = TimeUtils.nanoTime();
-        }
-        if (runGame && !gameOver) {
-            bird.move();
-            for (Barrier barrier : new Array.ArrayIterator<>(barriers)) {
-                barrier.move();
-            }
-        }
+
         game.batch.end();
 
         //Debug Hitbox
@@ -140,13 +153,14 @@ public class PlayScreen implements Screen {
             shapeRenderer.rect(barrier.getHitbox().x, barrier.getHitbox().y,
                     barrier.getHitbox().width, barrier.getHitbox().height);
         }
-        shapeRenderer.circle(bird.hitbox.x, bird.hitbox.y, bird.hitbox.radius);
+        shapeRenderer.circle(bird.getHitbox().x, bird.getHitbox().y, bird.getHitbox().radius);
+        shapeRenderer.circle(invincibleItem.getHitbox().x, invincibleItem.getHitbox().y, invincibleItem.getHitbox().radius);
         shapeRenderer.end();*/
 
         if (gameOver) {
             game.resetGameSpeed();
             gameOverScreen.render(delta);
-             bird.birdDies();
+            bird.birdDies();
         } else {
             update();
         }
@@ -158,30 +172,87 @@ public class PlayScreen implements Screen {
     private void update() {
         int randomNum = 0;
 
-        if(TimeUtils.nanoTime() - lastInvisibleTime > 1500000000) {
-            bird.getHitbox().setRadius(50);
-        }
-        if(runGame && TimeUtils.nanoTime() - currtime > 500000000){
-            game.increaseGameSpeed();
-            currtime = TimeUtils.nanoTime();
+        if(bird.getScoreCollectable() < 3){
+            bird.setHelmetactive(false);
         }
 
-        highscoreLabel.setText("Highscore: " + (int) bird.getHighscore());
+        if(TimeUtils.nanoTime() - lastInvisibleTime > 1500000000) {
+            bird.setInvincible(false);
+        }
+        if(TimeUtils.nanoTime() - bird.getLastMultiplierTime() > 10000000000L) {
+            bird.setMultiplier(1);
+        }
+        if(TimeUtils.nanoTime() - bird.getLastShrinkTime() > 10000000000L) {
+            bird.getHitbox().setRadius(bird.getWidth() / 2);
+            bird.setBirdWidth(bird.getWidth());
+        }
+        if(runGame && TimeUtils.nanoTime() - currentTime > 500000000){
+            game.increaseGameSpeed();
+            currentTime = TimeUtils.nanoTime();
+        }
+
+        highscoreLabel.setText("Highscore: " + (int) bird.getHighscore() /*+ " " + Background.FOREGROUNDSPEED*/);
+        collectableLabel.setText(bird.getScoreCollectable() + " / 3");
+        if(bird.getScoreCollectable() == 1) {
+            table.getCells().get(0).setActor(new Image(pommespackung_eins));
+        }
+        else if(bird.getScoreCollectable() == 2) {
+            table.getCells().get(0).setActor(new Image(pommespackung_zwei));
+        }
+        else if(bird.getScoreCollectable() == 3) {
+            table.getCells().get(0).setActor(new Image(pommespackung_drei));
+        }
+        else {
+            table.getCells().get(0).setActor(new Image(pommespackung_leer));
+        }
 
         for (Barrier barrier : new Array.ArrayIterator<>(barriers)) {
-            if (Intersector.overlaps(bird.getHitbox(), barrier.getBarrierSprite().getBoundingRectangle())) {
-                game.kielMusic.stop();
-                gameOver = true;
-                runGame = false;
-                bird.setDieTime(TimeUtils.millis());
-                gameOverScreen = new GameOverScreen(game, bird.getHighscore());
-
+            if(!bird.isInvincible()){
+                if (Intersector.overlaps(bird.getHitbox(), barrier.getBarrierSprite().getBoundingRectangle())) {
+                    if(bird.getScoreCollectable() == 3){
+                        lastInvisibleTime = TimeUtils.nanoTime();
+                        bird.setInvincible(true);
+                        bird.setScoreCollectable(0);
+                    } else {
+                        game.kielMusic.stop();
+                        gameOver = true;
+                        runGame = false;
+                        gameOverScreen = new GameOverScreen(game, bird.getHighscore());
+                        bird.setDieTime(TimeUtils.millis());
+                    }
+                }
+                if(bird.getHitbox().y > Configuration.ScreenHeight && barrier.getBarrierSprite().getX() <= bird.getBirdSprite().getX()) {
+                    game.kielMusic.stop();
+                    gameOver = true;
+                    runGame = false;
+                    gameOverScreen = new GameOverScreen(game, bird.getHighscore());
+                    bird.setDieTime(TimeUtils.millis());
+                }
             }
-            if(bird.getHitbox().y > Configuration.ScreenHeight && barrier.getBarrierSprite().getX() <= bird.getBirdSprite().getX()) {
-                game.kielMusic.stop();
-                gameOver = true;
-                runGame = false;
-                gameOverScreen = new GameOverScreen(game, bird.getHighscore());
+        }
+        for(Iterator<Item> iter = items.iterator(); iter.hasNext(); ) {
+            Item item = iter.next();
+            if (Intersector.overlaps(bird.getHitbox(), item.getHitbox())) {
+                item.collide(bird, game);
+                iter.remove();
+            }
+            if(item.getItemSprite().getX() < -item.getItemSprite().getWidth()) {
+                iter.remove();
+            }
+        }
+        //beim Drücken der Leertaste soll die Zeile"press space to ......" verschwenden und das spiel wird in Bewegung gesetzt
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            runGame = true;
+            tablePressSpace.clear();
+            currentTime = TimeUtils.nanoTime();
+        }
+        if (runGame && !gameOver) {
+            bird.move();
+            for (Item item: items) {
+                item.move();
+            }
+            for (Barrier barrier : new Array.ArrayIterator<>(barriers)) {
+                barrier.move();
             }
         }
 
@@ -189,7 +260,7 @@ public class PlayScreen implements Screen {
 
         for(Barrier barrier : new Array.ArrayIterator<>(barriers)) {
             if(bird.getBirdSprite().getX() >= barrier.getBarrierSprite().getX() && barrier.getWealth() != 0) {
-                bird.setHighscore(bird.getHighscore() + barrier.getWealth());
+                bird.setHighscore(bird.getHighscore() + (barrier.getWealth() * bird.getMultiplier()));
                 barrier.setWealth(0);
             }
             if (barrier.getBarrierSprite().getX() < (0 - barrier.getBarrierSprite().getWidth())) {
@@ -197,6 +268,7 @@ public class PlayScreen implements Screen {
                     randomNum = ThreadLocalRandom.current().nextInt(
                             (int) (Gdx.graphics.getHeight() - barrier.getBarrierSprite().getHeight()) +200, Gdx.graphics.getHeight());
                     barrier.getBarrierSprite().setY(randomNum);
+                    createItems(barrier.getBarrierSprite().getX() + ((barriers.size / 2f) * barrier.getDistance())+ (barrier.getDistance() / 2));
                 } else {
                     barrier.getBarrierSprite().setY(randomNum - barrier.getBarrierSprite().getHeight() - barrier.getGap());
                 }
@@ -224,6 +296,26 @@ public class PlayScreen implements Screen {
                     randomNum - b.getBarrierSprite().getHeight() - b.getGap(), Configuration.barrierupImg, game.getDifficulty());
             b2.getBarrierSprite().setRotation(180f);
             barriers.add(b2);
+            createItems(b.getBarrierSprite().getX() + b.getDistance()/2);
+        }
+    }
+
+    private void createItems(float xPos) {
+        int randomNum1 = ThreadLocalRandom.current().nextInt(
+                 200,Gdx.graphics.getHeight()-200);
+        int randomNum2 = ThreadLocalRandom.current().nextInt(0, 100);
+
+        if(randomNum2 < 15){
+            items.add(new Fries(xPos, randomNum1));
+        }
+        else if(randomNum2 < 20){
+            items.add(new Multiplier(xPos, randomNum1));
+        }
+        else if(randomNum2 < 25){
+            items.add(new Shrink(xPos, randomNum1));
+        }
+        else if(randomNum2 < 30){
+            items.add(new Slow(xPos,randomNum1));
         }
     }
 

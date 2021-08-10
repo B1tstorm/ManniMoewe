@@ -75,6 +75,18 @@ public class FlappyBird extends Game {
 	}
 
 	/**
+	 * Decreses the Speed of the Game.
+	 */
+	public void decreaseGameSpeed(){
+		Barrier.speed = Barrier.speed / speedMultiplier * (speedMultiplier - 0.15f);
+		Background.FOREGROUNDSPEED = Background.FOREGROUNDSPEED / speedMultiplier  * (speedMultiplier - 0.15f);
+		Background.WATERSPEED = Background.WATERSPEED / speedMultiplier  * (speedMultiplier  - 0.15f);
+		Background.CITYSPEED = Background.CITYSPEED / speedMultiplier  * (speedMultiplier  - 0.15f);
+		Background.SKYSPEED = Background.SKYSPEED / speedMultiplier  * (speedMultiplier  - 0.15f);
+		Item.itemspeed = Item.itemspeed /speedMultiplier * (speedMultiplier  - 0.15f);
+	}
+
+	/**
 	 * Resets the Speed of the Game.
 	 */
 	public void resetGameSpeed(){
@@ -83,6 +95,7 @@ public class FlappyBird extends Game {
 		Background.WATERSPEED = 150;
 		Background.CITYSPEED = 75;
 		Background.SKYSPEED = 30;
+		Item.itemspeed = 300;
 		speedMultiplier = 1.0f;
 	}
 
@@ -107,6 +120,22 @@ public class FlappyBird extends Game {
 	 */
 	public void setDifficulty(int difficulty) {
 		this.difficulty = difficulty;
+	}
+
+	/**
+	 * Gets the SpeedMultiplier
+	 * @return SpeedMultiplier
+	 */
+	public static float getSpeedMultiplier() {
+		return speedMultiplier;
+	}
+
+	/**
+	 * Sets the SpeedMultiplier.
+	 * @param speedMultiplier New SpeedMultiplier
+	 */
+	public static void setSpeedMultiplier(float speedMultiplier) {
+		FlappyBird.speedMultiplier = speedMultiplier;
 	}
 
 	/**

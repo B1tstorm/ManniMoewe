@@ -178,4 +178,6 @@ public class FlappyBird extends Game {
 	public void setHighscore(Highscore highscore) {
 		this.highscore = highscore;
 	}
+
+
 }

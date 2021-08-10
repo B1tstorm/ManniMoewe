@@ -79,12 +79,14 @@ public class PlayScreen implements Screen {
         this.game = game;
 
         bird = new Bird(50, 250 );
+
         if(bird.isHelmetactive()){
             bird.getBirdSprite().setTexture(bird.getMannyStraightHelm());
         }
         else {
             bird.getBirdSprite().setTexture(bird.getMannyStraight());
         }
+
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Configuration.ScreenWidth, Configuration.ScreenHeight);
 
@@ -139,11 +141,11 @@ public class PlayScreen implements Screen {
 
         bird.render(game.batch);
 
+        bird.birdGetSmaller();
+
         for (Item item: items) {
             item.render(game.batch);
         }
-
-        bird.birdGetSmaller();
 
         game.batch.end();
 
@@ -184,8 +186,10 @@ public class PlayScreen implements Screen {
             bird.setMultiplier(1);
         }
         if(TimeUtils.nanoTime() - bird.getLastShrinkTime() > 10000000000L) {
-            bird.getHitbox().setRadius(bird.getWidth() / 2);
-            bird.setBirdWidth(bird.getWidth());
+            bird.getHitbox().setRadius(50);
+            if(bird.getBirdWidth() < 100) {
+                bird.setBirdWidth((int) (bird.getHitbox().radius * 2));
+            }
         }
         if(runGame && TimeUtils.nanoTime() - currentTime > 500000000){
             game.increaseGameSpeed();

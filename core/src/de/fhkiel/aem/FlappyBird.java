@@ -40,7 +40,7 @@ public class FlappyBird extends Game {
 		background = new Background(batch);
 
 		networkHandler = new NetworkHandler();
-		highscore = networkHandler.getFromServer();
+		highscore = new Highscore();
 
 		this.setScreen(new StartScreen(this));
 

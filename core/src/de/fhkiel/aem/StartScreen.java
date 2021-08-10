@@ -23,6 +23,7 @@ public class StartScreen implements Screen {
     private final ImageButton startButton;
     private final ImageButton highscoreButton;
     private final ImageButton optionsButton;
+    private final ImageButton helpButton;
     private ImageButton muteButton;
     private ImageButton exitButton;
     private final Bird bird;
@@ -61,6 +62,11 @@ public class StartScreen implements Screen {
             game.setScreen(new OptionsScreen(game));
             dispose();
         });
+        helpButton = ButtonFactory.CreateImageButton(Configuration.optionImg, Configuration.optionImgPressed, Configuration.optionImgPressed,
+                () -> {
+                    game.setScreen(new HelpScreen(game));
+                    dispose();
+                });
         muteButton = ButtonFactory.CreateImageButton(Configuration.unmuteImg, Configuration.muteImg, () -> {
             if(game.musicShouldPlay){
                 game.musicShouldPlay = false;
@@ -87,12 +93,13 @@ public class StartScreen implements Screen {
 
 //        ImageButton imageButton = new ImageButton();
 
+        table.add(exitButton).left().top();
 
-        table.add(exitButton).expand().left().top();
+        table.add().fillX();
 
-        table.add().expand();
-
-        table.add(muteButton).expand().right().top();
+        table.add(muteButton).right().top();
+        table.row();
+        table.add(helpButton).colspan(3).expand().top().right();
 
         table.row();
         table.add(startButton).center().fillX();

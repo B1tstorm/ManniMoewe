@@ -89,7 +89,7 @@ public class HelpScreen implements Screen {
         table.add(new Label("Item-Schnecke: Manni wird verlangsamt.", labelStyle)).fillX();
 
         table.row();
-        table.add(ButtonFactory.CreateImageButton(Configuration.backImg, Configuration.backImgPressed, Configuration.backImg,
+        table.add(ButtonFactory.CreateImageButton(Configuration.back, false,
                 () -> {
                     game.setScreen(new StartScreen(game));
                     dispose();

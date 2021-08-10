@@ -62,7 +62,7 @@ public class StartScreen implements Screen {
             game.setScreen(new OptionsScreen(game));
             dispose();
         });
-        helpButton = ButtonFactory.CreateImageButton(Configuration.optionImg, Configuration.optionImgPressed, Configuration.optionImgPressed,
+        helpButton = ButtonFactory.CreateImageButton(Configuration.option, false,
                 () -> {
                     game.setScreen(new HelpScreen(game));
                     dispose();
@@ -88,8 +88,7 @@ public class StartScreen implements Screen {
 
         muteButton.setProgrammaticChangeEvents(false);
 
-        table.add(exitButton).expand().left().top();
-//
+
         table.add(exitButton).left().top();
 
         table.add().fillX();

@@ -7,7 +7,7 @@ public class Configuration {
     // Config
     public final static int ScreenWidth = 1920;
     public final static int ScreenHeight = 1080;
-    public static  boolean fullscreen = false;
+    public static  boolean fullscreen = true;
 
     // Button Images
     public static final String startImg = "ATFB-start.png";

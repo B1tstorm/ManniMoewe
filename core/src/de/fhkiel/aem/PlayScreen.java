@@ -91,6 +91,7 @@ public class PlayScreen implements Screen {
         stage = new Stage(new FitViewport(Configuration.ScreenWidth, Configuration.ScreenHeight));
 
         Gdx.input.setInputProcessor(stage);
+
         highscoreLabel = new Label("Highscore: ", labelStyle);
         collectableLabel = new Label( "" + bird.getScoreCollectable() + " / 3",labelStyle);
 
@@ -135,11 +136,15 @@ public class PlayScreen implements Screen {
         }
 
         stage.draw();
+
         bird.render(game.batch);
+
         for (Item item: items) {
             item.render(game.batch);
         }
+
         bird.birdGetSmaller();
+
         game.batch.end();
 
         //Debug Hitbox
@@ -156,7 +161,7 @@ public class PlayScreen implements Screen {
         if (gameOver) {
             game.resetGameSpeed();
             gameOverScreen.render(delta);
-             bird.birdDies();
+            bird.birdDies();
         } else {
             update();
         }
@@ -187,7 +192,7 @@ public class PlayScreen implements Screen {
             currentTime = TimeUtils.nanoTime();
         }
 
-        highscoreLabel.setText("Highscore: " + (int) bird.getHighscore() + " " + Background.FOREGROUNDSPEED);
+        highscoreLabel.setText("Highscore: " + (int) bird.getHighscore() /*+ " " + Background.FOREGROUNDSPEED*/);
         collectableLabel.setText(bird.getScoreCollectable() + " / 3");
         if(bird.getScoreCollectable() == 1) {
             table.getCells().get(0).setActor(new Image(pommespackung_eins));
@@ -209,12 +214,12 @@ public class PlayScreen implements Screen {
                         lastInvisibleTime = TimeUtils.nanoTime();
                         bird.setInvincible(true);
                         bird.setScoreCollectable(0);
-                        bird.setDieTime(TimeUtils.millis());
                     } else {
                         game.kielMusic.stop();
                         gameOver = true;
                         runGame = false;
                         gameOverScreen = new GameOverScreen(game);
+                        bird.setDieTime(TimeUtils.millis());
                     }
                 }
                 if(bird.getHitbox().y > Configuration.ScreenHeight && barrier.getBarrierSprite().getX() <= bird.getBirdSprite().getX()) {
@@ -222,6 +227,7 @@ public class PlayScreen implements Screen {
                     gameOver = true;
                     runGame = false;
                     gameOverScreen = new GameOverScreen(game);
+                    bird.setDieTime(TimeUtils.millis());
                 }
             }
         }

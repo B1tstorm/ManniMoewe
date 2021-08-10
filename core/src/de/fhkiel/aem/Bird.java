@@ -25,7 +25,7 @@ public class Bird {
 
     private final int width = 100;
     private float highscore = 0;
-    private int  scoreCollectable = 0;
+    private int scoreCollectable = 0;
     private boolean invincible = false;
     private boolean helmetactive = false;
     private int multiplier = 1;
@@ -35,7 +35,7 @@ public class Bird {
     private long lastMultiplierTime;
     private long lastShrinkTime;
 
-    private long dieTime;
+    private long dieTime = 0;
     private static HashMap<Integer, Texture> animationMap = new HashMap<>();
 
 
@@ -77,14 +77,14 @@ public class Bird {
     /**
      * Moves the Bird.
      */
-    public void move(){
+    public void move() {
         birdGetSmaller();
 
         //bird rotiert nach oben bis er seine Grenze erreicht und dann wieder zurück
         if (birdMayRotate && birdRotation < 25) {
             birdRotation += 4;
         } else if (birdRotation > 0) {
-            birdRotation-=2d;
+            birdRotation -= 2d;
         }
 
         //bird Fällt nach unten mit einer Beschleunigung
@@ -97,8 +97,8 @@ public class Bird {
         }
 
         //nach xxxx millisec nachdem der button betätigt wurde, fällt der Vogel auf 2 Phasen wieder runter
-        if (pressTime != 0 &&( fallSpeed < 0  && TimeUtils.millis() >= (pressTime + 200))){
-            if(helmetactive){
+        if (pressTime != 0 && (fallSpeed < 0 && TimeUtils.millis() >= (pressTime + 200))) {
+            if (helmetactive) {
                 birdSprite.setTexture(mannyStraightHelm);
             } else {
                 birdSprite.setTexture(mannyStraight);
@@ -106,8 +106,8 @@ public class Bird {
             fallSpeed = 4;
             birdMayRotate = false;
         }
-        if (pressTime != 0 && fallSpeed > 0  && TimeUtils.millis() >= (pressTime + 300)){
-            if(helmetactive){
+        if (pressTime != 0 && fallSpeed > 0 && TimeUtils.millis() >= (pressTime + 300)) {
+            if (helmetactive) {
                 birdSprite.setTexture(mannyDownHelm);
             } else {
                 birdSprite.setTexture(mannyDown);
@@ -191,7 +191,7 @@ public class Bird {
             birdMayRotate = true;
         }
         pressTime = TimeUtils.millis();
-        if(helmetactive){
+        if (helmetactive) {
             birdSprite.setTexture(mannyUpHelm);
         } else {
             birdSprite.setTexture(mannyUp);
@@ -201,10 +201,9 @@ public class Bird {
 
     private void slide() {
         pressTime = TimeUtils.millis();
-        if(helmetactive){
+        if (helmetactive) {
             birdSprite.setTexture(mannyUpHelm);
-        }
-        else {
+        } else {
             birdSprite.setTexture(mannyUp);
         }
         fallSpeed = -6;
@@ -227,7 +226,7 @@ public class Bird {
             birdSprite.setY(birdSprite.getY() - fallSpeed);
         }
         birdMayRotate = true;
-        birdRotation+=8;
+        birdRotation += 8;
     }
 
     /**
@@ -236,32 +235,27 @@ public class Bird {
      */
     private int dieStep() {
         return (int) ((TimeUtils.millis() - dieTime) / 100);
-        if(helmetactive){
-            birdSprite.setTexture(mannyUpHelm);
-        }
-        else {
-            birdSprite.setTexture(mannyUp);
-        }
-        fallSpeed = -7;
     }
 
     public void setFallSpeed(float fallSpeed) {
         this.fallSpeed = fallSpeed;
     }
 
-    public int getScoreCollectable() {return scoreCollectable;}
+    public int getScoreCollectable() {
+        return scoreCollectable;
+    }
 
     public void setScoreCollectable(int scoreCollectable) {
         this.scoreCollectable = scoreCollectable;
     }
 
-    public Texture getMannyUp() {
+    /*public Texture getMannyUp() {
         return mannyUp;
     }
 
     public Texture getMannyDown() {
         return mannyDown;
-    }
+    }*/
 
     public boolean isInvincible() {
         return invincible;
@@ -271,7 +265,7 @@ public class Bird {
         this.invincible = invincible;
     }
 
-    public float getFallSpeed() {
+    /*public float getFallSpeed() {
         return fallSpeed;
     }
 
@@ -281,19 +275,19 @@ public class Bird {
 
     public void setPressTime(long pressTime) {
         this.pressTime = pressTime;
-    }
+    }*/
 
     public Texture getMannyStraightHelm() {
         return mannyStraightHelm;
     }
 
-    public Texture getMannyDownHelm() {
+    /*public Texture getMannyDownHelm() {
         return mannyDownHelm;
     }
 
     public Texture getMannyUpHelm() {
         return mannyUpHelm;
-    }
+    }*/
 
     public boolean isHelmetactive() {
         return helmetactive;
@@ -327,13 +321,9 @@ public class Bird {
         this.lastShrinkTime = lastShrinkTime;
     }
 
-
-}
-
-
-    public long getDieTime() {
+    /*public long getDieTime() {
         return dieTime;
-    }
+    }*/
 
     public void setDieTime(long dieTime) {
         this.dieTime = dieTime;

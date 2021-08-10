@@ -330,14 +330,16 @@ public class PlayScreen implements Screen {
                 200, Gdx.graphics.getHeight() - 200);
         int randomNum2 = ThreadLocalRandom.current().nextInt(0, 100);
 
-        if (randomNum2 < 15) {
+        if (randomNum2 < 10) {
             items.add(new Fries(xPos, randomNum1));
-        } else if (randomNum2 < 20) {
+        } else if (randomNum2 < 15) {
             items.add(new Multiplier(xPos, randomNum1));
-        } else if (randomNum2 < 25) {
+        } else if (randomNum2 < 20) {
             items.add(new Shrink(xPos, randomNum1));
-        } else if (randomNum2 < 30) {
+        } else if (randomNum2 < 23) {
             items.add(new Slow(xPos, randomNum1));
+        } else if (randomNum2 < 28) {
+            items.add(new ReduceScore(xPos, randomNum1));
         }
     }
 

@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.utils.TimeUtils;
 
+import java.util.HashMap;
+
 /**
  * The Bird of the Game.
  */
@@ -20,15 +22,21 @@ public class Bird {
     private final Texture mannyStraightHelm = new Texture(Configuration.manny_straight_helmImg);
     private final Texture mannyDownHelm = new Texture(Configuration.manny_down_HelmImg);
     private final Texture mannyUpHelm = new Texture(Configuration.manny_up_helmImg);
+
     private final int width = 100;
     private float highscore = 0;
     private int  scoreCollectable = 0;
     private boolean invincible = false;
     private boolean helmetactive = false;
     private int multiplier = 1;
+    private int birdRotation = 0;
+    private boolean birdMayRotate = false;
     private int birdWidth = 350;
     private long lastMultiplierTime;
     private long lastShrinkTime;
+
+    private long dieTime;
+    private static HashMap<Integer, Texture> animationMap = new HashMap<>();
 
 
     public Texture getMannyStraight() {
@@ -41,6 +49,7 @@ public class Bird {
 
     /**
      * Creates an new bird object on the given location.
+     *
      * @param xPos x position of the bird
      * @param yPos y position of the bird
      */
@@ -52,26 +61,38 @@ public class Bird {
         birdSprite.setY(yPos);
         hitbox = new Circle(birdSprite.getX(), birdSprite.getY(), width / 2f);
         hitbox.setPosition(birdSprite.getX(), birdSprite.getY());
+        initializeAnimation();
     }
 
     /**
      * Renders the bird on the given SpriteBatch.
+     *
      * @param batch spriteBatch it rendered on
      */
-    public void render(SpriteBatch batch){
-        batch.draw(birdSprite, birdSprite.getX(), birdSprite.getY(), birdSprite.getOriginX(), birdSprite.getOriginY(),
-                getBirdWidth(), getBirdWidth(),1,1, birdSprite.getRotation());
+    public void render(SpriteBatch batch) {
+        batch.draw(birdSprite, birdSprite.getX(), birdSprite.getY(), birdSprite.getX(), birdSprite.getX(),
+                getBirdWidth(), getBirdWidth(), 1, 1, birdRotation);
     }
 
     /**
      * Moves the Bird.
      */
     public void move(){
+        birdGetSmaller();
+
+        //bird rotiert nach oben bis er seine Grenze erreicht und dann wieder zurück
+        if (birdMayRotate && birdRotation < 25) {
+            birdRotation += 4;
+        } else if (birdRotation > 0) {
+            birdRotation-=2d;
+        }
+
+        //bird Fällt nach unten mit einer Beschleunigung
         birdSprite.setY(birdSprite.getY() - fallSpeed);
         hitbox.setPosition(birdSprite.getX() + width / 2f, birdSprite.getY() + width / 2f);
-        fallSpeed +=0.3;
+        fallSpeed += 0.3;
 
-        if ( Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             sprungNachOben();
         }
 
@@ -83,6 +104,7 @@ public class Bird {
                 birdSprite.setTexture(mannyStraight);
             }
             fallSpeed = 4;
+            birdMayRotate = false;
         }
         if (pressTime != 0 && fallSpeed > 0  && TimeUtils.millis() >= (pressTime + 300)){
             if(helmetactive){
@@ -94,8 +116,7 @@ public class Bird {
             pressTime = 0;
         }
         //stoppe den Vogel am Rand des Bilds
-        if (birdSprite.getY() <= 25 ){
-            //! zu testen da.... Damit der Vogel stopp, musst du die vorherige Zeile aktivieren und die folgende löschen
+        if (birdSprite.getY() <= 25) {
             slide();
         }
 
@@ -103,21 +124,23 @@ public class Bird {
 
     //zum beginn des playScreens wird der Vogel allmählich klein
     public void birdGetSmaller() {
-        if(birdWidth > 100){
-            this.setBirdWidth(this.getBirdWidth()-5);
+        if (birdWidth > 100) {
+            this.setBirdWidth(this.getBirdWidth() - 5);
         }
     }
 
     /**
      * Gets the Sprite of the bird.
+     *
      * @return The bird Sprite
      */
-    public Sprite getBirdSprite(){
-            return birdSprite;
+    public Sprite getBirdSprite() {
+        return birdSprite;
     }
 
     /**
      * Returns the hitbox of the bird.
+     *
      * @return Circle that represents the hitbox
      */
     public Circle getHitbox() {
@@ -126,6 +149,7 @@ public class Bird {
 
     /**
      * Gets the width of the Bird.
+     *
      * @return Width of bird
      */
     public int getWidth() {
@@ -143,14 +167,16 @@ public class Bird {
 
     /**
      * Gets the highscore.
+     *
      * @return The highscore
      */
-    public float getHighscore(){
+    public float getHighscore() {
         return highscore;
     }
 
     /**
      * Sets the highscore to a new value.
+     *
      * @param highscore New highscore
      */
     public void setHighscore(float highscore) {
@@ -160,7 +186,10 @@ public class Bird {
     /**
      * The bird jumps up.
      */
-    private void sprungNachOben(){
+    private void sprungNachOben() {
+        if (birdRotation < 25) {
+            birdMayRotate = true;
+        }
         pressTime = TimeUtils.millis();
         if(helmetactive){
             birdSprite.setTexture(mannyUpHelm);
@@ -170,8 +199,43 @@ public class Bird {
         fallSpeed = -13;
     }
 
-    private void slide(){
+    private void slide() {
         pressTime = TimeUtils.millis();
+        if(helmetactive){
+            birdSprite.setTexture(mannyUpHelm);
+        }
+        else {
+            birdSprite.setTexture(mannyUp);
+        }
+        fallSpeed = -6;
+    }
+
+    /**
+     * the Bird dies and the Animation changes
+     * eine Reihe an Bildern wird abgespielt
+     * und der Vogel dreht sich um seine x Achse beim Fallen
+     */
+    public void birdDies() {
+        fallSpeed = 1;
+        birdSprite.setY(birdSprite.getY() - fallSpeed);
+
+        int dieStep = dieStep();
+        if (dieStep < 8) {
+            birdSprite.setTexture(animationMap.get(dieStep));
+        } else {
+            fallSpeed = 4;
+            birdSprite.setY(birdSprite.getY() - fallSpeed);
+        }
+        birdMayRotate = true;
+        birdRotation+=8;
+    }
+
+    /**
+     * return an integer based on the time of the collision
+     * the return number presents the dying step
+     */
+    private int dieStep() {
+        return (int) ((TimeUtils.millis() - dieTime) / 100);
         if(helmetactive){
             birdSprite.setTexture(mannyUpHelm);
         }
@@ -264,4 +328,28 @@ public class Bird {
     }
 
 
+}
+
+
+    public long getDieTime() {
+        return dieTime;
+    }
+
+    public void setDieTime(long dieTime) {
+        this.dieTime = dieTime;
+    }
+
+    /**
+     * fill the Hashmap with the animation assetss
+     */
+    private void initializeAnimation() {
+        animationMap.put(0, new Texture(Gdx.files.internal(Configuration.mannyOuch2)));
+        animationMap.put(1, new Texture(Gdx.files.internal(Configuration.mannyOuch3)));
+        animationMap.put(2, new Texture(Gdx.files.internal(Configuration.mannyOuch4)));
+        animationMap.put(3, new Texture(Gdx.files.internal(Configuration.mannyOuch5)));
+        animationMap.put(4, new Texture(Gdx.files.internal(Configuration.mannyOuch6)));
+        animationMap.put(5, new Texture(Gdx.files.internal(Configuration.mannyOuch7)));
+        animationMap.put(6, new Texture(Gdx.files.internal(Configuration.mannyOuch8)));
+        animationMap.put(7, new Texture(Gdx.files.internal(Configuration.mannyOuch9)));
+    }
 }

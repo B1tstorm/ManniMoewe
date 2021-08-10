@@ -70,6 +70,7 @@ public class FlappyBird extends Game {
 			Background.WATERSPEED = Background.WATERSPEED / speedMultiplier  * (speedMultiplier + 0.01f);
 			Background.CITYSPEED = Background.CITYSPEED / speedMultiplier  * (speedMultiplier + 0.01f);
 			Background.SKYSPEED = Background.SKYSPEED / speedMultiplier  * (speedMultiplier + 0.01f);
+			Item.itemspeed = Barrier.speed;
 			speedMultiplier += 0.01f;
 		}
 	}

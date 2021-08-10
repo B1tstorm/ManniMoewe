@@ -30,8 +30,7 @@ public abstract class Item {
 
     public void move() {
         hitbox.setPosition(itemSprite.getX() + radius, itemSprite.getY() + radius);
-        float movement = itemspeed * Gdx.graphics.getDeltaTime();
-        itemSprite.setX(itemSprite.getX() - movement);
+        itemSprite.setX(itemSprite.getX() - Gdx.graphics.getDeltaTime() * itemspeed);
     }
 
     public abstract void collide(Bird bird, FlappyBird game);

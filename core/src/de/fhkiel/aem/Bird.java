@@ -73,7 +73,7 @@ public class Bird {
      * @param batch spriteBatch it rendered on
      */
     public void render(SpriteBatch batch) {
-        batch.draw(birdSprite, birdSprite.getX(), birdSprite.getY(), birdSprite.getX()-100, birdSprite.getX()-100,
+        batch.draw(birdSprite, birdSprite.getX(), birdSprite.getY(), birdSprite.getX()-25, birdSprite.getX()-25,
                 getBirdWidth(), getBirdWidth(), 1, 1, birdRotation);
     }
 

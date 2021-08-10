@@ -77,7 +77,7 @@ public class PlayScreen implements Screen {
 
         this.game = game;
 
-        bird = new Bird(150, 250 );
+        bird = new Bird(75, 250 );
 
         if(bird.isHelmetactive()){
             bird.getBirdSprite().setTexture(bird.getMannyStraightHelm());

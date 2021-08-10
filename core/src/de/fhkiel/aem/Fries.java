@@ -6,7 +6,7 @@ public class Fries extends Item{
     }
 
     @Override
-    public void collide(Bird bird){
+    public void collide(Bird bird, FlappyBird game){
         if(bird.getScoreCollectable() < 3) {
             bird.setScoreCollectable(bird.getScoreCollectable() + 1);
         }

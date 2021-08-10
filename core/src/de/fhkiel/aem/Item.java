@@ -34,7 +34,7 @@ public abstract class Item {
         itemSprite.setX(itemSprite.getX() - movement);
     }
 
-    public abstract void collide(Bird bird);
+    public abstract void collide(Bird bird, FlappyBird game);
 
     public Sprite getItemSprite() {
         return itemSprite;

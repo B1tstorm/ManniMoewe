@@ -186,7 +186,7 @@ public class PlayScreen implements Screen {
             currentTime = TimeUtils.nanoTime();
         }
 
-        highscoreLabel.setText("Highscore: " + (int) bird.getHighscore());
+        highscoreLabel.setText("Highscore: " + (int) bird.getHighscore() + " " + Background.FOREGROUNDSPEED);
         collectableLabel.setText(bird.getScoreCollectable() + " / 3");
         if(bird.getScoreCollectable() == 1) {
             table.getCells().get(0).setActor(new Image(pommespackung_eins));
@@ -226,7 +226,7 @@ public class PlayScreen implements Screen {
         for(Iterator<Item> iter = items.iterator(); iter.hasNext(); ) {
             Item item = iter.next();
             if (Intersector.overlaps(bird.getHitbox(), item.getHitbox())) {
-                item.collide(bird);
+                item.collide(bird, game);
                 iter.remove();
             }
             if(item.getItemSprite().getX() < -item.getItemSprite().getWidth()) {
@@ -306,6 +306,9 @@ public class PlayScreen implements Screen {
         }
         else if(randomNum2 < 25){
             items.add(new Shrink(xPos, randomNum1));
+        }
+        else if(randomNum2 < 30){
+            items.add(new Slow(xPos,randomNum1));
         }
     }
 

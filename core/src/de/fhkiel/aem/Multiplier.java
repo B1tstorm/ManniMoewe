@@ -8,7 +8,7 @@ public class Multiplier extends Item{
     }
 
     @Override
-    public void collide(Bird bird) {
+    public void collide(Bird bird, FlappyBird game) {
         bird.setMultiplier(2);
         bird.setLastMultiplierTime(TimeUtils.nanoTime());
     }

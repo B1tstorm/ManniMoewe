@@ -10,7 +10,7 @@ public class Shrink extends Item{
     @Override
     public void collide(Bird bird, FlappyBird game) {
         bird.getHitbox().setRadius(bird.getWidth() / 4);
-        bird.setBirdWidth(bird.getWidth() / 2);
+        bird.setBirdWidth((int) (bird.getWidth() * 0.6));
         bird.setLastShrinkTime(TimeUtils.nanoTime());
     }
 }

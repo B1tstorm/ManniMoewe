@@ -62,27 +62,33 @@ public class NetworkHandler {
 	 * @return The parsed Highscore
 	 */
 	private Highscore readJson(String jsonString) {
-		Highscore highscore = new Highscore();
-		JSONObject jsonObject = new JSONObject(jsonString);
-		JSONArray easyArray = jsonObject.getJSONArray("easy");
-		JSONArray mediumArray = jsonObject.getJSONArray("medium");
-		JSONArray hardArray = jsonObject.getJSONArray("hard");
+		try {
+			Highscore highscore = new Highscore();
+			JSONObject jsonObject = new JSONObject(jsonString);
+			JSONArray easyArray = jsonObject.getJSONArray("easy");
+			JSONArray mediumArray = jsonObject.getJSONArray("medium");
+			JSONArray hardArray = jsonObject.getJSONArray("hard");
 
-		for(Object obj: easyArray) {
-			JSONObject jObj = (JSONObject) obj;
-			highscore.addHighscore(1, new HighscoreEntry(jObj.getString("name"), jObj.getInt("highscore")));
-		}
+			for(Object obj: easyArray) {
+				JSONObject jObj = (JSONObject) obj;
+				highscore.addHighscore(1, new HighscoreEntry(jObj.getString("name"), jObj.getInt("highscore")));
+			}
 
-		for(Object obj: mediumArray) {
-			JSONObject jObj = (JSONObject) obj;
-			highscore.addHighscore(2, new HighscoreEntry(jObj.getString("name"), jObj.getInt("highscore")));
-		}
+			for(Object obj: mediumArray) {
+				JSONObject jObj = (JSONObject) obj;
+				highscore.addHighscore(2, new HighscoreEntry(jObj.getString("name"), jObj.getInt("highscore")));
+			}
 
-		for(Object obj: hardArray) {
-			JSONObject jObj = (JSONObject) obj;
-			highscore.addHighscore(3, new HighscoreEntry(jObj.getString("name"), jObj.getInt("highscore")));
+			for(Object obj: hardArray) {
+				JSONObject jObj = (JSONObject) obj;
+				highscore.addHighscore(3, new HighscoreEntry(jObj.getString("name"), jObj.getInt("highscore")));
+			}
+			return highscore;
+		} catch(Exception e) {
+			System.err.println("JSON could not be read!");
+			System.err.println(e.getMessage());
+			return new Highscore();
 		}
-		return highscore;
 	}
 
 	/**

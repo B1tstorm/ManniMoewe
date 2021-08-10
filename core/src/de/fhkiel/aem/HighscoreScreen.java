@@ -38,6 +38,7 @@ public class HighscoreScreen implements Screen {
     public HighscoreScreen(final FlappyBird game) {
 
         this.game = game;
+        game.setHighscore(game.getNetworkHandler().getFromServer());
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Configuration.ScreenWidth, Configuration.ScreenHeight);

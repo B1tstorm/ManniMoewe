@@ -41,7 +41,6 @@ public class FlappyBird extends Game {
 
 		networkHandler = new NetworkHandler();
 		highscore = networkHandler.getFromServer();
-		networkHandler.sendToServer(highscore);
 
 		this.setScreen(new StartScreen(this));
 
@@ -140,5 +139,13 @@ public class FlappyBird extends Game {
 	 */
 	public Highscore getHighscore() {
 		return highscore;
+	}
+
+	/**
+	 * Sets the Highscore.
+	 * @param highscore New Highscore
+	 */
+	public void setHighscore(Highscore highscore) {
+		this.highscore = highscore;
 	}
 }

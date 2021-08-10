@@ -172,13 +172,13 @@ public class PlayScreen implements Screen {
                 game.kielMusic.stop();
                 gameOver = true;
                 runGame = false;
-                gameOverScreen = new GameOverScreen(game);
+                gameOverScreen = new GameOverScreen(game, bird.getHighscore());
             }
             if(bird.getHitbox().y > Configuration.ScreenHeight && barrier.getBarrierSprite().getX() <= bird.getBirdSprite().getX()) {
                 game.kielMusic.stop();
                 gameOver = true;
                 runGame = false;
-                gameOverScreen = new GameOverScreen(game);
+                gameOverScreen = new GameOverScreen(game, bird.getHighscore());
             }
         }
 

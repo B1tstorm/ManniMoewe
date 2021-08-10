@@ -19,13 +19,6 @@ public class Highscore {
 		easy = new Array<>();
 		medium = new Array<>();
 		hard = new Array<>();
-
-		easy.add(new HighscoreEntry("Name 1", 100));
-		easy.add(new HighscoreEntry("Name 2", 200));
-		easy.add(new HighscoreEntry("Name 3", 300));
-		easy.add(new HighscoreEntry("Name 4", 400));
-
-		easy.sort(Comparator.comparingInt(highscoreEntry -> -highscoreEntry.highscore));
 	}
 
 	/**

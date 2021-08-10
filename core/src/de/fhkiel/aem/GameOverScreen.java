@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import de.fhkiel.aem.model.HighscoreEntry;
 import de.fhkiel.aem.utility.ButtonFactory;
 
 public class GameOverScreen implements Screen {
@@ -23,10 +24,12 @@ public class GameOverScreen implements Screen {
     private ImageButton restartButton;
     private ImageButton highscoreButton;
     private final ShapeRenderer shapeRenderer;
+    private int score;
 
 
-    public GameOverScreen(FlappyBird game) {
+    public GameOverScreen(FlappyBird game, float score) {
         this.game = game;
+        this.score = (int)score;
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Configuration.ScreenWidth, Configuration.ScreenHeight);
@@ -77,22 +80,31 @@ public class GameOverScreen implements Screen {
     private void createButtons(){
         backButton = ButtonFactory.CreateImageButton(Configuration.backImg,
                 () -> {
-                    game.setScreen(new StartScreen(game));
+                    game.setHighscore(game.getNetworkHandler().getFromServer());
                     game.setPlayerName(nameTextField.getText());
+                    game.getHighscore().addHighscore(game.getDifficulty() ,new HighscoreEntry(game.getPlayerName(), score));
+                    game.getNetworkHandler().sendToServer(game.getHighscore());
+                    game.setScreen(new StartScreen(game));
                     dispose();
                 });
 
         restartButton = ButtonFactory.CreateImageButton(Configuration.startImg,
                 () -> {
-                    game.setScreen(new PlayScreen(game));
+                    game.setHighscore(game.getNetworkHandler().getFromServer());
                     game.setPlayerName(nameTextField.getText());
+                    game.getHighscore().addHighscore(game.getDifficulty() ,new HighscoreEntry(game.getPlayerName(), score));
+                    game.getNetworkHandler().sendToServer(game.getHighscore());
+                    game.setScreen(new PlayScreen(game));
                     dispose();
                 });
 
         highscoreButton = ButtonFactory.CreateImageButton(Configuration.highscoreImg,
                 () -> {
-                    game.setScreen(new HighscoreScreen(game));
+                    game.setHighscore(game.getNetworkHandler().getFromServer());
                     game.setPlayerName(nameTextField.getText());
+                    game.getHighscore().addHighscore(game.getDifficulty() ,new HighscoreEntry(game.getPlayerName(), score));
+                    game.getNetworkHandler().sendToServer(game.getHighscore());
+                    game.setScreen(new HighscoreScreen(game));
                     dispose();
                 });
     }

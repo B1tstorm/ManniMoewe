@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import de.fhkiel.aem.model.HighscoreEntry;
 import de.fhkiel.aem.utility.ButtonFactory;
 
 public class GameOverScreen implements Screen {
@@ -24,9 +25,12 @@ public class GameOverScreen implements Screen {
     private ImageButton backButton;
     private ImageButton restartButton;
     private ImageButton highscoreButton;
+    private int score;
 
-    public GameOverScreen(FlappyBird game) {
+
+    public GameOverScreen(FlappyBird game, float score) {
         this.game = game;
+        this.score = (int)score;
 
         Texture highscoreInputImg = new Texture(Gdx.files.internal(Configuration.highscoreInputImg));
         camera = new OrthographicCamera();
@@ -59,7 +63,7 @@ public class GameOverScreen implements Screen {
 
         //das Holzbrett als Hintergrund für den Eingabefeld setzten
         textFieldStyle.background = new SpriteDrawable(new Sprite(highscoreInputImg));
-        nameTextField = new TextField("Enter your Name", textFieldStyle);
+        nameTextField = new TextField(game.getPlayerName(), textFieldStyle);
         nameTextField.setAlignment(Align.center);
 
         table.add(overLabel).height(200).top().center().colspan(3).expand();
@@ -80,18 +84,30 @@ public class GameOverScreen implements Screen {
     private void createButtons() {
         backButton = ButtonFactory.CreateImageButton(Configuration.backImg,
                 () -> {
+                    game.setHighscore(game.getNetworkHandler().getFromServer());
+                    game.setPlayerName(nameTextField.getText());
+                    game.getHighscore().addHighscore(game.getDifficulty() ,new HighscoreEntry(game.getPlayerName(), score));
+                    game.getNetworkHandler().sendToServer(game.getHighscore());
                     game.setScreen(new StartScreen(game));
                     dispose();
                 });
 
         restartButton = ButtonFactory.CreateImageButton(Configuration.startImg,
                 () -> {
+                    game.setHighscore(game.getNetworkHandler().getFromServer());
+                    game.setPlayerName(nameTextField.getText());
+                    game.getHighscore().addHighscore(game.getDifficulty() ,new HighscoreEntry(game.getPlayerName(), score));
+                    game.getNetworkHandler().sendToServer(game.getHighscore());
                     game.setScreen(new PlayScreen(game));
                     dispose();
                 });
 
         highscoreButton = ButtonFactory.CreateImageButton(Configuration.highscoreImg,
                 () -> {
+                    game.setHighscore(game.getNetworkHandler().getFromServer());
+                    game.setPlayerName(nameTextField.getText());
+                    game.getHighscore().addHighscore(game.getDifficulty() ,new HighscoreEntry(game.getPlayerName(), score));
+                    game.getNetworkHandler().sendToServer(game.getHighscore());
                     game.setScreen(new HighscoreScreen(game));
                     dispose();
                 });
@@ -109,15 +125,18 @@ public class GameOverScreen implements Screen {
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
 
-        if (stage.getKeyboardFocus() != nameTextField) {
+        if(stage.getKeyboardFocus() != nameTextField) {
             stage.setKeyboardFocus(nameTextField);
             nameTextField.selectAll();
         }
 
         game.batch.begin();
-        game.batch.end();
 
         stage.draw();
+
+        game.batch.end();
+
+
 
     }
 

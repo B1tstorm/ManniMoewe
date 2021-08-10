@@ -62,7 +62,6 @@ public class PlayScreen implements Screen {
         labelStyle.font = new BitmapFont(Gdx.files.internal("title-font-export.fnt"));
         labelStyle.fontColor = Color.GRAY;
 
-
         table = new Table();
         table.setFillParent(true);
         tablePressSpace = new Table();
@@ -218,7 +217,7 @@ public class PlayScreen implements Screen {
                         game.kielMusic.stop();
                         gameOver = true;
                         runGame = false;
-                        gameOverScreen = new GameOverScreen(game);
+                        gameOverScreen = new GameOverScreen(game, bird.getHighscore());
                         bird.setDieTime(TimeUtils.millis());
                     }
                 }
@@ -226,7 +225,7 @@ public class PlayScreen implements Screen {
                     game.kielMusic.stop();
                     gameOver = true;
                     runGame = false;
-                    gameOverScreen = new GameOverScreen(game);
+                    gameOverScreen = new GameOverScreen(game, bird.getHighscore());
                     bird.setDieTime(TimeUtils.millis());
                 }
             }

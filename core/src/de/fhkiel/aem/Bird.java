@@ -62,6 +62,7 @@ public class Bird {
 
         birdSprite.setX(xPos);
         birdSprite.setY(yPos);
+
         hitbox = new Circle(birdSprite.getX(), birdSprite.getY(), width / 2f);
         hitbox.setPosition(birdSprite.getX(), birdSprite.getY());
         initializeAnimation();

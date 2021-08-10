@@ -29,7 +29,10 @@ public class Bird {
     private boolean invincible = false;
     private boolean helmetactive = false;
     private int multiplier = 1;
-    private int birdRotation = 0;
+
+
+
+    public int birdRotation = 0;
     private boolean birdMayRotate = false;
     private int birdWidth = 350;
     private long lastMultiplierTime;
@@ -59,6 +62,7 @@ public class Bird {
 
         birdSprite.setX(xPos);
         birdSprite.setY(yPos);
+
         hitbox = new Circle(birdSprite.getX(), birdSprite.getY(), width / 2f);
         hitbox.setPosition(birdSprite.getX(), birdSprite.getY());
         initializeAnimation();
@@ -70,7 +74,7 @@ public class Bird {
      * @param batch spriteBatch it rendered on
      */
     public void render(SpriteBatch batch) {
-        batch.draw(birdSprite, birdSprite.getX(), birdSprite.getY(), birdSprite.getX(), birdSprite.getX(),
+        batch.draw(birdSprite, birdSprite.getX(), birdSprite.getY(), birdSprite.getX()-25, birdSprite.getX()-25,
                 getBirdWidth(), getBirdWidth(), 1, 1, birdRotation);
     }
 
@@ -342,4 +346,5 @@ public class Bird {
         animationMap.put(6, new Texture(Gdx.files.internal(Configuration.mannyOuch8)));
         animationMap.put(7, new Texture(Gdx.files.internal(Configuration.mannyOuch9)));
     }
+
 }

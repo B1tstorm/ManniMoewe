@@ -292,7 +292,7 @@ public class PlayScreen implements Screen {
             if (barrier.getBarrierSprite().getX() < (0 - barrier.getBarrierSprite().getWidth())) {
                 if (barrier.getBarrierSprite().getRotation() != 180) {
                     randomNum = ThreadLocalRandom.current().nextInt(
-                            (int) (Gdx.graphics.getHeight() - barrier.getBarrierSprite().getHeight()) + 200, Gdx.graphics.getHeight());
+                            200, Gdx.graphics.getHeight());
                     barrier.getBarrierSprite().setY(randomNum);
                     createItems(barrier.getBarrierSprite().getX() + ((barriers.size / 2f) * barrier.getDistance()) + (barrier.getDistance() / 2));
                 } else {

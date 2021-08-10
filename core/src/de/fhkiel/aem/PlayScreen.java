@@ -77,7 +77,7 @@ public class PlayScreen implements Screen {
 
         this.game = game;
 
-        bird = new Bird(50, 250 );
+        bird = new Bird(150, 250 );
 
         if(bird.isHelmetactive()){
             bird.getBirdSprite().setTexture(bird.getMannyStraightHelm());
@@ -123,7 +123,6 @@ public class PlayScreen implements Screen {
      */
     @Override
     public void render(float delta) {
-
         ScreenUtils.clear(0f, 0f, 0f, 1);
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);

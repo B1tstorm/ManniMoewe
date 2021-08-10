@@ -187,6 +187,22 @@ public class PlayScreen implements Screen {
         if (TimeUtils.nanoTime() - bird.getLastMultiplierTime() > 10000000000L) {
             bird.setMultiplier(1);
         }
+
+        if(bird.getBirdWidth() < 101) {
+            if (TimeUtils.nanoTime() - bird.getLastShrinkTime() > 8000000000L && TimeUtils.nanoTime() - bird.getLastShrinkTime() < 8500000000L) {
+                bird.setBirdWidth(100);
+            }
+            else if(TimeUtils.nanoTime() - bird.getLastShrinkTime() >8500000000L && TimeUtils.nanoTime() - bird.getLastShrinkTime() < 9000000000L) {
+                bird.setBirdWidth(50);
+            }
+            else if(TimeUtils.nanoTime() - bird.getLastShrinkTime() > 9000000000L && TimeUtils.nanoTime() - bird.getLastShrinkTime() < 9500000000L){
+                bird.setBirdWidth(100);
+            }
+            else if(TimeUtils.nanoTime() - bird.getLastShrinkTime() > 9500000000L && TimeUtils.nanoTime() - bird.getLastShrinkTime() < 9800000000L) {
+                bird.setBirdWidth(50);
+            }
+        }
+
         if (TimeUtils.nanoTime() - bird.getLastShrinkTime() > 10000000000L) {
             bird.getHitbox().setRadius(50);
             if (bird.getBirdWidth() < 100) {
@@ -276,7 +292,7 @@ public class PlayScreen implements Screen {
             if (barrier.getBarrierSprite().getX() < (0 - barrier.getBarrierSprite().getWidth())) {
                 if (barrier.getBarrierSprite().getRotation() != 180) {
                     randomNum = ThreadLocalRandom.current().nextInt(
-                            (int) (Gdx.graphics.getHeight() - barrier.getBarrierSprite().getHeight()) + 200, Gdx.graphics.getHeight());
+                            200, Gdx.graphics.getHeight());
                     barrier.getBarrierSprite().setY(randomNum);
                     createItems(barrier.getBarrierSprite().getX() + ((barriers.size / 2f) * barrier.getDistance()) + (barrier.getDistance() / 2));
                 } else {
@@ -314,14 +330,16 @@ public class PlayScreen implements Screen {
                 200, Gdx.graphics.getHeight() - 200);
         int randomNum2 = ThreadLocalRandom.current().nextInt(0, 100);
 
-        if (randomNum2 < 15) {
+        if (randomNum2 < 10) {
             items.add(new Fries(xPos, randomNum1));
-        } else if (randomNum2 < 20) {
+        } else if (randomNum2 < 15) {
             items.add(new Multiplier(xPos, randomNum1));
-        } else if (randomNum2 < 25) {
+        } else if (randomNum2 < 20) {
             items.add(new Shrink(xPos, randomNum1));
-        } else if (randomNum2 < 30) {
+        } else if (randomNum2 < 23) {
             items.add(new Slow(xPos, randomNum1));
+        } else if (randomNum2 < 28) {
+            items.add(new ReduceScore(xPos, randomNum1));
         }
     }
 

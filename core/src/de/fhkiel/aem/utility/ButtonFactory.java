@@ -21,24 +21,6 @@ public class ButtonFactory {
 	}
 
 	/**
-	 * Creates a new Image Button.
-	 * @param imagePath The imagePath to the Image the button should have
-	 * @param function The function that is called on Click
-	 * @return The newly created Button
-	 */
-	public static ImageButton CreateImageButton(String imagePath, ActionFunction function) {
-		ImageButton button = new ImageButton(
-				new TextureRegionDrawable(new TextureRegion(new Texture(imagePath))));
-		button.addListener(new ChangeListener() {
-			@Override
-			public void changed (ChangeEvent event, Actor actor) {
-				function.run();
-			}
-		});
-		return button;
-	}
-
-	/**
 	 * Creates an new ImageButton with an different Image as the Checked Image.
 	 * @param imagePath The imagePath to the Image the button should have
 	 * @param checkedImagePath The imagePath to the Image the button should have if he is checked
@@ -58,11 +40,21 @@ public class ButtonFactory {
 		});
 		return button;
 	}
+
+	/**
+	 * Creates an ImageButton.
+	 * @param upImagePath Up Image
+	 * @param downImagePath Down Image
+	 * @param checkedImagePath Checked Image
+	 * @param function The click Function
+	 * @return The newly created Button
+	 */
 	public static ImageButton CreateImageButton(String upImagePath, String downImagePath, String checkedImagePath, ActionFunction function) {
-		ImageButton button = new ImageButton(
-				new TextureRegionDrawable(new TextureRegion(new Texture(upImagePath))),
-				new TextureRegionDrawable(new TextureRegion(new Texture(downImagePath))),
-				new TextureRegionDrawable(new TextureRegion(new Texture(checkedImagePath))));
+		ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
+		style.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(upImagePath)));
+		style.imageDown = new TextureRegionDrawable(new TextureRegion(new Texture(downImagePath)));
+		style.imageChecked = new TextureRegionDrawable(new TextureRegion(new Texture(checkedImagePath)));
+		ImageButton button = new ImageButton(style);
 		button.addListener(new ChangeListener() {
 			@Override
 			public void changed (ChangeEvent event, Actor actor) {
@@ -72,4 +64,28 @@ public class ButtonFactory {
 		return button;
 	}
 
+	/**
+	 * Creates a new Image Button.
+	 * @param imageName The imagePath to the Image the button should have. NEED to have a ".png" , "-pressed.png" and "-hover.png".
+	 * @param hasCheckedState If the button has a check state. NEEDs a "-active.png"
+	 * @param function The function that is called on Click
+	 * @return The newly created Button
+	 */
+	public static ImageButton CreateImageButton(String imageName, boolean hasCheckedState, ActionFunction function) {
+		ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
+		style.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(imageName + ".png")));
+		style.imageDown = new TextureRegionDrawable(new TextureRegion(new Texture(imageName + "-pressed.png")));
+		style.imageOver = new TextureRegionDrawable(new TextureRegion(new Texture(imageName + "-hover.png")));
+		if(hasCheckedState) {
+			style.imageChecked = new TextureRegionDrawable(new TextureRegion(new Texture(imageName + "-active.png")));
+		}
+		ImageButton button = new ImageButton(style);
+		button.addListener(new ChangeListener() {
+			@Override
+			public void changed (ChangeEvent event, Actor actor) {
+				function.run();
+			}
+		});
+		return button;
+	}
 }

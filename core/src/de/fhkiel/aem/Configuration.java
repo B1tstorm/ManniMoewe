@@ -7,24 +7,32 @@ public class Configuration {
     // Config
     public final static int ScreenWidth = 1920;
     public final static int ScreenHeight = 1080;
-    public static  boolean fullscreen = true;
+    public static  boolean fullscreen = false;
 
     // Button Images
     public static final String startImg = "ATFB-start.png";
+    public static final String start = "ATFB-start";
     public static final String startImgPressed = "ATFB-start-pressed.png";
     public static final String backImg = "ATFB-back.png";
+    public static final String back = "ATFB-back";
     public static final String backImgPressed = "ATFB-back-pressed.png";
     public static final String difficulty_easyImg = "ATFB-difficulty-easy.png";
+    public static final String difficulty_easy = "ATFB-difficulty-easy";
     public static final String difficulty_easyImgPressed = "ATFB-difficulty-easy-pressed.png";
     public static final String difficulty_mediumImg = "ATFB-difficulty-medium.png";
+    public static final String difficulty_medium = "ATFB-difficulty-medium";
     public static final String difficulty_mediumImgPressed = "ATFB-difficulty-medium-pressed.png";
     public static final String difficulty_hardImg = "ATFB-difficulty-hard.png";
+    public static final String difficulty_hard = "ATFB-difficulty-hard";
     public static final String difficulty_hardImgPressed = "ATFB-difficulty-hard-pressed.png";
     public static final String highscoreImg = "ATFB-highscore.png";
+    public static final String highscore = "ATFB-highscore";
     public static final String highscoreImgPressed = "ATFB-highscore-pressed.png";
     public static final String exitImg = "ATFB-exit.png";
+    public static final String exit = "ATFB-exit";
     public static final String exitImgPressed = "ATFB-exit-pressed.png";
     public static final String optionImg = "ATFB-option.png";
+    public static final String option = "ATFB-option";
     public static final String optionImgPressed = "ATFB-option-pressed.png";
 
     public static final String muteImg = "ATFB-mute.png";
@@ -64,6 +72,8 @@ public class Configuration {
     public static final String city1Img = "ATFB-stadt1.png";
     public static final String city2Img = "ATFB-stadt2.png";
     public static final String city3Img = "ATFB-stadt3.png";
+
+    // Item Assets
     public static final String transparentImg = "ATFB-transparent.png";
     public static final String item_godmodeImg = "ATFB-item-godmode.png";
     public static final String pommesImg = "ATFB-pommes.png";
@@ -77,6 +87,7 @@ public class Configuration {
     public static final String manny_down_HelmImg = "ATFB-manny-down-helm.png";
     public static final String manny_straight_helmImg = "ATFB-manny-straight-helm.png";
     public static final String manny_up_helmImg = "ATFB-manny-up-helm.png";
+    public static final String reduceScoreImg = "ATFB-reduceScore.png";
 
 
 

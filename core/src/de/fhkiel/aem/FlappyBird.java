@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import de.fhkiel.aem.model.Highscore;
 
 /**
  * The game object which handles Screen general behavior.
@@ -17,12 +18,14 @@ public class FlappyBird extends Game {
 	private int difficulty = 2;
 	public boolean musicShouldPlay = true;
 	public Background background;
-	private static float speedMultiplier = 1.0f;
 
+	private static float speedMultiplier = 1.0f;
+	private String playerName = "Enter your Name";
+	private Highscore highscore;
+	private NetworkHandler networkHandler;
 
 	@Override
 	public void create () {
-
 		oceanSeagullMusic = Gdx.audio.newMusic(Gdx.files.internal("Meer_Möwe.mp3"));
 		oceanSeagullMusic.setLooping(true);
 		oceanSeagullMusic.setVolume(0.5f);
@@ -35,6 +38,9 @@ public class FlappyBird extends Game {
 		font = new BitmapFont();
 
 		background = new Background(batch);
+
+		networkHandler = new NetworkHandler();
+		highscore = networkHandler.getFromServer();
 
 		this.setScreen(new StartScreen(this));
 
@@ -55,7 +61,7 @@ public class FlappyBird extends Game {
 	}
 
 	/**
-	 * increases the Speed of the Game
+	 * Increases the Speed of the Game.
 	 */
 	public void increaseGameSpeed(){
 		if(speedMultiplier <= 3){
@@ -64,11 +70,13 @@ public class FlappyBird extends Game {
 			Background.WATERSPEED = Background.WATERSPEED / speedMultiplier  * (speedMultiplier + 0.01f);
 			Background.CITYSPEED = Background.CITYSPEED / speedMultiplier  * (speedMultiplier + 0.01f);
 			Background.SKYSPEED = Background.SKYSPEED / speedMultiplier  * (speedMultiplier + 0.01f);
-			Item.itemspeed = Item.itemspeed /speedMultiplier * (speedMultiplier + 0.01f);
 			speedMultiplier += 0.01f;
 		}
 	}
 
+	/**
+	 * Decreses the Speed of the Game.
+	 */
 	public void decreaseGameSpeed(){
 		Barrier.speed = Barrier.speed / speedMultiplier * (speedMultiplier - 0.15f);
 		Background.FOREGROUNDSPEED = Background.FOREGROUNDSPEED / speedMultiplier  * (speedMultiplier - 0.15f);
@@ -78,6 +86,9 @@ public class FlappyBird extends Game {
 		Item.itemspeed = Item.itemspeed /speedMultiplier * (speedMultiplier  - 0.15f);
 	}
 
+	/**
+	 * Resets the Speed of the Game.
+	 */
 	public void resetGameSpeed(){
 		Barrier.speed = 300;
 		Background.FOREGROUNDSPEED = 300;
@@ -88,22 +99,82 @@ public class FlappyBird extends Game {
 		speedMultiplier = 1.0f;
 	}
 
+	/**
+	 * Sets the music volume.
+	 * @param volume volume
+	 */
 	public void setMusicVolume(float volume){
 		oceanSeagullMusic.setVolume(volume);
 		kielMusic.setVolume(volume);
 	}
 
+	/**
+	 * Gets the difficulty of the game.
+	 * @return Difficulty level
+	 */
 	public int getDifficulty(){return difficulty;}
 
+	/**
+	 * Sets the difficulty of the game.
+	 * @param difficulty Difficulty level
+	 */
 	public void setDifficulty(int difficulty) {
 		this.difficulty = difficulty;
 	}
 
+	/**
+	 * Gets the SpeedMultiplier
+	 * @return SpeedMultiplier
+	 */
 	public static float getSpeedMultiplier() {
 		return speedMultiplier;
 	}
 
+	/**
+	 * Sets the SpeedMultiplier.
+	 * @param speedMultiplier New SpeedMultiplier
+	 */
 	public static void setSpeedMultiplier(float speedMultiplier) {
 		FlappyBird.speedMultiplier = speedMultiplier;
+	}
+
+	/**
+	 * Gets the playername.
+	 * @return playername
+	 */
+	public String getPlayerName() {
+		return playerName;
+	}
+
+	/**
+	 * Sets the playername.
+	 * @param playerName New playername
+	 */
+	public void setPlayerName(String playerName) {
+		this.playerName = playerName;
+	}
+
+	/**
+	 * Gets the NetworkHandler.
+	 * @return The NetworkHandler
+	 */
+	public NetworkHandler getNetworkHandler() {
+		return networkHandler;
+	}
+
+	/**
+	 * Gets the Highscore.
+	 * @return The Highscore
+	 */
+	public Highscore getHighscore() {
+		return highscore;
+	}
+
+	/**
+	 * Sets the Highscore.
+	 * @param highscore New Highscore
+	 */
+	public void setHighscore(Highscore highscore) {
+		this.highscore = highscore;
 	}
 }

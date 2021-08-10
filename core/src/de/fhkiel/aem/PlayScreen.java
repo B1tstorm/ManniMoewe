@@ -146,6 +146,7 @@ public class PlayScreen implements Screen {
         if (gameOver) {
             game.resetGameSpeed();
             gameOverScreen.render(delta);
+             bird.birdDies();
         } else {
             update();
         }
@@ -172,7 +173,9 @@ public class PlayScreen implements Screen {
                 game.kielMusic.stop();
                 gameOver = true;
                 runGame = false;
+                bird.setDieTime(TimeUtils.millis());
                 gameOverScreen = new GameOverScreen(game, bird.getHighscore());
+
             }
             if(bird.getHitbox().y > Configuration.ScreenHeight && barrier.getBarrierSprite().getX() <= bird.getBirdSprite().getX()) {
                 game.kielMusic.stop();
@@ -211,7 +214,7 @@ public class PlayScreen implements Screen {
     public void createBarriers() {
         for(int i = 0; i < 10; i++) {
             int randomNum = ThreadLocalRandom.current().nextInt(
-                    Gdx.graphics.getHeight() - new Texture(Configuration.barrierdownImg).getHeight() +200,Gdx.graphics.getHeight());
+                    200,Gdx.graphics.getHeight());
 
             Barrier b = new Barrier(
                     Gdx.graphics.getWidth() + new Barrier(0, 0, Configuration.barrierdownImg, game.getDifficulty()).getDistance() * i,

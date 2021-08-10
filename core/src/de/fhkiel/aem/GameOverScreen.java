@@ -7,9 +7,11 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import de.fhkiel.aem.model.HighscoreEntry;
 import de.fhkiel.aem.utility.ButtonFactory;
@@ -23,7 +25,6 @@ public class GameOverScreen implements Screen {
     private ImageButton backButton;
     private ImageButton restartButton;
     private ImageButton highscoreButton;
-    private final ShapeRenderer shapeRenderer;
     private int score;
 
 
@@ -31,10 +32,10 @@ public class GameOverScreen implements Screen {
         this.game = game;
         this.score = (int)score;
 
+        Texture highscoreInputImg = new Texture(Gdx.files.internal(Configuration.highscoreInputImg));
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Configuration.ScreenWidth, Configuration.ScreenHeight);
 
-        shapeRenderer = new ShapeRenderer();
         stage = new Stage(new FitViewport(Configuration.ScreenWidth, Configuration.ScreenHeight));
         Table table = new Table();
         createButtons();
@@ -52,7 +53,7 @@ public class GameOverScreen implements Screen {
         textFieldStyle.font = new BitmapFont(Gdx.files.internal("title-font-export.fnt"));
         textFieldStyle.fontColor = Color.GRAY;
 
-        Pixmap cursorColor = new Pixmap( 3,
+        Pixmap cursorColor = new Pixmap(3,
                 (int) overLabel.getHeight(),
                 Pixmap.Format.RGB888);
         cursorColor.setColor(Color.BLACK);
@@ -60,7 +61,10 @@ public class GameOverScreen implements Screen {
 
         textFieldStyle.cursor = new Image(new Texture(cursorColor)).getDrawable();
 
+        //das Holzbrett als Hintergrund für den Eingabefeld setzten
+        textFieldStyle.background = new SpriteDrawable(new Sprite(highscoreInputImg));
         nameTextField = new TextField(game.getPlayerName(), textFieldStyle);
+        nameTextField.setAlignment(Align.center);
 
         table.add(overLabel).height(200).top().center().colspan(3).expand();
         table.row();
@@ -77,7 +81,7 @@ public class GameOverScreen implements Screen {
     /**
      * Create all used Buttons
      */
-    private void createButtons(){
+    private void createButtons() {
         backButton = ButtonFactory.CreateImageButton(Configuration.backImg,
                 () -> {
                     game.setHighscore(game.getNetworkHandler().getFromServer());
@@ -126,15 +130,14 @@ public class GameOverScreen implements Screen {
             nameTextField.selectAll();
         }
 
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(80, 80, 50, 0.01f);
-        shapeRenderer.rect(nameTextField.getX(), nameTextField.getY(),
-                nameTextField.getWidth(), nameTextField.getHeight());
-        shapeRenderer.end();
-
         game.batch.begin();
+
         stage.draw();
+
         game.batch.end();
+
+
+
     }
 
     @Override
@@ -147,7 +150,8 @@ public class GameOverScreen implements Screen {
 
     }
 
-    @Override    public void resume() {
+    @Override
+    public void resume() {
 
     }
 

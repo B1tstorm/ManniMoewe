@@ -26,6 +26,7 @@ public class Configuration {
     public static final String exitImgPressed = "ATFB-exit-pressed.png";
     public static final String optionImg = "ATFB-option.png";
     public static final String optionImgPressed = "ATFB-option-pressed.png";
+    public static final String creditImg = "ATFB-credits.png";
 
     public static final String muteImg = "ATFB-mute.png";
     public static final String unmuteImg = "ATFB-unmute.png";

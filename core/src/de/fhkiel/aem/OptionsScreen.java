@@ -29,6 +29,7 @@ public class OptionsScreen implements Screen {
     private ImageButton skinButton1;
     private ImageButton skinButton2;
     private ImageButton skinButton3;
+    private ImageButton creditButton;
     private Skin skin;
     private Slider soundSlider;
 
@@ -48,6 +49,8 @@ public class OptionsScreen implements Screen {
         createButtons();
         table.setFillParent(true);
         Gdx.input.setInputProcessor(stage);
+
+        table.debug();
 
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = new BitmapFont(Gdx.files.internal("title-font-export.fnt"));
@@ -87,7 +90,9 @@ public class OptionsScreen implements Screen {
         table.row();
         table.add(soundSlider).center().colspan(3).width(Gdx.graphics.getWidth() / 4);
         table.row();
-        table.add(backButton).expand().colspan(3);
+        table.add(backButton).expand().fillX();
+        table.add().expand();
+        table.add(creditButton).expand().fillX();
 
         stage.addActor(table);
 
@@ -130,6 +135,10 @@ public class OptionsScreen implements Screen {
         skinButton3 = ButtonFactory.CreateImageButton(Configuration.manny_heyImg,
                 () -> {
 
+                });
+        creditButton = ButtonFactory.CreateImageButton(Configuration.creditImg,
+                () -> {
+                    game.setScreen(new CreditScreen(game));
                 });
     }
 

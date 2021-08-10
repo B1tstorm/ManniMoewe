@@ -46,17 +46,17 @@ public class StartScreen implements Screen {
         table.setFillParent(true);
         Gdx.input.setInputProcessor(stage);
 
-        startButton = ButtonFactory.CreateImageButton(Configuration.startImg,
+        startButton = ButtonFactory.CreateImageButton(Configuration.startImg, Configuration.startImgPressed, Configuration.startImg,
                 () -> {
                     game.setScreen(new PlayScreen(game));
                     dispose();
         });
-        highscoreButton = ButtonFactory.CreateImageButton(Configuration.highscoreImg,
+        highscoreButton = ButtonFactory.CreateImageButton(Configuration.highscoreImg, Configuration.highscoreImgPressed, Configuration.highscoreImg,
                 () -> {
                     game.setScreen(new HighscoreScreen(game));
                     dispose();
         });
-        optionsButton = ButtonFactory.CreateImageButton(Configuration.optionImg,
+        optionsButton = ButtonFactory.CreateImageButton(Configuration.optionImg, Configuration.optionImgPressed, Configuration.optionImgPressed,
                 () -> {
             game.setScreen(new OptionsScreen(game));
             dispose();
@@ -74,13 +74,19 @@ public class StartScreen implements Screen {
                 muteButton.setChecked(false);
             }
         });
-        exitButton = ButtonFactory.CreateImageButton(Configuration.exitImg,
+        exitButton = ButtonFactory.CreateImageButton(Configuration.exitImg, Configuration.exitImgPressed, Configuration.exitImg,
                 () -> {
                     Gdx.app.exit();
                     dispose();
         });
 
         muteButton.setProgrammaticChangeEvents(false);
+
+//        ImageButton.ImageButtonStyle buttonStyle = new ImageButton.ImageButtonStyle();
+//        buttonStyle. = buttonStyle.checkedOver;
+
+//        ImageButton imageButton = new ImageButton();
+
 
         table.add(exitButton).expand().left().top();
 

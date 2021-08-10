@@ -79,7 +79,7 @@ public class OptionsScreen implements Screen {
         table.row();
         table.add(charLabel).center().colspan(3);
         table.row();
-        table.add(skinButton1).height(180).center().fillX();
+        table.add(skinButton1).center().fillX();
         table.add(skinButton2).center().fillX();
         table.add(skinButton3).center().fillX();
         table.row();
@@ -141,15 +141,20 @@ public class OptionsScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        ScreenUtils.clear(0, 0, 0.5f, 1);
+        ScreenUtils.clear(0, 0, 0, 1);
 
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
+        game.background.renderBackground();
+        game.background.renderForeground();
         stage.draw();
         game.batch.end();
+        game.background.move();
     }
+
+
 
     @Override
     public void resize(int width, int height) {

@@ -46,17 +46,17 @@ public class StartScreen implements Screen {
         table.setFillParent(true);
         Gdx.input.setInputProcessor(stage);
 
-        startButton = ButtonFactory.CreateImageButton(Configuration.startImg, Configuration.startImgPressed, Configuration.startImg,
+        startButton = ButtonFactory.CreateImageButton(Configuration.start, false,
                 () -> {
                     game.setScreen(new PlayScreen(game));
                     dispose();
         });
-        highscoreButton = ButtonFactory.CreateImageButton(Configuration.highscoreImg, Configuration.highscoreImgPressed, Configuration.highscoreImg,
+        highscoreButton = ButtonFactory.CreateImageButton(Configuration.highscore, false,
                 () -> {
                     game.setScreen(new HighscoreScreen(game));
                     dispose();
         });
-        optionsButton = ButtonFactory.CreateImageButton(Configuration.optionImg, Configuration.optionImgPressed, Configuration.optionImgPressed,
+        optionsButton = ButtonFactory.CreateImageButton(Configuration.option, false,
                 () -> {
             game.setScreen(new OptionsScreen(game));
             dispose();
@@ -74,19 +74,13 @@ public class StartScreen implements Screen {
                 muteButton.setChecked(false);
             }
         });
-        exitButton = ButtonFactory.CreateImageButton(Configuration.exitImg, Configuration.exitImgPressed, Configuration.exitImg,
+        exitButton = ButtonFactory.CreateImageButton(Configuration.exit, false,
                 () -> {
                     Gdx.app.exit();
                     dispose();
         });
 
         muteButton.setProgrammaticChangeEvents(false);
-
-//        ImageButton.ImageButtonStyle buttonStyle = new ImageButton.ImageButtonStyle();
-//        buttonStyle. = buttonStyle.checkedOver;
-
-//        ImageButton imageButton = new ImageButton();
-
 
         table.add(exitButton).expand().left().top();
 
@@ -129,9 +123,10 @@ public class StartScreen implements Screen {
 
         game.batch.draw(bird.getBirdSprite(), bird.getBirdSprite().getX(), bird.getBirdSprite().getY() , bird.getBirdWidth() , bird.getBirdWidth());
 
-        stage.draw();
         game.batch.end();
 
+        stage.draw();
+        stage.act();
         game.background.move();
     }
 

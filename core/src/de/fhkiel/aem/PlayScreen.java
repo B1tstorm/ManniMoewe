@@ -308,7 +308,7 @@ public class PlayScreen implements Screen {
                     randomNum = ThreadLocalRandom.current().nextInt(
                             200, Gdx.graphics.getHeight());
                     barrier.getBarrierSprite().setY(randomNum);
-                    barrier.getHitbox().setY(barrier.getBarrierSprite().getY());
+                    barrier.getHitbox().setY(barrier.getBarrierSprite().getY() + 55);
                     barrier.getHitbox2().setY(barrier.getHitbox().y - barrier.getHitbox2().height);
                     barrier.getHitbox3().setY(barrier.getHitbox2().y - barrier.getHitbox3().radius);
                     createItems(barrier.getBarrierSprite().getX() + ((barriers.size / 2f) * barrier.getDistance()) + (barrier.getDistance() / 2));

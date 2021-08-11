@@ -50,8 +50,6 @@ public class OptionsScreen implements Screen {
         table.setFillParent(true);
         Gdx.input.setInputProcessor(stage);
 
-        table.debug();
-
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = new BitmapFont(Gdx.files.internal("title-font-export.fnt"));
         labelStyle.fontColor = Color.WHITE;
@@ -136,7 +134,7 @@ public class OptionsScreen implements Screen {
                 () -> {
 
                 });
-        creditButton = ButtonFactory.CreateImageButton(Configuration.creditImg,
+        creditButton = ButtonFactory.CreateImageButton(Configuration.credit, false,
                 () -> {
                     game.setScreen(new CreditScreen(game));
                 });

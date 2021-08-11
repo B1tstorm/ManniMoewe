@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import de.fhkiel.aem.model.HighscoreEntry;
 import de.fhkiel.aem.utility.ButtonFactory;
@@ -26,11 +27,13 @@ public class GameOverScreen implements Screen {
     private ImageButton restartButton;
     private ImageButton highscoreButton;
     private int score;
+    private long createTime;
 
 
     public GameOverScreen(FlappyBird game, float score) {
         this.game = game;
         this.score = (int)score;
+        createTime = TimeUtils.nanoTime();
 
         Texture highscoreInputImg = new Texture(Gdx.files.internal(Configuration.highscoreInputImg));
         camera = new OrthographicCamera();
@@ -126,16 +129,20 @@ public class GameOverScreen implements Screen {
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
 
-        if(stage.getKeyboardFocus() != nameTextField) {
-            stage.setKeyboardFocus(nameTextField);
-            nameTextField.selectAll();
-        }
+        setFocus();
 
         game.batch.begin();
         game.batch.end();
 
         stage.draw();
         stage.act();
+    }
+
+    private void setFocus() {
+        if (TimeUtils.nanoTime() - createTime > 750000000L && stage.getKeyboardFocus() != nameTextField) {
+            stage.setKeyboardFocus(nameTextField);
+            nameTextField.selectAll();
+        }
     }
 
     @Override

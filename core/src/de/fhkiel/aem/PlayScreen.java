@@ -152,7 +152,7 @@ public class PlayScreen implements Screen {
         game.batch.end();
 
         //Debug Hitbox
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        /*shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(Color.CYAN);
         for(Barrier barrier : barriers){
             shapeRenderer.setColor(Color.CYAN);
@@ -165,7 +165,7 @@ public class PlayScreen implements Screen {
             shapeRenderer.circle(barrier.getHitbox3().x, barrier.getHitbox3().y, barrier.getHitbox3().radius);
         }
         shapeRenderer.circle(bird.getHitbox().x, bird.getHitbox().y, bird.getHitbox().radius);
-        shapeRenderer.end();
+        shapeRenderer.end();*/
 
         if (gameOver) {
             game.resetGameSpeed();

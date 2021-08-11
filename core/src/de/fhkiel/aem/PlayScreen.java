@@ -209,8 +209,11 @@ public class PlayScreen implements Screen {
         }
 
         if (TimeUtils.nanoTime() - bird.getLastShrinkTime() > 10000000000L) {
+
             bird.getHitbox().setRadius(50);
             if (bird.getBirdWidth() < 100) {
+                bird.getHitbox().setPosition(bird.getBirdSprite().getX() + bird.getHitbox().radius,
+                        bird.getBirdSprite().getY() + bird.getHitbox().radius);
                 bird.setBirdWidth((int) (bird.getHitbox().radius * 2));
             }
         }

@@ -44,6 +44,8 @@ public class Configuration {
     // Environment Assets
     public static final String barrierdownImg = "ATFB-barrier-down.png";
     public static final String barrierupImg = "ATFB-barrier-up.png";
+    public static final String spaceBarrierUpImg = "ATFB-space-barrier-up.png";
+    public static final String spaceBarrierDownImg = "ATFB-space-barrier-down.png";
 
     // Manni Assets
     public static final String manny_downImg = "ATFB-manny-down.png";

@@ -2,11 +2,12 @@ package de.fhkiel.aem;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -39,13 +40,13 @@ public class CreditScreen implements Screen {
 
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = new BitmapFont(Gdx.files.internal("title-font-export.fnt"));
-        labelStyle.fontColor = Color.WHITE;
+        labelStyle.fontColor = Color.BLACK;
 
         headerLabel = new Label("Credits", labelStyle);
         name = new Label("Name", labelStyle);
         role = new Label("Rolle", labelStyle);
-        poRole = new Label("Der PO", labelStyle);
-        smRole = new Label("Der SM Master", labelStyle);
+        poRole = new Label("Product Owner", labelStyle);
+        smRole = new Label("Scrum Master", labelStyle);
         devRole = new Label("Developer", labelStyle);
         devRole1 = new Label("Developer", labelStyle);
         devRole2 = new Label("Developer", labelStyle);
@@ -97,7 +98,9 @@ public class CreditScreen implements Screen {
         table.add(kai).expand();
         table.add(desRole).expand();
         table.row();
-        table.add(backButton).top().center().colspan(3).height(200);
+        table.add(new Image(new Texture(Configuration.manny_heyImg))).colspan(3).height(300);
+        table.row();
+        table.add(backButton).top().center().colspan(3).height(100);
 
         stage.addActor(table);
     }

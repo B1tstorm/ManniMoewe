@@ -172,14 +172,14 @@ public class PlayScreen implements Screen {
             gameOverScreen.render(delta);
             bird.birdDies();
         } else {
-            update();
+            update(delta);
         }
     }
 
     /**
      * Calculation and Updates of values.
      */
-    private void update() {
+    private void update(float delta) {
         int randomNum = 0;
 
         if (bird.getScoreCollectable() < 3) {
@@ -283,12 +283,12 @@ public class PlayScreen implements Screen {
             currentTime = TimeUtils.nanoTime();
         }
         if (runGame && !gameOver) {
-            bird.move();
+            bird.move(delta);
             for (Item item : items) {
                 item.move();
             }
             for (Barrier barrier : new Array.ArrayIterator<>(barriers)) {
-                barrier.move();
+                barrier.move(delta);
             }
         }
 

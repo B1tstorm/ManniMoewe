@@ -365,7 +365,7 @@ public class PlayScreen implements Screen {
             items.add(new Fries(xPos, randomNum1));
         } else if (randomNum2 < 15) {
             items.add(new Multiplier(xPos, randomNum1));
-        } else if (randomNum2 < 200) {
+        } else if (randomNum2 < 20) {
             items.add(new Shrink(xPos, randomNum1));
         } else if (randomNum2 < 23) {
             items.add(new Slow(xPos, randomNum1));

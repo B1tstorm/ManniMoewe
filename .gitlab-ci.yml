@@ -77,7 +77,7 @@ deploy:
     - ./gradlew dist
   artifacts:
    paths:
-     - ./desktop/build/libs/desktop-1.0.jar
+     - desktop/build/libs/desktop-1.0.jar
    expire_in: 1 week
 
 after_script:

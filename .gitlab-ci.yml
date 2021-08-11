@@ -65,10 +65,6 @@ build:
   stage: build
   script:
     - ./gradlew build
-  artifacts:
-   paths:
-     - desktop-1.0.jar
-   expire_in: 1 week
 
 test:
   stage: test
@@ -79,6 +75,10 @@ deploy:
   stage: deploy
   script:
     - ./gradlew dist
+  artifacts:
+   paths:
+     - ./desktop/build/libs/desktop-1.0.jar
+   expire_in: 1 week
 
 after_script:
   - echo "End CI"

@@ -154,11 +154,16 @@ public class PlayScreen implements Screen {
         /*shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(Color.CYAN);
         for(Barrier barrier : barriers){
+            shapeRenderer.setColor(Color.CYAN);
             shapeRenderer.rect(barrier.getHitbox().x, barrier.getHitbox().y,
                     barrier.getHitbox().width, barrier.getHitbox().height);
+            shapeRenderer.setColor(Color.RED);
+            shapeRenderer.rect(barrier.getHitbox2().x, barrier.getHitbox2().y,
+                    barrier.getHitbox2().width, barrier.getHitbox2().height);
+            shapeRenderer.setColor(Color.YELLOW);
+            shapeRenderer.circle(barrier.getHitbox3().x, barrier.getHitbox3().y, barrier.getHitbox3().radius);
         }
         shapeRenderer.circle(bird.getHitbox().x, bird.getHitbox().y, bird.getHitbox().radius);
-        shapeRenderer.circle(invincibleItem.getHitbox().x, invincibleItem.getHitbox().y, invincibleItem.getHitbox().radius);
         shapeRenderer.end();*/
 
         if (gameOver) {
@@ -203,8 +208,11 @@ public class PlayScreen implements Screen {
         }
 
         if (TimeUtils.nanoTime() - bird.getLastShrinkTime() > 10000000000L) {
+
             bird.getHitbox().setRadius(50);
             if (bird.getBirdWidth() < 100) {
+                bird.getHitbox().setPosition(bird.getBirdSprite().getX() + bird.getHitbox().radius,
+                        bird.getBirdSprite().getY() + bird.getHitbox().radius);
                 bird.setBirdWidth((int) (bird.getHitbox().radius * 2));
             }
         }
@@ -233,7 +241,9 @@ public class PlayScreen implements Screen {
 
         for (Barrier barrier : new Array.ArrayIterator<>(barriers)) {
             if (!bird.isInvincible()) {
-                if (Intersector.overlaps(bird.getHitbox(), barrier.getBarrierSprite().getBoundingRectangle())) {
+                if (Intersector.overlaps(bird.getHitbox(), barrier.getHitbox())
+                        || Intersector.overlaps(bird.getHitbox(), barrier.getHitbox2())
+                        || Intersector.overlaps(bird.getHitbox(), barrier.getHitbox3())) {
                     if (bird.getScoreCollectable() == 3) {
                         lastInvisibleTime = TimeUtils.nanoTime();
                         bird.setInvincible(true);
@@ -289,20 +299,29 @@ public class PlayScreen implements Screen {
                 barrier.setWealth(0);
             }
             if (barrier.getBarrierSprite().getX() < (0 - barrier.getBarrierSprite().getWidth())) {
+                barrier.getBarrierSprite().setX(barrier.getBarrierSprite().getX() + (barriers.size / 2f) * barrier.getDistance());
+                barrier.getHitbox().setX(barrier.getHitbox().getX() + (barriers.size / 2f) * barrier.getDistance());
+                barrier.getHitbox2().setX(barrier.getHitbox2().getX() + (barriers.size / 2f) * barrier.getDistance());
+                barrier.getHitbox3().setX(barrier.getHitbox3().x + (barriers.size / 2f) * barrier.getDistance());
                 if (barrier.getBarrierSprite().getRotation() != 180) {
                     randomNum = ThreadLocalRandom.current().nextInt(
                             200, Gdx.graphics.getHeight());
                     barrier.getBarrierSprite().setY(randomNum);
+                    barrier.getHitbox().setY(barrier.getBarrierSprite().getY());
+                    barrier.getHitbox2().setY(barrier.getHitbox().y - barrier.getHitbox2().height);
+                    barrier.getHitbox3().setY(barrier.getHitbox2().y - barrier.getHitbox3().radius);
                     createItems(barrier.getBarrierSprite().getX() + ((barriers.size / 2f) * barrier.getDistance()) + (barrier.getDistance() / 2));
                 } else {
                     barrier.getBarrierSprite().setY(randomNum - barrier.getBarrierSprite().getHeight() - barrier.getGap());
+                    barrier.getHitbox().setY(barrier.getBarrierSprite().getY());
+                    barrier.getHitbox2().setY(barrier.getHitbox().y + barrier.getHitbox().height);
+                    barrier.getHitbox3().setY(barrier.getHitbox2().y + barrier.getHitbox3().radius + barrier.getHitbox2().height);
                 }
-                barrier.getBarrierSprite().setX(barrier.getBarrierSprite().getX() + (barriers.size / 2f) * barrier.getDistance());
+
                 barrier.setWealth(game.getDifficulty() / 2.0f);
             }
         }
     }
-
 
     /**
      * Creates the Barriers for the game.
@@ -313,12 +332,24 @@ public class PlayScreen implements Screen {
                     200, Gdx.graphics.getHeight());
 
             Barrier b = new Barrier(
-                    Gdx.graphics.getWidth() + new Barrier(0, 0, Configuration.barrierdownImg, game.getDifficulty()).getDistance() * i,
+                    Gdx.graphics.getWidth() + new Barrier(0, 0, Configuration.barrierdownImg,
+                            game.getDifficulty()).getDistance() * i,
                     randomNum, Configuration.barrierupImg, game.getDifficulty());
+            b.getHitbox().setPosition(b.getHitbox().x - 5 ,b.getHitbox().y + 55);
+            b.getHitbox2().setPosition(b.getHitbox().x + (b.getHitbox().width - b.getHitbox2().width) / 2,
+                    b.getHitbox().y - b.getHitbox2().height);
+            b.getHitbox3().setPosition(b.getHitbox2().x + (b.getHitbox2().width - b.getHitbox3().radius) / 2,
+                    b.getHitbox2().y - b.getHitbox3().radius);
             barriers.add(b);
             Barrier b2 = new Barrier(Gdx.graphics.getWidth() + (b.getDistance() * i),
                     randomNum - b.getBarrierSprite().getHeight() - b.getGap(), Configuration.barrierupImg, game.getDifficulty());
             b2.getBarrierSprite().setRotation(180f);
+            b2.getHitbox().setX(b.getHitbox().x);
+            b2.getHitbox2().setPosition(b2.getHitbox().x + 400, b2.getHitbox().x);
+            b2.getHitbox2().setPosition(b2.getHitbox().x + (b2.getHitbox().width - b2.getHitbox2().width) / 2,
+                    b2.getHitbox().y + b2.getHitbox().height);
+            b2.getHitbox3().setPosition(b2.getHitbox2().x + (b2.getHitbox2().width - b2.getHitbox3().radius) / 2,
+                    b2.getHitbox2().y + b2.getHitbox3().radius + b2.getHitbox2().height);
             barriers.add(b2);
             createItems(b.getBarrierSprite().getX() + b.getDistance() / 2);
         }

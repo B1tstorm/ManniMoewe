@@ -65,6 +65,7 @@ public class GameOverScreen implements Screen {
         textFieldStyle.background = new SpriteDrawable(new Sprite(highscoreInputImg));
         nameTextField = new TextField(game.getPlayerName(), textFieldStyle);
         nameTextField.setAlignment(Align.center);
+        nameTextField.setMaxLength(30);
 
         table.add(overLabel).height(200).top().center().colspan(3).expand();
         table.row();

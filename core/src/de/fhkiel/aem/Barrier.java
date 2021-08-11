@@ -57,11 +57,11 @@ public class Barrier {
     /**
      * Moves the barriers.
      */
-    public void move(){
-        barrierSprite.setX(barrierSprite.getX() - Gdx.graphics.getDeltaTime() * speed);
-        hitbox.setX(hitbox.getX() - Gdx.graphics.getDeltaTime() * speed);
-        hitbox2.setX(hitbox2.getX() - Gdx.graphics.getDeltaTime() * speed);
-        hitbox3.setX(hitbox3.x - Gdx.graphics.getDeltaTime() * speed);
+    public void move(float deltaTime){
+        barrierSprite.setX(barrierSprite.getX() - deltaTime * speed);
+        hitbox.setX(hitbox.getX() - deltaTime * speed);
+        hitbox2.setX(hitbox2.getX() - deltaTime * speed);
+        hitbox3.setX(hitbox3.x - deltaTime * speed);
     }
 
     /**

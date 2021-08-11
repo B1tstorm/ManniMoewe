@@ -44,7 +44,7 @@ public class Bird {
     }
 
     //bestimmt die Beschleunigung, in der der Vogel nach unten fällt
-    private float fallSpeed = 2;
+    private float fallSpeed = 200;
     private long pressTime;
 
     /**
@@ -78,7 +78,7 @@ public class Bird {
     /**
      * Moves the Bird.
      */
-    public void move() {
+    public void move(float deltaTime) {
         birdGetSmaller();
 
         //bird rotiert nach oben bis er seine Grenze erreicht und dann wieder zurück
@@ -89,9 +89,9 @@ public class Bird {
         }
 
         //bird Fällt nach unten mit einer Beschleunigung
-        birdSprite.setY(birdSprite.getY() - fallSpeed);
-        hitbox.setY(hitbox.y - fallSpeed);
-        fallSpeed += 0.3;
+        birdSprite.setY(birdSprite.getY() - fallSpeed * deltaTime);
+        hitbox.setY(hitbox.y - fallSpeed * deltaTime);
+        fallSpeed += 25;
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             sprungNachOben();
@@ -104,7 +104,7 @@ public class Bird {
             } else {
                 birdSprite.setTexture(mannyStraight);
             }
-            fallSpeed = 4;
+            fallSpeed = 320;
             birdMayRotate = false;
         }
         if (pressTime != 0 && fallSpeed > 0 && TimeUtils.millis() >= (pressTime + 300)) {
@@ -113,7 +113,7 @@ public class Bird {
             } else {
                 birdSprite.setTexture(mannyDown);
             }
-            fallSpeed = 6;
+            fallSpeed = 440;
             pressTime = 0;
         }
         //stoppe den Vogel am Rand des Bilds
@@ -197,7 +197,7 @@ public class Bird {
         } else {
             birdSprite.setTexture(mannyUp);
         }
-        fallSpeed = -13;
+        fallSpeed = -1000;
     }
 
     private void slide() {
@@ -207,7 +207,7 @@ public class Bird {
         } else {
             birdSprite.setTexture(mannyUp);
         }
-        fallSpeed = -6;
+        fallSpeed = -400;
     }
 
     /**

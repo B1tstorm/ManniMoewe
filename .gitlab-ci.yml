@@ -65,6 +65,10 @@ build:
   stage: build
   script:
     - ./gradlew build
+  artifacts:
+   paths:
+     - desktop-1.0.jar
+   expire_in: 1 week
 
 test:
   stage: test

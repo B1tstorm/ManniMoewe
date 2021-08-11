@@ -94,43 +94,64 @@ public class OptionsScreen implements Screen {
 
         stage.addActor(table);
 
+        switch(game.getDifficulty()) {
+            case 1:
+                easyButton.setChecked(true);
+                break;
+            case 2:
+                mediumButton.setChecked(true);
+                break;
+            case 3:
+                hardButton.setChecked(true);
+                break;
+            default:
+                break;
+        }
     }
 
     /**
      * Creates all shown Buttons
      */
     private void createButtons(){
-        backButton = ButtonFactory.CreateImageButton(Configuration.backImg, Configuration.backImgPressed, Configuration.backImg,
+        backButton = ButtonFactory.CreateImageButton(Configuration.back, false,
                 () -> {
                     game.setScreen(new StartScreen(game));
                     dispose();
                 });
 
-        easyButton = ButtonFactory.CreateImageButton(Configuration.difficulty_easyImg, Configuration.difficulty_easyImgPressed, Configuration.difficulty_easyImg,
+        easyButton = ButtonFactory.CreateImageButton(Configuration.difficulty_easy, true,
                 () -> {
                     game.setDifficulty(1);
+                    easyButton.setChecked(true);
+                    mediumButton.setChecked(false);
+                    hardButton.setChecked(false);
                 });
 
-        mediumButton = ButtonFactory.CreateImageButton(Configuration.difficulty_mediumImg, Configuration.difficulty_mediumImgPressed,Configuration.difficulty_mediumImg,
+        mediumButton = ButtonFactory.CreateImageButton(Configuration.difficulty_medium, true,
                 () -> {
                     game.setDifficulty(2);
+                    easyButton.setChecked(false);
+                    mediumButton.setChecked(true);
+                    hardButton.setChecked(false);
                 });
 
-        hardButton = ButtonFactory.CreateImageButton(Configuration.difficulty_hardImg, Configuration.difficulty_hardImgPressed, Configuration.difficulty_hardImg,
+        hardButton = ButtonFactory.CreateImageButton(Configuration.difficulty_hard, true,
                 () -> {
                     game.setDifficulty(3);
+                    easyButton.setChecked(false);
+                    mediumButton.setChecked(false);
+                    hardButton.setChecked(true);
                 });
 
-        skinButton1 = ButtonFactory.CreateImageButton(Configuration.manny_stareImg,
+        skinButton1 = ButtonFactory.CreateImageButton(Configuration.manny_stareImg, Configuration.manny_stareImg,
                 () -> {
                 });
 
-        skinButton2 = ButtonFactory.CreateImageButton(Configuration.manny_heyImg,
+        skinButton2 = ButtonFactory.CreateImageButton(Configuration.manny_heyImg, Configuration.manny_heyImg,
                 () -> {
-
                 });
 
-        skinButton3 = ButtonFactory.CreateImageButton(Configuration.manny_heyImg,
+        skinButton3 = ButtonFactory.CreateImageButton(Configuration.manny_heyImg, Configuration.manny_heyImg,
                 () -> {
 
                 });
@@ -138,6 +159,10 @@ public class OptionsScreen implements Screen {
                 () -> {
                     game.setScreen(new CreditScreen(game));
                 });
+
+        easyButton.setProgrammaticChangeEvents(false);
+        mediumButton.setProgrammaticChangeEvents(false);
+        hardButton.setProgrammaticChangeEvents(false);
     }
 
 
@@ -156,8 +181,10 @@ public class OptionsScreen implements Screen {
         game.batch.begin();
         game.background.renderBackground();
         game.background.renderForeground();
-        stage.draw();
         game.batch.end();
+
+        stage.draw();
+        stage.act();
         game.background.move();
     }
 

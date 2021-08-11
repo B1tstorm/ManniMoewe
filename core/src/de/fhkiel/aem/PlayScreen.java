@@ -234,7 +234,7 @@ public class PlayScreen implements Screen {
 
         for (Barrier barrier : new Array.ArrayIterator<>(barriers)) {
             if (!bird.isInvincible()) {
-                if (Intersector.overlaps(bird.getHitbox(), barrier.getBarrierSprite().getBoundingRectangle())) {
+                if (Intersector.overlaps(bird.getHitbox(), barrier.getHitbox())) {
                     if (bird.getScoreCollectable() == 3) {
                         lastInvisibleTime = TimeUtils.nanoTime();
                         bird.setInvincible(true);
@@ -290,15 +290,18 @@ public class PlayScreen implements Screen {
                 barrier.setWealth(0);
             }
             if (barrier.getBarrierSprite().getX() < (0 - barrier.getBarrierSprite().getWidth())) {
+                barrier.getBarrierSprite().setX(barrier.getBarrierSprite().getX() + (barriers.size / 2f) * barrier.getDistance());
                 if (barrier.getBarrierSprite().getRotation() != 180) {
                     randomNum = ThreadLocalRandom.current().nextInt(
                             200, Gdx.graphics.getHeight());
                     barrier.getBarrierSprite().setY(randomNum);
+                    barrier.getHitbox().setPosition(barrier.getBarrierSprite().getX(), barrier.getBarrierSprite().getY() + 90);
                     createItems(barrier.getBarrierSprite().getX() + ((barriers.size / 2f) * barrier.getDistance()) + (barrier.getDistance() / 2));
                 } else {
                     barrier.getBarrierSprite().setY(randomNum - barrier.getBarrierSprite().getHeight() - barrier.getGap());
+                    barrier.getHitbox().setPosition(barrier.getBarrierSprite().getX(), barrier.getBarrierSprite().getY());
                 }
-                barrier.getBarrierSprite().setX(barrier.getBarrierSprite().getX() + (barriers.size / 2f) * barrier.getDistance());
+
                 barrier.setWealth(game.getDifficulty() / 2.0f);
             }
         }
@@ -316,6 +319,7 @@ public class PlayScreen implements Screen {
             Barrier b = new Barrier(
                     Gdx.graphics.getWidth() + new Barrier(0, 0, Configuration.barrierdownImg, game.getDifficulty()).getDistance() * i,
                     randomNum, Configuration.barrierupImg, game.getDifficulty());
+            b.getHitbox().y += 90;
             barriers.add(b);
             Barrier b2 = new Barrier(Gdx.graphics.getWidth() + (b.getDistance() * i),
                     randomNum - b.getBarrierSprite().getHeight() - b.getGap(), Configuration.barrierupImg, game.getDifficulty());

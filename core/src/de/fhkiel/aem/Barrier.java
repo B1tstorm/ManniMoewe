@@ -36,7 +36,7 @@ public class Barrier {
         wealth = difficulty / 2.0f;
 
         hitbox = new Rectangle(barrierSprite.getX() + hitboxKorrektur, barrierSprite.getY(),
-                barrierSprite.getWidth() - hitboxKorrektur, barrierSprite.getHeight());
+                barrierSprite.getWidth() - hitboxKorrektur, barrierSprite.getHeight() - 90);
     }
 
 

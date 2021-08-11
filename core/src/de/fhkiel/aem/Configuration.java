@@ -34,6 +34,7 @@ public class Configuration {
     public static final String optionImg = "ATFB-option.png";
     public static final String option = "ATFB-option";
     public static final String optionImgPressed = "ATFB-option-pressed.png";
+    public static final String hitbox2 = "hitbox2.png";
 
     public static final String muteImg = "ATFB-mute.png";
     public static final String unmuteImg = "ATFB-unmute.png";

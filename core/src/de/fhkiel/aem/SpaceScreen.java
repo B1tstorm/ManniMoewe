@@ -36,15 +36,12 @@ public class SpaceScreen implements Screen {
     private final Table tablePressSpace;
     private boolean runGame = false;
     private boolean gameOver = false;
-    private ImageButton ausweichButton, platzhalterButton;
     private long lastInvisibleTime;
     private long currentTime;
     private final Array<Item> items;
     private Texture pommespackung_leer, pommespackung_eins, pommespackung_zwei, pommespackung_drei;
     private Image pommespackungImg;
-
     private final ShapeRenderer shapeRenderer;
-
     private final float highscoreAlt;
 
     public SpaceScreen(FlappyBird game, float highscoreAlt, Bird bird) {
@@ -111,8 +108,8 @@ public class SpaceScreen implements Screen {
 
     @Override
     public void show() {
-        game.oceanSeagullMusic.stop();
-        game.kielMusic.play();
+        game.oceanSeagullMusic.pause();
+        game.kielMusic.pause();
         game.resetGameSpeed();
         bird.getBirdSprite().setX(75);
         bird.getBirdSprite().setY(250);

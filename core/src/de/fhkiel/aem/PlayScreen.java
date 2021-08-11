@@ -39,7 +39,6 @@ public class PlayScreen implements Screen {
     private final Table tablePressSpace;
     private boolean runGame = false;
     private boolean gameOver = false;
-    private ImageButton ausweichButton, platzhalterButton;
     private long lastInvisibleTime;
     private long currentTime;
     private final Array<Item> items;

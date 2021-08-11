@@ -37,7 +37,6 @@ public class Configuration {
     public static final String creditImg = "ATFB-credits.png";
     public static final String credit = "ATFB-credits";
     public static final String help = "ATFB-help";
-
     public static final String muteImg = "ATFB-mute.png";
     public static final String unmuteImg = "ATFB-unmute.png";
 
@@ -64,7 +63,6 @@ public class Configuration {
 
     // Screen Assets
     public static final String highscoreInputImg = "AFTB-highscore-input.png";
-
     public static final String sky1Img = "ATFB-himmel1.png";
     public static final String sky2Img = "ATFB-himmel2.png";
     public static final String sky3Img = "ATFB-himmel3.png";

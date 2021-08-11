@@ -29,9 +29,6 @@ public class Bird {
     private boolean invincible = false;
     private boolean helmetactive = false;
     private int multiplier = 1;
-
-
-
     public int birdRotation = 0;
     private boolean birdMayRotate = false;
     private int birdWidth = 350;
@@ -64,7 +61,7 @@ public class Bird {
         birdSprite.setY(yPos);
 
         hitbox = new Circle(birdSprite.getX(), birdSprite.getY(), width / 2f);
-        hitbox.setPosition(birdSprite.getX(), birdSprite.getY());
+        hitbox.setPosition(birdSprite.getX() + hitbox.radius, birdSprite.getY() + hitbox.radius);
         initializeAnimation();
     }
 
@@ -93,7 +90,7 @@ public class Bird {
 
         //bird Fällt nach unten mit einer Beschleunigung
         birdSprite.setY(birdSprite.getY() - fallSpeed);
-        hitbox.setPosition(birdSprite.getX() + width / 2f, birdSprite.getY() + width / 2f);
+        hitbox.setY(hitbox.y - fallSpeed);
         fallSpeed += 0.3;
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {

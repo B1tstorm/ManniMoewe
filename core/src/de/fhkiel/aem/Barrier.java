@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 
 /**
@@ -17,7 +18,8 @@ public class Barrier {
     private float gap = 450;
     private float distance = 850;
     private float wealth;
-    private Rectangle hitbox;
+    private Rectangle hitbox, hitbox2;
+    private Circle hitbox3;
     private int hitboxKorrektur = 10;
 
     /**
@@ -36,7 +38,10 @@ public class Barrier {
         wealth = difficulty / 2.0f;
 
         hitbox = new Rectangle(barrierSprite.getX() + hitboxKorrektur, barrierSprite.getY(),
-                barrierSprite.getWidth() - hitboxKorrektur, barrierSprite.getHeight());
+                barrierSprite.getWidth() - hitboxKorrektur, barrierSprite.getHeight() - 55);
+        hitbox2 = new Rectangle(0,0, 60, 40);
+        hitbox3 = new Circle(0,0, 6);
+
     }
 
 
@@ -54,7 +59,9 @@ public class Barrier {
      */
     public void move(){
         barrierSprite.setX(barrierSprite.getX() - Gdx.graphics.getDeltaTime() * speed);
-        hitbox.setPosition(hitbox.getX() - Gdx.graphics.getDeltaTime() * speed, hitbox.getY());
+        hitbox.setX(hitbox.getX() - Gdx.graphics.getDeltaTime() * speed);
+        hitbox2.setX(hitbox2.getX() - Gdx.graphics.getDeltaTime() * speed);
+        hitbox3.setX(hitbox3.x - Gdx.graphics.getDeltaTime() * speed);
     }
 
     /**
@@ -104,4 +111,11 @@ public class Barrier {
         this.wealth = wealth;
     }
 
+    public Circle getHitbox3() {
+        return hitbox3;
+    }
+
+    public Rectangle getHitbox2() {
+        return hitbox2;
+    }
 }

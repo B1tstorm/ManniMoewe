@@ -27,7 +27,7 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class PlayScreen implements Screen {
 
-    private State state = State.RUN;
+    private static boolean pause = false;
     private final FlappyBird game;
     private final OrthographicCamera camera;
     private final Stage stage;
@@ -46,6 +46,8 @@ public class PlayScreen implements Screen {
     private final Array<Item> items;
     private Texture pommespackung_leer, pommespackung_eins, pommespackung_zwei, pommespackung_drei;
     private Image pommespackungImg;
+    Label.LabelStyle labelStyle = new Label.LabelStyle();
+
 
 
     private final ShapeRenderer shapeRenderer;
@@ -60,7 +62,6 @@ public class PlayScreen implements Screen {
         gameOver = false;
         runGame = false;
 
-        Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = new BitmapFont(Gdx.files.internal("title-font-export.fnt"));
         labelStyle.fontColor = Color.GRAY;
 
@@ -127,10 +128,15 @@ public class PlayScreen implements Screen {
      */
     @Override
     public void render(float delta) {
+        if(pause) {
+            stage.draw();
+            if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
+                pause = false;
+        }
+
+
 
         ScreenUtils.clear(0f, 0f, 0f, 1);
-        switch (state) {
-            case RUN: {
                 camera.update();
                 game.batch.setProjectionMatrix(camera.combined);
 
@@ -175,47 +181,10 @@ public class PlayScreen implements Screen {
                     gameOverScreen.render(delta);
                     bird.birdDies();
                 } else {
+                    if(!pause)
                     update(delta);
                 }
-                if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
-                    setGameState(State.PAUSE);
-                }
-                break;
-            }
-            case PAUSE:
-                if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
-                    setGameState(State.RUN);
-                }
 
-                camera.update();
-                game.batch.setProjectionMatrix(camera.combined);
-
-                game.batch.begin();
-                game.background.renderBackground();
-                game.background.renderForeground();
-
-                for (Barrier barrier : new Array.ArrayIterator<>(barriers)) {
-                    barrier.render(game.batch);
-                }
-
-                stage.draw();
-
-                bird.render(game.batch);
-
-                bird.birdGetSmaller();
-
-                for (Item item : items) {
-                    item.render(game.batch);
-                }
-
-                game.batch.end();
-
-
-        }
-    }
-
-    public void setGameState(State s) {
-        this.state = s;
     }
 
     /**
@@ -421,12 +390,14 @@ public class PlayScreen implements Screen {
     @Override
 
     public void pause() {
-        setGameState(State.PAUSE);
+        pause = true;
+        pressSpaceLable = new Label("Press Space to continue...", labelStyle);
+        tablePressSpace.add(pressSpaceLable).height(750).center().top().expand();
+        stage.addActor(tablePressSpace);
     }
 
     @Override
     public void resume() {
-        setGameState(State.RUN);
     }
 
     @Override

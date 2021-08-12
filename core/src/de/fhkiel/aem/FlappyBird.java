@@ -183,4 +183,7 @@ public class FlappyBird extends Game {
 		this.highscore = highscore;
 	}
 
+	public int getDefaultPadding() {
+		return defaultPadding;
+	}
 }

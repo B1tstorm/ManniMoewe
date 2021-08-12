@@ -70,6 +70,9 @@ public class OptionsScreen implements Screen {
 
         Label headerLabel = new Label("Options", labelStyle);
 
+        int padding = game.getDefaultPadding();
+        table.pad(padding, padding, padding, padding);
+
         table.add(headerLabel).height(200).center().colspan(3);
         table.row();
         table.add(difficultyLabel).center().colspan(3);
@@ -86,11 +89,11 @@ public class OptionsScreen implements Screen {
         table.row();
         table.add(soundLabel).center().colspan(3);
         table.row();
-        table.add(soundSlider).center().colspan(3).width(Gdx.graphics.getWidth() / 4);
+        table.add(soundSlider).center().colspan(3).width(Gdx.graphics.getWidth() / 4).fillY();
         table.row();
-        table.add(backButton).expand().fillX();
+        table.add(creditButton).expand().fillX().bottom();
         table.add().expand();
-        table.add(creditButton).expand().fillX();
+        table.add(backButton).expand().fillX().bottom();
 
         stage.addActor(table);
 

@@ -384,8 +384,15 @@ public class Bird {
      * fill the Hashmap with the animation assetss
      */
     private void initializeAnimation() {
-        animationMap.put(0, new Texture(Gdx.files.internal(Configuration.mannyOuch2)));
-        animationMap.put(1, new Texture(Gdx.files.internal(Configuration.mannyOuch3)));
+
+        if(spaceScreen){
+            animationMap.put(0, new Texture(Gdx.files.internal(Configuration.mannyOuch2Space)));
+            animationMap.put(1, new Texture(Gdx.files.internal(Configuration.mannyOuch3Space)));
+        }
+        else {
+            animationMap.put(0, new Texture(Gdx.files.internal(Configuration.mannyOuch2)));
+            animationMap.put(1, new Texture(Gdx.files.internal(Configuration.mannyOuch3)));
+        }
         animationMap.put(2, new Texture(Gdx.files.internal(Configuration.mannyOuch4)));
         animationMap.put(3, new Texture(Gdx.files.internal(Configuration.mannyOuch5)));
         animationMap.put(4, new Texture(Gdx.files.internal(Configuration.mannyOuch6)));

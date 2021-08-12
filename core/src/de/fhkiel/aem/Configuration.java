@@ -66,6 +66,8 @@ public class Configuration {
     public static final String mannyDownSpaceHelmet = "ATFB-manny-down-space-helmet.png";
     public static final String mannyStraightSpace = "ATFB-manny-straight-space.png";
     public static final String mannyStraightSpaceHelmet = "ATFB-manny-Straight-space-helmet.png";
+    public static final String mannyOuch2Space = "ATFB-manny-ouch-2-space.png";
+    public static final String mannyOuch3Space = "ATFB-manny-ouch-3-space.png";
 
     // Screen Assets
     public static final String highscoreInputImg = "ATFB-highscore-input.png";

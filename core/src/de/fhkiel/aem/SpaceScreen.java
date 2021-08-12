@@ -129,6 +129,7 @@ public class SpaceScreen implements Screen {
         bird.spaceScreen = true;
         game.oceanSeagullMusic.pause();
         game.kielMusic.pause();
+        game.spaceMusic.play();
         game.resetGameSpeed();
         bird.getBirdSprite().setX(75);
         bird.getBirdSprite().setY(250);
@@ -320,7 +321,7 @@ public class SpaceScreen implements Screen {
                             200, Gdx.graphics.getHeight());
                     barrier.getBarrierSprite().setY(randomNum);
                     barrier.getHitbox().setY(barrier.getBarrierSprite().getY());
-                    createItems(barrier.getBarrierSprite().getX() + ((barriers.size / 2f) * barrier.getDistance()) + (barrier.getDistance() / 2));
+                    createItems(barrier.getBarrierSprite().getX() + (barrier.getDistance() / 2));
                 } else {
                     barrier.getBarrierSprite().setY(randomNum - barrier.getBarrierSprite().getHeight() - barrier.getGap());
                     barrier.getHitbox().setY(barrier.getBarrierSprite().getY());

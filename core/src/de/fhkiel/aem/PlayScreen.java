@@ -63,11 +63,15 @@ public class PlayScreen implements Screen {
         labelStyle.font = new BitmapFont(Gdx.files.internal("title-font-export.fnt"));
         labelStyle.fontColor = Color.GRAY;
 
+
         table = new Table();
+
+        int padding = game.getDefaultPadding();
+        table.pad(padding, padding, padding, padding);
+
         table.setFillParent(true);
         tablePressSpace = new Table();
         tablePressSpace.setFillParent(true);
-        //table.debug();
 
         items = new Array<>();
 

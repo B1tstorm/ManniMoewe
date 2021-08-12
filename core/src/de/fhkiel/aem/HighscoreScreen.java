@@ -28,7 +28,7 @@ public class HighscoreScreen implements Screen {
     private ImageButton mediumButton;
     private ImageButton hardButton;
     private int shownDifficulty;
-    private Table highscoreTable;
+    private Table table;
 
 
     /**
@@ -77,8 +77,8 @@ public class HighscoreScreen implements Screen {
         mediumButton.setProgrammaticChangeEvents(false);
         hardButton.setProgrammaticChangeEvents(false);
 
-        highscoreTable = new Table();
-        highscoreTable.setFillParent(true);
+        table = new Table();
+        table.setFillParent(true);
 
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = new BitmapFont(Gdx.files.internal("title-font-export.fnt"));
@@ -91,33 +91,38 @@ public class HighscoreScreen implements Screen {
 
         Gdx.input.setInputProcessor(stage);
 
-        highscoreTable.add(highscore).height(100).colspan(3).center();
+        int padding = game.getDefaultPadding();
+        table.pad(padding, padding, padding, padding);
 
-        highscoreTable.row();
-        highscoreTable.add(easyButton).fillX();
-        highscoreTable.add(mediumButton).fillX();
-        highscoreTable.add(hardButton).fillX();
-        highscoreTable.row();
-        highscoreTable.add(place).expand();
-        highscoreTable.add(name).expand();
-        highscoreTable.add(score).expand();
+        table.add(highscore).height(100).colspan(3).center();
+
+        table.row();
+        table.add(easyButton).fillX();
+        table.add(mediumButton).fillX();
+        table.add(hardButton).fillX();
+        table.row();
+        table.add(place).expand();
+        table.add(name).expand();
+        table.add(score).expand();
 
         for(int i = 0; i<10; i++) {
-            highscoreTable.row();
-            highscoreTable.add(new Label((i+1) + ".", labelStyle)).expand();
-            highscoreTable.add(new Label("", labelStyle)).expand();
-            highscoreTable.add(new Label("", labelStyle)).expand();
+            table.row();
+            table.add(new Label((i+1) + ".", labelStyle)).expand();
+            table.add(new Label("", labelStyle)).expand();
+            table.add(new Label("", labelStyle)).expand();
         }
 
-        highscoreTable.row();
-        highscoreTable.add(ButtonFactory.CreateImageButton(Configuration.back, false,
+        table.row();
+        table.add();
+        table.add();
+        table.add(ButtonFactory.CreateImageButton(Configuration.back, false,
                 () -> {
                     game.setScreen(new StartScreen(game));
                     dispose();
-        })).colspan(3).center();
+        })).center();
 
         updateTable();
-        stage.addActor(highscoreTable);
+        stage.addActor(table);
 
         switch(game.getDifficulty()) {
             case 1:
@@ -149,7 +154,7 @@ public class HighscoreScreen implements Screen {
     }
 
     private void updateLabel(Array<HighscoreEntry> array) {
-         Array<Cell> cells = highscoreTable.getCells();
+         Array<Cell> cells = table.getCells();
          for(int i = 8, j = 0; i <= 35; i +=3, j++) {
              ((Label)cells.get(i).getActor()).setText(array.size > j ? array.get(j).name : "-");
              ((Label)cells.get(i + 1).getActor()).setText(array.size > j ? array.get(j).highscore : 0);

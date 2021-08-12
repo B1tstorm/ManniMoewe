@@ -88,6 +88,8 @@ public class StartScreen implements Screen {
 
         muteButton.setProgrammaticChangeEvents(false);
 
+        int padding = game.getDefaultPadding();
+        table.pad(padding, padding, padding, padding);
 
         table.add(exitButton).left().top();
 

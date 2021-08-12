@@ -17,6 +17,7 @@ public class FlappyBird extends Game {
 	public Music kielMusic;
 	private int difficulty = 2;
 	public boolean musicShouldPlay = true;
+	private int defaultPadding = 50;
 	public NormalBackground background;
 
 	private static float speedMultiplier = 1.0f;

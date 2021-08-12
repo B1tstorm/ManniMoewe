@@ -159,7 +159,9 @@ public class HighscoreScreen implements Screen {
 
     @Override
     public void show() {
-
+        game.oceanSeagullMusic.play();
+        game.spaceMusic.pause();
+        game.kielMusic.pause();
     }
 
     @Override

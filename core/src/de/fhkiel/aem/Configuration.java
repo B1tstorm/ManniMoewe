@@ -37,13 +37,14 @@ public class Configuration {
     public static final String creditImg = "ATFB-credits.png";
     public static final String credit = "ATFB-credits";
     public static final String help = "ATFB-help";
-
     public static final String muteImg = "ATFB-mute.png";
     public static final String unmuteImg = "ATFB-unmute.png";
 
     // Environment Assets
     public static final String barrierdownImg = "ATFB-barrier-down.png";
     public static final String barrierupImg = "ATFB-barrier-up.png";
+    public static final String spaceBarrierUpImg = "ATFB-space-barrier-up.png";
+    public static final String spaceBarrierDownImg = "ATFB-space-barrier-down.png";
 
     // Manni Assets
     public static final String manny_downImg = "ATFB-manny-down.png";
@@ -59,10 +60,17 @@ public class Configuration {
     public static final String mannyOuch7 = "ATFB-manny-ouch-7.png";
     public static final String mannyOuch8 = "ATFB-manny-ouch-8.png";
     public static final String mannyOuch9 = "ATFB-manny-ouch-9.png";
+    public static final String mannyUpSpace = "ATFB-manny-up-space.png";
+    public static final String mannyUpSpaceHelmet = "ATFB-manny-up-space-helmet.png";
+    public static final String mannyDownSpace = "ATFB-manny-down-space.png";
+    public static final String mannyDownSpaceHelmet = "ATFB-manny-down-space-helmet.png";
+    public static final String mannyStraightSpace = "ATFB-manny-straight-space.png";
+    public static final String mannyStraightSpaceHelmet = "ATFB-manny-Straight-space-helmet.png";
+    public static final String mannyOuch2Space = "ATFB-manny-ouch-2-space.png";
+    public static final String mannyOuch3Space = "ATFB-manny-ouch-3-space.png";
 
     // Screen Assets
-    public static final String highscoreInputImg = "AFTB-highscore-input.png";
-
+    public static final String highscoreInputImg = "ATFB-highscore-input.png";
     public static final String sky1Img = "ATFB-himmel1.png";
     public static final String sky2Img = "ATFB-himmel2.png";
     public static final String sky3Img = "ATFB-himmel3.png";

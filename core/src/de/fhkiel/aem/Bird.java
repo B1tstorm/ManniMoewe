@@ -91,7 +91,7 @@ public class Bird {
         //bird Fällt nach unten mit einer Beschleunigung
         birdSprite.setY(birdSprite.getY() - fallSpeed * deltaTime);
         hitbox.setY(hitbox.y - fallSpeed * deltaTime);
-        fallSpeed += 25;
+        fallSpeed += 20;
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             sprungNachOben();
@@ -197,7 +197,7 @@ public class Bird {
         } else {
             birdSprite.setTexture(mannyUp);
         }
-        fallSpeed = -1000;
+        fallSpeed = -850;
     }
 
     private void slide() {

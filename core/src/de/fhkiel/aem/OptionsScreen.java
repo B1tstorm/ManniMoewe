@@ -69,7 +69,7 @@ public class OptionsScreen implements Screen {
             }
         });
 
-        Label headerLabel = new Label("Options", game.labelStyle);
+        Label headerLabel = new Label("Options", game.labelStyleHeadline);
 
         int padding = game.getDefaultPadding();
         table.pad(padding, padding, padding, padding);

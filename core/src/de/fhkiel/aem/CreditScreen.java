@@ -37,7 +37,7 @@ public class CreditScreen implements Screen {
 
         Gdx.input.setInputProcessor(stage);
         
-        headerLabel = new Label("Credits", game.labelStyle);
+        headerLabel = new Label("Credits", game.labelStyleHeadline);
         name = new Label("Name", game.labelStyle);
         role = new Label("Rolle", game.labelStyle);
         poRole = new Label("Product Owner", game.labelStyle);

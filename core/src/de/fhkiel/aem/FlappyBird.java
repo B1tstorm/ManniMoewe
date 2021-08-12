@@ -29,6 +29,7 @@ public class FlappyBird extends Game {
 	private Highscore highscore;
 	private NetworkHandler networkHandler;
 	Label.LabelStyle labelStyle;
+	Label.LabelStyle labelStyleHeadline;
 
 	@Override
 	public void create () {
@@ -57,6 +58,21 @@ public class FlappyBird extends Game {
 
 		labelStyle = new Label.LabelStyle();
 		labelStyle.font = font36;
+
+		// Custom Typeface "Luckiest Guy" Google Font
+		FreeTypeFontGenerator generatorHeadline = new FreeTypeFontGenerator(Gdx.files.internal("LuckiestGuy-Regular.ttf"));
+		FreeTypeFontGenerator.FreeTypeFontParameter parameterHeadline = new FreeTypeFontGenerator.FreeTypeFontParameter();
+		parameterHeadline.size = 96;
+		parameterHeadline.color = Color.valueOf("FFFFFF");
+		parameterHeadline.shadowColor = Color.valueOf("9A836D");
+		parameterHeadline.shadowOffsetX = -3;
+		parameterHeadline.shadowOffsetY = 3;
+		BitmapFont font72 = generatorHeadline.generateFont(parameterHeadline); // font size 36 pixels
+		generatorHeadline.dispose();
+
+		labelStyleHeadline = new Label.LabelStyle();
+		labelStyleHeadline.font = font72;
+
 
 
 		batch = new SpriteBatch();

@@ -20,7 +20,7 @@ public class CreditScreen implements Screen {
     private final FlappyBird game;
     private final OrthographicCamera camera;
     private final Stage stage;
-    private Table table;
+    private Table table, buttonTable;
     private Label headerLabel, name, role, poRole, smRole, devRole, desRole, devdesRole, devRole1,devRole2, devRole3;
     private Label niels, oliver, marvin, anas, joshua, kai, jonas, paul;
     private ImageButton backButton;
@@ -69,7 +69,10 @@ public class CreditScreen implements Screen {
                     dispose();
                 });
 
-        table.add(headerLabel).top().center().colspan(3).height(200);
+        int padding = game.getDefaultPadding();
+        table.pad(padding, padding, padding, padding);
+
+        table.add(headerLabel).top().center().colspan(3).height(100);
         table.row();
         table.add(name).expand();
         table.add(role).expand();
@@ -100,7 +103,22 @@ public class CreditScreen implements Screen {
         table.row();
         table.add(new Image(new Texture(Configuration.manny_heyImg))).colspan(3).height(300);
         table.row();
-        table.add(backButton).top().center().colspan(3).height(100);
+
+        buttonTable = new Table();
+        buttonTable.setFillParent(true);
+
+        buttonTable.padLeft(padding);
+        buttonTable.add().expand().colspan(3);
+        buttonTable.row();
+        buttonTable.add().fillX().minWidth((Gdx.graphics.getWidth() / 3) - (padding * 12));
+        buttonTable.add().fillX().minWidth((Gdx.graphics.getWidth() / 3) - (padding * 12));
+        buttonTable.add(ButtonFactory.CreateImageButton(Configuration.back, false,
+                () -> {
+                    game.setScreen(new OptionsScreen(game));
+                    dispose();
+                })).bottom().center();
+
+        table.add(buttonTable).colspan(3).fillX();
 
         stage.addActor(table);
     }

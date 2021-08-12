@@ -43,7 +43,6 @@ public class PlayScreen implements Screen {
     private long currentTime;
     private final Array<Item> items;
     private Texture pommespackung_leer, pommespackung_eins, pommespackung_zwei, pommespackung_drei;
-
     private Image pommespackungImg;
     Label.LabelStyle labelStyle = new Label.LabelStyle();
 
@@ -65,10 +64,13 @@ public class PlayScreen implements Screen {
         labelStyle.fontColor = Color.GRAY;
 
         table = new Table();
+
+        int padding = game.getDefaultPadding();
+        table.pad(padding, padding, padding, padding);
+
         table.setFillParent(true);
         tablePressSpace = new Table();
         tablePressSpace.setFillParent(true);
-        //table.debug();
 
         items = new Array<>();
 
@@ -137,30 +139,29 @@ public class PlayScreen implements Screen {
 
 
         ScreenUtils.clear(0f, 0f, 0f, 1);
-                camera.update();
-                game.batch.setProjectionMatrix(camera.combined);
+        camera.update();
+        game.batch.setProjectionMatrix(camera.combined);
 
-                game.batch.begin();
-                game.background.renderBackground();
+        game.batch.begin();
+        game.background.renderBackground();
 
+        for (Barrier barrier : new Array.ArrayIterator<>(barriers)) {
+            barrier.render(game.batch);
+        }
 
-                for (Barrier barrier : new Array.ArrayIterator<>(barriers)) {
-                    barrier.render(game.batch);
-                }
+        stage.draw();
 
-                stage.draw();
+        bird.render(game.batch);
 
-                bird.render(game.batch);
+        bird.birdGetSmaller();
 
-                bird.birdGetSmaller();
+        for (Item item : items) {
+            item.render(game.batch);
+        }
 
-                for (Item item : items) {
-                    item.render(game.batch);
-                }
+        game.batch.end();
 
-                game.batch.end();
-
-                //Debug Hitbox
+        //Debug Hitbox
         /*shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(Color.CYAN);
         for(Barrier barrier : barriers){
@@ -176,15 +177,15 @@ public class PlayScreen implements Screen {
         shapeRenderer.circle(bird.getHitbox().x, bird.getHitbox().y, bird.getHitbox().radius);
         shapeRenderer.end();*/
 
-                if (gameOver) {
-                    game.resetGameSpeed();
-                    gameOverScreen.render(delta);
-                    bird.birdDies();
-                } else {
-                    if(!pause)
-                    update(delta);
-                }
-
+        if (gameOver) {
+            game.resetGameSpeed();
+            gameOverScreen.render(delta);
+            bird.birdDies();
+        } else {
+            if(!pause) {
+                update(delta);
+            }
+        }
     }
 
     /**
@@ -209,14 +210,17 @@ public class PlayScreen implements Screen {
             bird.setMultiplier(1);
         }
 
-        if (bird.getBirdWidth() < 101) {
+        if(bird.getBirdWidth() < 101) {
             if (TimeUtils.nanoTime() - bird.getLastShrinkTime() > 8000000000L && TimeUtils.nanoTime() - bird.getLastShrinkTime() < 8500000000L) {
-                bird.setBirdWidth(100);
-            } else if (TimeUtils.nanoTime() - bird.getLastShrinkTime() > 8500000000L && TimeUtils.nanoTime() - bird.getLastShrinkTime() < 9000000000L) {
+                bird.setBirdWidth(80);
+            }
+            else if(TimeUtils.nanoTime() - bird.getLastShrinkTime() >8500000000L && TimeUtils.nanoTime() - bird.getLastShrinkTime() < 9000000000L) {
                 bird.setBirdWidth(50);
-            } else if (TimeUtils.nanoTime() - bird.getLastShrinkTime() > 9000000000L && TimeUtils.nanoTime() - bird.getLastShrinkTime() < 9500000000L) {
-                bird.setBirdWidth(100);
-            } else if (TimeUtils.nanoTime() - bird.getLastShrinkTime() > 9500000000L && TimeUtils.nanoTime() - bird.getLastShrinkTime() < 9800000000L) {
+            }
+            else if(TimeUtils.nanoTime() - bird.getLastShrinkTime() > 9000000000L && TimeUtils.nanoTime() - bird.getLastShrinkTime() < 9500000000L){
+                bird.setBirdWidth(80);
+            }
+            else if(TimeUtils.nanoTime() - bird.getLastShrinkTime() > 9500000000L && TimeUtils.nanoTime() - bird.getLastShrinkTime() < 9800000000L) {
                 bird.setBirdWidth(50);
             }
         }

@@ -17,7 +17,8 @@ public class FlappyBird extends Game {
 	public Music kielMusic;
 	private int difficulty = 2;
 	public boolean musicShouldPlay = true;
-	public Background background;
+	private int defaultPadding = 50;
+	public NormalBackground background;
 
 	private static float speedMultiplier = 1.0f;
 	private String playerName = "Enter your Name";
@@ -37,7 +38,7 @@ public class FlappyBird extends Game {
 		batch = new SpriteBatch();
 		font = new BitmapFont();
 
-		background = new Background(batch);
+		background = new NormalBackground(batch);
 
 		networkHandler = new NetworkHandler();
 		highscore = new Highscore();
@@ -66,10 +67,11 @@ public class FlappyBird extends Game {
 	public void increaseGameSpeed(){
 		if(speedMultiplier <= 3){
 			Barrier.speed = Barrier.speed / speedMultiplier * (speedMultiplier + 0.01f);
-			Background.FOREGROUNDSPEED = Background.FOREGROUNDSPEED / speedMultiplier  * (speedMultiplier + 0.01f);
-			Background.WATERSPEED = Background.WATERSPEED / speedMultiplier  * (speedMultiplier + 0.01f);
-			Background.CITYSPEED = Background.CITYSPEED / speedMultiplier  * (speedMultiplier + 0.01f);
-			Background.SKYSPEED = Background.SKYSPEED / speedMultiplier  * (speedMultiplier + 0.01f);
+			Background.layerOneSpeed = Background.layerOneSpeed / speedMultiplier  * (speedMultiplier + 0.01f);
+			Background.layerTwoSpeed = Background.layerTwoSpeed / speedMultiplier  * (speedMultiplier + 0.01f);
+			Background.layerThreeSpeed = Background.layerThreeSpeed / speedMultiplier  * (speedMultiplier + 0.01f);
+			Background.layerFourSpeed = Background.layerFourSpeed / speedMultiplier  * (speedMultiplier + 0.01f);
+			Background.layerFiveSpeed = Background.layerFiveSpeed / speedMultiplier  * (speedMultiplier + 0.01f);
 			Item.itemspeed = Barrier.speed;
 			speedMultiplier += 0.01f;
 		}
@@ -80,10 +82,11 @@ public class FlappyBird extends Game {
 	 */
 	public void decreaseGameSpeed(){
 		Barrier.speed = Barrier.speed / speedMultiplier * (speedMultiplier - .15f);
-		Background.FOREGROUNDSPEED = Background.FOREGROUNDSPEED / speedMultiplier  * (speedMultiplier - 0.15f);
-		Background.WATERSPEED = Background.WATERSPEED / speedMultiplier  * (speedMultiplier  - 0.15f);
-		Background.CITYSPEED = Background.CITYSPEED / speedMultiplier  * (speedMultiplier  - 0.15f);
-		Background.SKYSPEED = Background.SKYSPEED / speedMultiplier  * (speedMultiplier  - 0.15f);
+		Background.layerOneSpeed = Background.layerOneSpeed / speedMultiplier  * (speedMultiplier - 0.15f);
+		Background.layerTwoSpeed = Background.layerTwoSpeed / speedMultiplier  * (speedMultiplier  - 0.15f);
+		Background.layerThreeSpeed = Background.layerThreeSpeed / speedMultiplier  * (speedMultiplier  - 0.15f);
+		Background.layerFourSpeed = Background.layerFourSpeed / speedMultiplier  * (speedMultiplier  - 0.15f);
+		Background.layerFiveSpeed = Background.layerFiveSpeed / speedMultiplier  * (speedMultiplier  - 0.15f);
 		Item.itemspeed = Item.itemspeed /speedMultiplier * (speedMultiplier  - 0.15f);
 		speedMultiplier -= 0.15f;
 	}
@@ -93,10 +96,11 @@ public class FlappyBird extends Game {
 	 */
 	public void resetGameSpeed(){
 		Barrier.speed = 300;
-		Background.FOREGROUNDSPEED = 300;
-		Background.WATERSPEED = 150;
-		Background.CITYSPEED = 75;
-		Background.SKYSPEED = 30;
+		Background.layerFiveSpeed = 30;
+		Background.layerFourSpeed = 60;
+		Background.layerThreeSpeed = 110;
+		Background.layerTwoSpeed = 180;
+		Background.layerOneSpeed = 300;
 		Item.itemspeed = 300;
 		speedMultiplier = 1.0f;
 	}
@@ -180,4 +184,7 @@ public class FlappyBird extends Game {
 		this.highscore = highscore;
 	}
 
+	public int getDefaultPadding() {
+		return defaultPadding;
+	}
 }

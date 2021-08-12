@@ -27,6 +27,7 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class PlayScreen implements Screen {
 
+    private State state = State.RUN;
     private final FlappyBird game;
     private final OrthographicCamera camera;
     private final Stage stage;
@@ -63,15 +64,11 @@ public class PlayScreen implements Screen {
         labelStyle.font = new BitmapFont(Gdx.files.internal("title-font-export.fnt"));
         labelStyle.fontColor = Color.GRAY;
 
-
         table = new Table();
-
-        int padding = game.getDefaultPadding();
-        table.pad(padding, padding, padding, padding);
-
         table.setFillParent(true);
         tablePressSpace = new Table();
         tablePressSpace.setFillParent(true);
+        //table.debug();
 
         items = new Array<>();
 
@@ -82,7 +79,7 @@ public class PlayScreen implements Screen {
 
         this.game = game;
 
-        bird = new Bird(75, 250 );
+        bird = new Bird(75, 250);
 
         if (bird.isHelmetactive()) {
             bird.getBirdSprite().setTexture(bird.getMannyStraightHelm());
@@ -132,30 +129,32 @@ public class PlayScreen implements Screen {
     public void render(float delta) {
 
         ScreenUtils.clear(0f, 0f, 0f, 1);
-        camera.update();
-        game.batch.setProjectionMatrix(camera.combined);
+        switch (state) {
+            case RUN: {
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
 
-        game.batch.begin();
-        game.background.renderBackground();
-        game.background.renderForeground();
+                game.batch.begin();
+                game.background.renderBackground();
+                game.background.renderForeground();
 
-        for (Barrier barrier : new Array.ArrayIterator<>(barriers)) {
-            barrier.render(game.batch);
-        }
+                for (Barrier barrier : new Array.ArrayIterator<>(barriers)) {
+                    barrier.render(game.batch);
+                }
 
-        stage.draw();
+                stage.draw();
 
-        bird.render(game.batch);
+                bird.render(game.batch);
 
-        bird.birdGetSmaller();
+                bird.birdGetSmaller();
 
-        for (Item item : items) {
-            item.render(game.batch);
-        }
+                for (Item item : items) {
+                    item.render(game.batch);
+                }
 
-        game.batch.end();
+                game.batch.end();
 
-        //Debug Hitbox
+                //Debug Hitbox
         /*shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(Color.CYAN);
         for(Barrier barrier : barriers){
@@ -171,13 +170,52 @@ public class PlayScreen implements Screen {
         shapeRenderer.circle(bird.getHitbox().x, bird.getHitbox().y, bird.getHitbox().radius);
         shapeRenderer.end();*/
 
-        if (gameOver) {
-            game.resetGameSpeed();
-            gameOverScreen.render(delta);
-            bird.birdDies();
-        } else {
-            update(delta);
+                if (gameOver) {
+                    game.resetGameSpeed();
+                    gameOverScreen.render(delta);
+                    bird.birdDies();
+                } else {
+                    update(delta);
+                }
+                if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
+                    setGameState(State.PAUSE);
+                }
+                break;
+            }
+            case PAUSE:
+                if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
+                    setGameState(State.RUN);
+                }
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();
+                game.background.renderBackground();
+                game.background.renderForeground();
+
+                for (Barrier barrier : new Array.ArrayIterator<>(barriers)) {
+                    barrier.render(game.batch);
+                }
+
+                stage.draw();
+
+                bird.render(game.batch);
+
+                bird.birdGetSmaller();
+
+                for (Item item : items) {
+                    item.render(game.batch);
+                }
+
+                game.batch.end();
+
+
         }
+    }
+
+    public void setGameState(State s) {
+        this.state = s;
     }
 
     /**
@@ -197,17 +235,14 @@ public class PlayScreen implements Screen {
             bird.setMultiplier(1);
         }
 
-        if(bird.getBirdWidth() < 101) {
+        if (bird.getBirdWidth() < 101) {
             if (TimeUtils.nanoTime() - bird.getLastShrinkTime() > 8000000000L && TimeUtils.nanoTime() - bird.getLastShrinkTime() < 8500000000L) {
-                bird.setBirdWidth(80);
-            }
-            else if(TimeUtils.nanoTime() - bird.getLastShrinkTime() >8500000000L && TimeUtils.nanoTime() - bird.getLastShrinkTime() < 9000000000L) {
+                bird.setBirdWidth(100);
+            } else if (TimeUtils.nanoTime() - bird.getLastShrinkTime() > 8500000000L && TimeUtils.nanoTime() - bird.getLastShrinkTime() < 9000000000L) {
                 bird.setBirdWidth(50);
-            }
-            else if(TimeUtils.nanoTime() - bird.getLastShrinkTime() > 9000000000L && TimeUtils.nanoTime() - bird.getLastShrinkTime() < 9500000000L){
-                bird.setBirdWidth(80);
-            }
-            else if(TimeUtils.nanoTime() - bird.getLastShrinkTime() > 9500000000L && TimeUtils.nanoTime() - bird.getLastShrinkTime() < 9800000000L) {
+            } else if (TimeUtils.nanoTime() - bird.getLastShrinkTime() > 9000000000L && TimeUtils.nanoTime() - bird.getLastShrinkTime() < 9500000000L) {
+                bird.setBirdWidth(100);
+            } else if (TimeUtils.nanoTime() - bird.getLastShrinkTime() > 9500000000L && TimeUtils.nanoTime() - bird.getLastShrinkTime() < 9800000000L) {
                 bird.setBirdWidth(50);
             }
         }
@@ -340,7 +375,7 @@ public class PlayScreen implements Screen {
                     Gdx.graphics.getWidth() + new Barrier(0, 0, Configuration.barrierdownImg,
                             game.getDifficulty()).getDistance() * i,
                     randomNum, Configuration.barrierupImg, game.getDifficulty());
-            b.getHitbox().setPosition(b.getHitbox().x - 5 ,b.getHitbox().y + 55);
+            b.getHitbox().setPosition(b.getHitbox().x - 5, b.getHitbox().y + 55);
             b.getHitbox2().setPosition(b.getHitbox().x + (b.getHitbox().width - b.getHitbox2().width) / 2,
                     b.getHitbox().y - b.getHitbox2().height);
             b.getHitbox3().setPosition(b.getHitbox2().x + (b.getHitbox2().width - b.getHitbox3().radius) / 2,
@@ -384,18 +419,18 @@ public class PlayScreen implements Screen {
     }
 
     @Override
-    public void pause() {
 
+    public void pause() {
+        setGameState(State.PAUSE);
     }
 
     @Override
     public void resume() {
-
+        setGameState(State.RUN);
     }
 
     @Override
     public void hide() {
-
     }
 
     @Override

@@ -18,7 +18,6 @@ public class FlappyBird extends Game {
 	private int difficulty = 2;
 	public boolean musicShouldPlay = true;
 	public Background background;
-	private int defaultPadding = 50;
 
 	private static float speedMultiplier = 1.0f;
 	private String playerName = "Enter your Name";
@@ -181,7 +180,4 @@ public class FlappyBird extends Game {
 		this.highscore = highscore;
 	}
 
-	public int getDefaultPadding() {
-		return defaultPadding;
-	}
 }

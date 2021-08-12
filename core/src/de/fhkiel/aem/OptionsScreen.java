@@ -28,9 +28,8 @@ public class OptionsScreen implements Screen {
     private ImageButton easyButton;
     private ImageButton mediumButton;
     private ImageButton hardButton;
-    private ImageButton skinButton1;
-    private ImageButton skinButton2;
-    private ImageButton skinButton3;
+    private ImageButton skinButton1 = new ImageButton(new ImageButton.ImageButtonStyle());
+    private ImageButton skinButton2 = new ImageButton(new ImageButton.ImageButtonStyle());
     private ImageButton creditButton;
     private Slider.SliderStyle sliderStyle;
     private Slider soundSlider;
@@ -88,8 +87,8 @@ public class OptionsScreen implements Screen {
         table.add(charLabel).center().colspan(3);
         table.row();
         table.add(skinButton1).center().fillX();
+        table.add().center().fillX();
         table.add(skinButton2).center().fillX();
-        table.add(skinButton3).center().fillX();
         table.row();
         table.add(soundLabel).center().colspan(3);
         table.row();
@@ -150,18 +149,23 @@ public class OptionsScreen implements Screen {
                     hardButton.setChecked(true);
                 });
 
-        skinButton1 = ButtonFactory.CreateImageButton(Configuration.manny_stareImg, Configuration.manny_stareImg,
+        skinButton1 = ButtonFactory.CreateImageButton(Configuration.manny_stareImg, Configuration.manny_heyImg,
                 () -> {
+                    game.setCharManniActive(true);
+                    game.setCharSpaceManniActive(false);
+                    skinButton2.setChecked(false);
+                });
+        skinButton1.setChecked(true);
+
+        skinButton2 = ButtonFactory.CreateImageButton(Configuration.mannyStraightSpace, Configuration.mannyOuch2Space,
+                () -> {
+                    if(game.isFoundEasteregg()) {
+                        game.setCharSpaceManniActive(true);
+                        game.setCharManniActive(false);
+                        skinButton1.setChecked(false);
+                    }
                 });
 
-        skinButton2 = ButtonFactory.CreateImageButton(Configuration.manny_heyImg, Configuration.manny_heyImg,
-                () -> {
-                });
-
-        skinButton3 = ButtonFactory.CreateImageButton(Configuration.manny_heyImg, Configuration.manny_heyImg,
-                () -> {
-
-                });
         creditButton = ButtonFactory.CreateImageButton(Configuration.credit, false,
                 () -> {
                     game.setScreen(new CreditScreen(game));

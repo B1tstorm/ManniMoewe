@@ -20,6 +20,9 @@ public class FlappyBird extends Game {
 	public boolean musicShouldPlay = true;
 	private int defaultPadding = 50;
 	public NormalBackground background;
+	private boolean charManniActive = true;
+	private boolean charSpaceManniActive = false;
+	private boolean foundEasteregg = true;
 
 	private static float speedMultiplier = 1.0f;
 	private String playerName = "Enter your Name";
@@ -193,5 +196,29 @@ public class FlappyBird extends Game {
 
 	public int getDefaultPadding() {
 		return defaultPadding;
+	}
+
+	public boolean isCharManniActive() {
+		return charManniActive;
+	}
+
+	public void setCharManniActive(boolean charManniActive) {
+		this.charManniActive = charManniActive;
+	}
+
+	public boolean isCharSpaceManniActive() {
+		return charSpaceManniActive;
+	}
+
+	public void setCharSpaceManniActive(boolean charSpaceManniActive) {
+		this.charSpaceManniActive = charSpaceManniActive;
+	}
+
+	public boolean isFoundEasteregg() {
+		return foundEasteregg;
+	}
+
+	public void setFoundEasteregg(boolean foundEasteregg) {
+		this.foundEasteregg = foundEasteregg;
 	}
 }

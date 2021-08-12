@@ -43,8 +43,14 @@ public class StartScreen implements Screen {
         stage = new Stage(new FitViewport(Configuration.ScreenWidth, Configuration.ScreenHeight));
         bird = new Bird(50, 250 );
 
+
+
         Table table = new Table();
         table.setFillParent(true);
+
+        int padding = game.getDefaultPadding();
+        table.pad(padding, padding, padding, padding);
+
         Gdx.input.setInputProcessor(stage);
 
         startButton = ButtonFactory.CreateImageButton(Configuration.start, false,

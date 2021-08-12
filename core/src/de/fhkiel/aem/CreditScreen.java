@@ -67,6 +67,7 @@ public class CreditScreen implements Screen {
                     dispose();
                 });
 
+
         int padding = game.getDefaultPadding();
         table.pad(padding, padding, padding, padding);
         table.background(new TextureRegionDrawable(new Texture(Configuration.table_backgroundImg)));
@@ -102,6 +103,10 @@ public class CreditScreen implements Screen {
         table.row();
         table.add(new Image(new Texture(Configuration.manny_heyImg))).colspan(2).height(300);
         table.row();
+
+        buttonTable = new Table();
+        buttonTable.setFillParent(true);
+
         buttonTable.padLeft(padding);
         buttonTable.add().expand().colspan(3);
         buttonTable.row();

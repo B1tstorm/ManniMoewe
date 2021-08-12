@@ -92,6 +92,8 @@ public class Configuration {
     public static final String manny_up_helmImg = "ATFB-manny-up-helm.png";
     public static final String reduceScoreImg = "ATFB-reduceScore.png";
 
-
+    // Slider Assets
+    public static final String slider_background = "ATFB-laser.png";
+    public static final String slider_knob = "ATFB-sword.png";
 
 }

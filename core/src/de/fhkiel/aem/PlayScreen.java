@@ -26,6 +26,7 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class PlayScreen implements Screen {
 
+    private static boolean pause = false;
     private final FlappyBird game;
     private final OrthographicCamera camera;
     private final Stage stage;
@@ -43,6 +44,9 @@ public class PlayScreen implements Screen {
     private final Array<Item> items;
     private Texture pommespackung_leer, pommespackung_eins, pommespackung_zwei, pommespackung_drei;
 
+    private Image pommespackungImg;
+    Label.LabelStyle labelStyle = new Label.LabelStyle();
+
 
 
     private final ShapeRenderer shapeRenderer;
@@ -57,19 +61,14 @@ public class PlayScreen implements Screen {
         gameOver = false;
         runGame = false;
 
-        Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = new BitmapFont(Gdx.files.internal("title-font-export.fnt"));
         labelStyle.fontColor = Color.GRAY;
 
-
         table = new Table();
-
-        int padding = game.getDefaultPadding();
-        table.pad(padding, padding, padding, padding);
-
         table.setFillParent(true);
         tablePressSpace = new Table();
         tablePressSpace.setFillParent(true);
+        //table.debug();
 
         items = new Array<>();
 
@@ -80,7 +79,7 @@ public class PlayScreen implements Screen {
 
         this.game = game;
 
-        bird = new Bird(75, 250 );
+        bird = new Bird(75, 250);
 
         if (bird.isHelmetactive()) {
             bird.getBirdSprite().setTexture(bird.getMannyStraightHelm());
@@ -129,31 +128,39 @@ public class PlayScreen implements Screen {
      */
     @Override
     public void render(float delta) {
+        if(pause) {
+            stage.draw();
+            if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
+                pause = false;
+        }
+
+
 
         ScreenUtils.clear(0f, 0f, 0f, 1);
-        camera.update();
-        game.batch.setProjectionMatrix(camera.combined);
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
 
-        game.batch.begin();
-        game.background.renderBackground();
+                game.batch.begin();
+                game.background.renderBackground();
 
-        for (Barrier barrier : new Array.ArrayIterator<>(barriers)) {
-            barrier.render(game.batch);
-        }
 
-        stage.draw();
+                for (Barrier barrier : new Array.ArrayIterator<>(barriers)) {
+                    barrier.render(game.batch);
+                }
 
-        bird.render(game.batch);
+                stage.draw();
 
-        bird.birdGetSmaller();
+                bird.render(game.batch);
 
-        for (Item item : items) {
-            item.render(game.batch);
-        }
+                bird.birdGetSmaller();
 
-        game.batch.end();
+                for (Item item : items) {
+                    item.render(game.batch);
+                }
 
-        //Debug Hitbox
+                game.batch.end();
+
+                //Debug Hitbox
         /*shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(Color.CYAN);
         for(Barrier barrier : barriers){
@@ -169,13 +176,15 @@ public class PlayScreen implements Screen {
         shapeRenderer.circle(bird.getHitbox().x, bird.getHitbox().y, bird.getHitbox().radius);
         shapeRenderer.end();*/
 
-        if (gameOver) {
-            game.resetGameSpeed();
-            gameOverScreen.render(delta);
-            bird.birdDies();
-        } else {
-            update(delta);
-        }
+                if (gameOver) {
+                    game.resetGameSpeed();
+                    gameOverScreen.render(delta);
+                    bird.birdDies();
+                } else {
+                    if(!pause)
+                    update(delta);
+                }
+
     }
 
     /**
@@ -200,17 +209,14 @@ public class PlayScreen implements Screen {
             bird.setMultiplier(1);
         }
 
-        if(bird.getBirdWidth() < 101) {
+        if (bird.getBirdWidth() < 101) {
             if (TimeUtils.nanoTime() - bird.getLastShrinkTime() > 8000000000L && TimeUtils.nanoTime() - bird.getLastShrinkTime() < 8500000000L) {
-                bird.setBirdWidth(80);
-            }
-            else if(TimeUtils.nanoTime() - bird.getLastShrinkTime() >8500000000L && TimeUtils.nanoTime() - bird.getLastShrinkTime() < 9000000000L) {
+                bird.setBirdWidth(100);
+            } else if (TimeUtils.nanoTime() - bird.getLastShrinkTime() > 8500000000L && TimeUtils.nanoTime() - bird.getLastShrinkTime() < 9000000000L) {
                 bird.setBirdWidth(50);
-            }
-            else if(TimeUtils.nanoTime() - bird.getLastShrinkTime() > 9000000000L && TimeUtils.nanoTime() - bird.getLastShrinkTime() < 9500000000L){
-                bird.setBirdWidth(80);
-            }
-            else if(TimeUtils.nanoTime() - bird.getLastShrinkTime() > 9500000000L && TimeUtils.nanoTime() - bird.getLastShrinkTime() < 9800000000L) {
+            } else if (TimeUtils.nanoTime() - bird.getLastShrinkTime() > 9000000000L && TimeUtils.nanoTime() - bird.getLastShrinkTime() < 9500000000L) {
+                bird.setBirdWidth(100);
+            } else if (TimeUtils.nanoTime() - bird.getLastShrinkTime() > 9500000000L && TimeUtils.nanoTime() - bird.getLastShrinkTime() < 9800000000L) {
                 bird.setBirdWidth(50);
             }
         }
@@ -342,7 +348,7 @@ public class PlayScreen implements Screen {
                     Gdx.graphics.getWidth() + new Barrier(0, 0, Configuration.barrierdownImg,
                             game.getDifficulty()).getDistance() * i,
                     randomNum, Configuration.barrierupImg, game.getDifficulty());
-            b.getHitbox().setPosition(b.getHitbox().x - 5 ,b.getHitbox().y + 55);
+            b.getHitbox().setPosition(b.getHitbox().x - 5, b.getHitbox().y + 55);
             b.getHitbox2().setPosition(b.getHitbox().x + (b.getHitbox().width - b.getHitbox2().width) / 2,
                     b.getHitbox().y - b.getHitbox2().height);
             b.getHitbox3().setPosition(b.getHitbox2().x + (b.getHitbox2().width - b.getHitbox3().radius) / 2,
@@ -387,17 +393,18 @@ public class PlayScreen implements Screen {
 
     @Override
     public void pause() {
-
+        pause = true;
+        pressSpaceLable = new Label("Press Space to continue...", labelStyle);
+        tablePressSpace.add(pressSpaceLable).height(750).center().top().expand();
+        stage.addActor(tablePressSpace);
     }
 
     @Override
     public void resume() {
-
     }
 
     @Override
     public void hide() {
-
     }
 
     @Override

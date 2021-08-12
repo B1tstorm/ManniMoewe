@@ -4,12 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -82,7 +84,7 @@ public class HighscoreScreen implements Screen {
 
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = new BitmapFont(Gdx.files.internal("title-font-export.fnt"));
-        labelStyle.fontColor = Color.WHITE;
+        labelStyle.fontColor = Color.DARK_GRAY;
 
         Label highscore = new Label("Highscores: ", labelStyle);
         Label name = new Label("Name", labelStyle);
@@ -92,6 +94,9 @@ public class HighscoreScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
 
         int padding = game.getDefaultPadding();
+
+        table.background(new TextureRegionDrawable(new Texture(Configuration.table_backgroundImg)));
+
         table.pad(padding, padding, padding, padding);
 
         table.add(highscore).height(100).colspan(3).center();

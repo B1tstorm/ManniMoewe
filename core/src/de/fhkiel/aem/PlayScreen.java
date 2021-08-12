@@ -314,7 +314,7 @@ public class PlayScreen implements Screen {
                     barrier.getHitbox().setY(barrier.getBarrierSprite().getY() + 55);
                     barrier.getHitbox2().setY(barrier.getHitbox().y - barrier.getHitbox2().height);
                     barrier.getHitbox3().setY(barrier.getHitbox2().y - barrier.getHitbox3().radius);
-                    createItems(barrier.getBarrierSprite().getX() + ((barriers.size / 2f) * barrier.getDistance()) + (barrier.getDistance() / 2));
+                    createItems(barrier.getBarrierSprite().getX() /*+ ((barriers.size / 2f) * barrier.getDistance())*/ + (barrier.getDistance() / 2));
                 } else {
                     barrier.getBarrierSprite().setY(randomNum - barrier.getBarrierSprite().getHeight() - barrier.getGap());
                     barrier.getHitbox().setY(barrier.getBarrierSprite().getY());
@@ -364,7 +364,7 @@ public class PlayScreen implements Screen {
                 200, Gdx.graphics.getHeight() - 200);
         int randomNum2 = ThreadLocalRandom.current().nextInt(0, 100);
 
-        if (randomNum2 < 10) {
+        if (randomNum2 < 100) {
             items.add(new Fries(xPos, randomNum1));
         } else if (randomNum2 < 15) {
             items.add(new Multiplier(xPos, randomNum1));

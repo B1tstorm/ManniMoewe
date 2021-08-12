@@ -43,6 +43,7 @@ public class Configuration {
 
     // Environment Assets
     public static final String barrierdownImg = "ATFB-barrier-down.png";
+    public static final String barrierhelpImg = "ATFB-barrier-down-help.png";
     public static final String barrierupImg = "ATFB-barrier-up.png";
 
     // Manni Assets
@@ -124,7 +125,10 @@ public class Configuration {
     public static final String reduceScoreImg = "ATFB-reduceScore.png";
 
     // Slider Assets
-    public static final String slider_background = "ATFB-laser.png";
-    public static final String slider_knob = "ATFB-sword.png";
+    public static final String slider_backgroundImg = "ATFB-laser.png";
+    public static final String slider_knobImg = "ATFB-sword.png";
+
+    // Table Background Asset
+    public static final String table_backgroundImg = "ATFB-highscore-screen.png";
 
 }

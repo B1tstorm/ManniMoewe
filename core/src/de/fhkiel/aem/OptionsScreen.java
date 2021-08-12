@@ -61,8 +61,8 @@ public class OptionsScreen implements Screen {
         soundLabel = new Label("Sound", labelStyle);
 
         sliderStyle = new Slider.SliderStyle();
-        sliderStyle.background = new TextureRegionDrawable(new Texture(Configuration.slider_background));
-        sliderStyle.knob = new TextureRegionDrawable(new Texture(Configuration.slider_knob));
+        sliderStyle.background = new TextureRegionDrawable(new Texture(Configuration.slider_backgroundImg));
+        sliderStyle.knob = new TextureRegionDrawable(new Texture(Configuration.slider_knobImg));
         soundSlider = new Slider(0, 1, 0.01f, false, sliderStyle);
         soundSlider.setValue(0.5f);
         soundSlider.addListener(new ChangeListener() {

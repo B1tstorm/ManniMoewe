@@ -149,31 +149,44 @@ public class OptionsScreen implements Screen {
                     hardButton.setChecked(true);
                 });
 
-        skinButton1 = ButtonFactory.CreateImageButton(Configuration.manny_stareImg, Configuration.manny_heyImg,
+        skinButton1 = ButtonFactory.CreateImageButton(Configuration.manniBtn, true,
                 () -> {
                     game.setCharManniActive(true);
                     game.setCharSpaceManniActive(false);
                     skinButton2.setChecked(false);
+                    skinButton1.setChecked(true);
                 });
-        skinButton1.setChecked(true);
 
-        skinButton2 = ButtonFactory.CreateImageButton(Configuration.mannyStraightSpace, Configuration.mannyOuch2Space,
-                () -> {
-                    if(game.isFoundEasteregg()) {
-                        game.setCharSpaceManniActive(true);
-                        game.setCharManniActive(false);
-                        skinButton1.setChecked(false);
-                    }
-                });
+        if(game.isFoundEasteregg()) {
+            skinButton2 = ButtonFactory.CreateImageButton(Configuration.manniSpaceBtn, true,
+                    () -> {
+                        if (game.isFoundEasteregg()) {
+                            game.setCharSpaceManniActive(true);
+                            game.setCharManniActive(false);
+                            skinButton1.setChecked(false);
+                            skinButton2.setChecked(true);
+                        }
+                    });
+        }
+        else{
+            skinButton2 = ButtonFactory.CreateImageButton(Configuration.manniSpaceLocked, Configuration.manniSpaceLocked,
+                    () -> {
+                    });
+        }
 
         creditButton = ButtonFactory.CreateImageButton(Configuration.credit, false,
                 () -> {
                     game.setScreen(new CreditScreen(game));
                 });
 
+        skinButton1.setChecked(game.isCharManniActive());
+        skinButton2.setChecked(game.isCharSpaceManniActive());
+
         easyButton.setProgrammaticChangeEvents(false);
         mediumButton.setProgrammaticChangeEvents(false);
         hardButton.setProgrammaticChangeEvents(false);
+        skinButton1.setProgrammaticChangeEvents(false);
+        skinButton2.setProgrammaticChangeEvents(false);
     }
 
 

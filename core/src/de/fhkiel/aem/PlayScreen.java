@@ -86,9 +86,6 @@ public class PlayScreen implements Screen {
         if (bird.isHelmetactive()) {
             bird.getBirdSprite().setTexture(bird.getMannyStraightHelm());
         }
-        else if(game.isCharManniActive()){
-            bird.getBirdSprite().setTexture(bird.getMannyStraightSpace());
-        }
         else {
             bird.getBirdSprite().setTexture(bird.getMannyStraight());
         }

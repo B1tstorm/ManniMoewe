@@ -22,7 +22,7 @@ public class FlappyBird extends Game {
 	public NormalBackground background;
 	private boolean charManniActive = true;
 	private boolean charSpaceManniActive = false;
-	private boolean foundEasteregg = true;
+	private boolean foundEasteregg = false;
 
 	private static float speedMultiplier = 1.0f;
 	private String playerName = "Enter your Name";

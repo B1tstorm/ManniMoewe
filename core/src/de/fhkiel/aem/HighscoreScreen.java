@@ -2,10 +2,8 @@ package de.fhkiel.aem;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -82,14 +80,11 @@ public class HighscoreScreen implements Screen {
         table = new Table();
         table.setFillParent(true);
 
-        Label.LabelStyle labelStyle = new Label.LabelStyle();
-        labelStyle.font = new BitmapFont(Gdx.files.internal("title-font-export.fnt"));
-        labelStyle.fontColor = Color.DARK_GRAY;
 
-        Label highscore = new Label("Highscores: ", labelStyle);
-        Label name = new Label("Name", labelStyle);
-        Label place = new Label("Platz", labelStyle);
-        Label score = new Label("Score", labelStyle);
+        Label highscore = new Label("Highscores: ", game.labelStyle);
+        Label name = new Label("Name", game.labelStyle);
+        Label place = new Label("Platz", game.labelStyle);
+        Label score = new Label("Score", game.labelStyle);
 
         Gdx.input.setInputProcessor(stage);
 
@@ -112,9 +107,9 @@ public class HighscoreScreen implements Screen {
 
         for(int i = 0; i<10; i++) {
             table.row();
-            table.add(new Label((i+1) + ".", labelStyle)).expand();
-            table.add(new Label("", labelStyle)).expand();
-            table.add(new Label("", labelStyle)).expand();
+            table.add(new Label((i+1) + ".", game.labelStyle)).expand();
+            table.add(new Label("", game.labelStyle)).expand();
+            table.add(new Label("", game.labelStyle)).expand();
         }
 
         table.row();

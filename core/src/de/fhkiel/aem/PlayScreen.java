@@ -3,10 +3,8 @@ package de.fhkiel.aem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -44,7 +42,7 @@ public class PlayScreen implements Screen {
     private final Array<Item> items;
     private Texture pommespackung_leer, pommespackung_eins, pommespackung_zwei, pommespackung_drei;
     private Image pommespackungImg;
-    Label.LabelStyle labelStyle = new Label.LabelStyle();
+
 
 
 
@@ -59,9 +57,6 @@ public class PlayScreen implements Screen {
         shapeRenderer = new ShapeRenderer();
         gameOver = false;
         runGame = false;
-
-        labelStyle.font = new BitmapFont(Gdx.files.internal("title-font-export.fnt"));
-        labelStyle.fontColor = Color.GRAY;
 
         table = new Table();
 
@@ -96,9 +91,9 @@ public class PlayScreen implements Screen {
 
         Gdx.input.setInputProcessor(stage);
 
-        highscoreLabel = new Label("Highscore: ", labelStyle);
-        collectableLabel = new Label("" + bird.getScoreCollectable() + " / 3", labelStyle);
-        speedLabel = new Label("Speed: " + game.getSpeedMultiplier() * 60 + "km/h", labelStyle);
+        highscoreLabel = new Label("Highscore: ", game.labelStyle);
+        collectableLabel = new Label("" + bird.getScoreCollectable() + " / 3", game.labelStyle);
+        speedLabel = new Label("Speed: " + game.getSpeedMultiplier() * 60 + "km/h", game.labelStyle);
 
         table.add(new Image(pommespackung_leer)).top().left().maxHeight(55).maxWidth(55);
         table.add(collectableLabel).expand().center().top().left().padLeft(20);
@@ -109,7 +104,7 @@ public class PlayScreen implements Screen {
         table.add().expand().padRight(75 + collectableLabel.getWidth());
         stage.addActor(table);
 
-        pressSpaceLable = new Label("Press Space to start...", labelStyle);
+        pressSpaceLable = new Label("Press Space to start...", game.labelStyle);
         tablePressSpace.add(pressSpaceLable).height(750).center().top().expand();
         stage.addActor(tablePressSpace);
 
@@ -398,7 +393,7 @@ public class PlayScreen implements Screen {
     @Override
     public void pause() {
         pause = true;
-        pressSpaceLable = new Label("Press Space to continue...", labelStyle);
+        pressSpaceLable = new Label("Press Space to continue...", game.labelStyle);
         tablePressSpace.add(pressSpaceLable).height(750).center().top().expand();
         stage.addActor(tablePressSpace);
     }

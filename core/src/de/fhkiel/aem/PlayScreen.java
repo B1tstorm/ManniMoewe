@@ -11,7 +11,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
@@ -43,7 +42,7 @@ public class PlayScreen implements Screen {
     private long currentTime;
     private final Array<Item> items;
     private Texture pommespackung_leer, pommespackung_eins, pommespackung_zwei, pommespackung_drei;
-    private Image pommespackungImg;
+
 
 
     private final ShapeRenderer shapeRenderer;
@@ -96,7 +95,7 @@ public class PlayScreen implements Screen {
         collectableLabel = new Label("" + bird.getScoreCollectable() + " / 3", labelStyle);
         speedLabel = new Label("Speed: " + game.getSpeedMultiplier() * 60 + "km/h", labelStyle);
 
-        table.add(pommespackungImg = new Image(pommespackung_leer)).top().left().maxHeight(55).maxWidth(55);
+        table.add(new Image(pommespackung_leer)).top().left().maxHeight(55).maxWidth(55);
         table.add(collectableLabel).expand().center().top().left().padLeft(20);
 
         table.add(highscoreLabel).expand().height(100).center().top();

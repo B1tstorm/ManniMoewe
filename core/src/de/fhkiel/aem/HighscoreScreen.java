@@ -174,10 +174,12 @@ public class HighscoreScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
+        game.background.renderBackground();
         game.batch.end();
 
         stage.draw();
         stage.act();
+        game.background.move();
     }
 
     @Override

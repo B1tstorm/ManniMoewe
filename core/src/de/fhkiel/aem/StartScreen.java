@@ -104,7 +104,7 @@ public class StartScreen implements Screen {
 
         stage.addActor(table);
 
-        game.background = new Background(game.batch);
+        game.background = new NormalBackground(game.batch);
     }
 
     @Override
@@ -128,7 +128,6 @@ public class StartScreen implements Screen {
         game.batch.begin();
 
         game.background.renderBackground();
-        game.background.renderForeground();
 
         game.batch.draw(bird.getBirdSprite(), bird.getBirdSprite().getX(), bird.getBirdSprite().getY() , bird.getBirdWidth() , bird.getBirdWidth());
 

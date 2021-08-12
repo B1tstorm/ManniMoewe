@@ -120,7 +120,6 @@ public class CreditScreen implements Screen {
 
         game.batch.begin();
         game.background.renderBackground();
-        game.background.renderForeground();
         game.batch.end();
         stage.draw();
         stage.act();

@@ -76,6 +76,38 @@ public class Configuration {
     public static final String city2Img = "ATFB-stadt2.png";
     public static final String city3Img = "ATFB-stadt3.png";
 
+    // Space Background
+    public static final String spaceLayerOne1Img = "ATFB-Space-1-1.png";
+    public static final String spaceLayerOne2Img = "ATFB-Space-1-2.png";
+    public static final String spaceLayerOne3Img = "ATFB-Space-1-3.png";
+    public static final String spaceLayerOne4Img = "ATFB-Space-1-4.png";
+    public static final String spaceLayerOne5Img = "ATFB-Space-1-5.png";
+
+    public static final String spaceLayerTwo1Img = "ATFB-Space-2-1.png";
+    public static final String spaceLayerTwo2Img = "ATFB-Space-2-2.png";
+    public static final String spaceLayerTwo3Img = "ATFB-Space-2-3.png";
+    public static final String spaceLayerTwo4Img = "ATFB-Space-2-4.png";
+    public static final String spaceLayerTwo5Img = "ATFB-Space-2-5.png";
+
+    public static final String spaceLayerThree1Img = "ATFB-Space-3-1.png";
+    public static final String spaceLayerThree2Img = "ATFB-Space-3-2.png";
+    public static final String spaceLayerThree3Img = "ATFB-Space-3-3.png";
+    public static final String spaceLayerThree4Img = "ATFB-Space-3-4.png";
+    public static final String spaceLayerThree5Img = "ATFB-Space-3-5.png";
+
+    public static final String spaceLayerFour1Img = "ATFB-Space-4-1.png";
+    public static final String spaceLayerFour2Img = "ATFB-Space-4-2.png";
+    public static final String spaceLayerFour3Img = "ATFB-Space-4-3.png";
+    public static final String spaceLayerFour4Img = "ATFB-Space-4-4.png";
+    public static final String spaceLayerFour5Img = "ATFB-Space-4-5.png";
+
+    public static final String spaceLayerFive1Img = "ATFB-Space-5-1.png";
+    public static final String spaceLayerFive2Img = "ATFB-Space-5-2.png";
+    public static final String spaceLayerFive3Img = "ATFB-Space-5-3.png";
+    public static final String spaceLayerFive4Img = "ATFB-Space-5-4.png";
+    public static final String spaceLayerFive5Img = "ATFB-Space-5-5.png";
+
+
     // Item Assets
     public static final String transparentImg = "ATFB-transparent.png";
     public static final String item_godmodeImg = "ATFB-item-godmode.png";

@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -42,6 +43,7 @@ public class SpaceScreen implements Screen {
     private Texture pommespackung_leer, pommespackung_eins, pommespackung_zwei, pommespackung_drei;
     private final ShapeRenderer shapeRenderer;
     private final float highscoreAlt;
+    private SpaceBackground spaceBackground;
 
 
     /**
@@ -54,6 +56,7 @@ public class SpaceScreen implements Screen {
         gameOver = false;
         runGame = false;
 
+        spaceBackground = new SpaceBackground(game.batch);
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = new BitmapFont(Gdx.files.internal("title-font-export.fnt"));
         labelStyle.fontColor = Color.GRAY;
@@ -77,11 +80,22 @@ public class SpaceScreen implements Screen {
 
         bird.setHighscore(highscoreAlt);
 
-        if (bird.isHelmetactive()) {
-            bird.getBirdSprite().setTexture(bird.getMannyStraightHelm());
-        } else {
-            bird.getBirdSprite().setTexture(bird.getMannyStraight());
+        if(bird.spaceScreen) {
+            if (bird.isHelmetactive()) {
+                bird.getBirdSprite().setTexture(bird.getMannyStraightSpace());
+            } else {
+                bird.getBirdSprite().setTexture(bird.getMannyStraightSpace());
+            }
         }
+        else {
+            if (bird.isHelmetactive()) {
+                bird.getBirdSprite().setTexture(bird.getMannyStraightSpaceHelmet());
+            } else {
+                bird.getBirdSprite().setTexture(bird.getMannyStraight());
+            }
+        }
+
+
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Configuration.ScreenWidth, Configuration.ScreenHeight);
@@ -112,6 +126,7 @@ public class SpaceScreen implements Screen {
 
     @Override
     public void show() {
+        bird.spaceScreen = true;
         game.oceanSeagullMusic.pause();
         game.kielMusic.pause();
         game.resetGameSpeed();
@@ -134,8 +149,7 @@ public class SpaceScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
-        game.background.renderBackground();
-        game.background.renderForeground();
+        spaceBackground.renderBackground();
 
         for (Barrier barrier : new Array.ArrayIterator<>(barriers)) {
             barrier.render(game.batch);
@@ -291,7 +305,7 @@ public class SpaceScreen implements Screen {
             }
         }
 
-        game.background.move();
+        spaceBackground.move();
 
         for (Barrier barrier : new Array.ArrayIterator<>(barriers)) {
             if (bird.getBirdSprite().getX() >= barrier.getBarrierSprite().getX() && barrier.getWealth() != 0) {
@@ -380,6 +394,6 @@ public class SpaceScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        bird.spaceScreen = false;
     }
 }

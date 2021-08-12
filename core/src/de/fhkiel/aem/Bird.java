@@ -22,6 +22,13 @@ public class Bird {
     private final Texture mannyStraightHelm = new Texture(Configuration.manny_straight_helmImg);
     private final Texture mannyDownHelm = new Texture(Configuration.manny_down_HelmImg);
     private final Texture mannyUpHelm = new Texture(Configuration.manny_up_helmImg);
+    private final Texture mannyUpSpace = new Texture(Configuration.mannyUpSpace);
+    private final Texture mannyUpSpaceHelmet = new Texture(Configuration.mannyUpSpaceHelmet);
+    private final Texture mannyDownSpace = new Texture(Configuration.mannyDownSpace);
+    private final Texture mannyDownSpaceHelmet = new Texture(Configuration.mannyDownSpaceHelmet);
+    private final Texture mannyStraightSpace = new Texture(Configuration.mannyStraightSpace);
+    private final Texture mannyStraightSpaceHelmet = new Texture(Configuration.mannyStraightSpaceHelmet);
+
 
     private final int width = 100;
     private float highscore = 0;
@@ -34,7 +41,7 @@ public class Bird {
     private int birdWidth = 350;
     private long lastMultiplierTime;
     private long lastShrinkTime;
-
+    public boolean spaceScreen = false;
     private long dieTime = 0;
     private static HashMap<Integer, Texture> animationMap = new HashMap<>();
 
@@ -42,6 +49,8 @@ public class Bird {
     public Texture getMannyStraight() {
         return mannyStraight;
     }
+
+    public Texture getMannyStraightSpace() {return mannyStraightSpace;}
 
     //bestimmt die Beschleunigung, in der der Vogel nach unten fällt
     private float fallSpeed = 200;
@@ -99,19 +108,38 @@ public class Bird {
 
         //nach xxxx millisec nachdem der button betätigt wurde, fällt der Vogel auf 2 Phasen wieder runter
         if (pressTime != 0 && (fallSpeed < 0 && TimeUtils.millis() >= (pressTime + 200))) {
-            if (helmetactive) {
-                birdSprite.setTexture(mannyStraightHelm);
-            } else {
-                birdSprite.setTexture(mannyStraight);
+
+            if(spaceScreen) {
+                if (helmetactive) {
+                    birdSprite.setTexture(mannyStraightSpaceHelmet);
+                } else {
+                    birdSprite.setTexture(mannyStraightSpace);
+                }
+            }
+            else {
+                if (helmetactive) {
+                    birdSprite.setTexture(mannyStraightHelm);
+                } else {
+                    birdSprite.setTexture(mannyStraight);
+                }
             }
             fallSpeed = 320;
             birdMayRotate = false;
         }
         if (pressTime != 0 && fallSpeed > 0 && TimeUtils.millis() >= (pressTime + 300)) {
-            if (helmetactive) {
-                birdSprite.setTexture(mannyDownHelm);
-            } else {
-                birdSprite.setTexture(mannyDown);
+            if(spaceScreen) {
+                if (helmetactive) {
+                    birdSprite.setTexture(mannyStraightSpaceHelmet);
+                } else {
+                    birdSprite.setTexture(mannyStraightSpace);
+                }
+            }
+            else {
+                if (helmetactive) {
+                    birdSprite.setTexture(mannyStraightHelm);
+                } else {
+                    birdSprite.setTexture(mannyStraight);
+                }
             }
             fallSpeed = 440;
             pressTime = 0;
@@ -192,20 +220,38 @@ public class Bird {
             birdMayRotate = true;
         }
         pressTime = TimeUtils.millis();
-        if (helmetactive) {
-            birdSprite.setTexture(mannyUpHelm);
-        } else {
-            birdSprite.setTexture(mannyUp);
+        if(spaceScreen) {
+            if (helmetactive) {
+                birdSprite.setTexture(mannyStraightSpaceHelmet);
+            } else {
+                birdSprite.setTexture(mannyStraightSpace);
+            }
+        }
+        else {
+            if (helmetactive) {
+                birdSprite.setTexture(mannyStraightHelm);
+            } else {
+                birdSprite.setTexture(mannyStraight);
+            }
         }
         fallSpeed = -850;
     }
 
     private void slide() {
         pressTime = TimeUtils.millis();
-        if (helmetactive) {
-            birdSprite.setTexture(mannyUpHelm);
-        } else {
-            birdSprite.setTexture(mannyUp);
+        if(spaceScreen) {
+            if (helmetactive) {
+                birdSprite.setTexture(mannyStraightSpaceHelmet);
+            } else {
+                birdSprite.setTexture(mannyStraightSpace);
+            }
+        }
+        else {
+            if (helmetactive) {
+                birdSprite.setTexture(mannyStraightHelm);
+            } else {
+                birdSprite.setTexture(mannyStraight);
+            }
         }
         fallSpeed = -400;
     }
@@ -260,6 +306,10 @@ public class Bird {
 
     public boolean isInvincible() {
         return invincible;
+    }
+
+    public Texture getMannyStraightSpaceHelmet() {
+        return mannyStraightSpaceHelmet;
     }
 
     public void setInvincible(boolean invincible) {

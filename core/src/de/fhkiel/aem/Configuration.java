@@ -60,9 +60,15 @@ public class Configuration {
     public static final String mannyOuch7 = "ATFB-manny-ouch-7.png";
     public static final String mannyOuch8 = "ATFB-manny-ouch-8.png";
     public static final String mannyOuch9 = "ATFB-manny-ouch-9.png";
+    public static final String mannyUpSpace = "ATFB-manny-up-space.png";
+    public static final String mannyUpSpaceHelmet = "ATFB-manny-up-space-helmet.png";
+    public static final String mannyDownSpace = "ATFB-manny-down-space.png";
+    public static final String mannyDownSpaceHelmet = "ATFB-manny-down-space-helmet.png";
+    public static final String mannyStraightSpace = "ATFB-manny-straight-space.png";
+    public static final String mannyStraightSpaceHelmet = "ATFB-manny-Straight-space-helmet.png";
 
     // Screen Assets
-    public static final String highscoreInputImg = "AFTB-highscore-input.png";
+    public static final String highscoreInputImg = "ATFB-highscore-input.png";
     public static final String sky1Img = "ATFB-himmel1.png";
     public static final String sky2Img = "ATFB-himmel2.png";
     public static final String sky3Img = "ATFB-himmel3.png";

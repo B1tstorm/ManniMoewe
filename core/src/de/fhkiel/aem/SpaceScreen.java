@@ -21,6 +21,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import java.util.Iterator;
 import java.util.concurrent.ThreadLocalRandom;
 
+
 public class SpaceScreen implements Screen {
 
     private final FlappyBird game;
@@ -42,6 +43,12 @@ public class SpaceScreen implements Screen {
     private final ShapeRenderer shapeRenderer;
     private final float highscoreAlt;
 
+
+    /**
+     * Creates a new PlayScreen where the game is running on.
+     *
+     * @param game The game object
+     */
     public SpaceScreen(FlappyBird game, float highscoreAlt, Bird bird) {
         shapeRenderer = new ShapeRenderer();
         gameOver = false;
@@ -66,8 +73,8 @@ public class SpaceScreen implements Screen {
 
         this.game = game;
         this.highscoreAlt = highscoreAlt;
-
         this.bird = bird;
+
         bird.setHighscore(highscoreAlt);
 
         if (bird.isHelmetactive()) {
@@ -103,7 +110,6 @@ public class SpaceScreen implements Screen {
         createBarriers();
     }
 
-
     @Override
     public void show() {
         game.oceanSeagullMusic.pause();
@@ -111,6 +117,8 @@ public class SpaceScreen implements Screen {
         game.resetGameSpeed();
         bird.getBirdSprite().setX(75);
         bird.getBirdSprite().setY(250);
+        bird.getHitbox().setPosition(bird.getBirdSprite().getX() + bird.getHitbox().radius,
+                bird.getBirdSprite().getY() + bird.getHitbox().radius);
     }
 
     /**
@@ -149,11 +157,11 @@ public class SpaceScreen implements Screen {
         /*shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(Color.CYAN);
         for(Barrier barrier : barriers){
+            shapeRenderer.setColor(Color.CYAN);
             shapeRenderer.rect(barrier.getHitbox().x, barrier.getHitbox().y,
                     barrier.getHitbox().width, barrier.getHitbox().height);
         }
         shapeRenderer.circle(bird.getHitbox().x, bird.getHitbox().y, bird.getHitbox().radius);
-        shapeRenderer.circle(invincibleItem.getHitbox().x, invincibleItem.getHitbox().y, invincibleItem.getHitbox().radius);
         shapeRenderer.end();*/
 
         if (gameOver) {
@@ -171,6 +179,11 @@ public class SpaceScreen implements Screen {
     private void update(float delta) {
         int randomNum = 0;
 
+        if(bird.getBirdSprite().getY() > Configuration.ScreenHeight + 500 && bird.getHighscore() > 3) {
+            game.setScreen(new SpaceScreen(game, bird.getHighscore(), bird));
+            dispose();
+        }
+
         if (bird.getScoreCollectable() < 3) {
             bird.setHelmetactive(false);
         }
@@ -184,13 +197,13 @@ public class SpaceScreen implements Screen {
 
         if(bird.getBirdWidth() < 101) {
             if (TimeUtils.nanoTime() - bird.getLastShrinkTime() > 8000000000L && TimeUtils.nanoTime() - bird.getLastShrinkTime() < 8500000000L) {
-                bird.setBirdWidth(100);
+                bird.setBirdWidth(80);
             }
             else if(TimeUtils.nanoTime() - bird.getLastShrinkTime() >8500000000L && TimeUtils.nanoTime() - bird.getLastShrinkTime() < 9000000000L) {
                 bird.setBirdWidth(50);
             }
             else if(TimeUtils.nanoTime() - bird.getLastShrinkTime() > 9000000000L && TimeUtils.nanoTime() - bird.getLastShrinkTime() < 9500000000L){
-                bird.setBirdWidth(100);
+                bird.setBirdWidth(80);
             }
             else if(TimeUtils.nanoTime() - bird.getLastShrinkTime() > 9500000000L && TimeUtils.nanoTime() - bird.getLastShrinkTime() < 9800000000L) {
                 bird.setBirdWidth(50);
@@ -200,6 +213,8 @@ public class SpaceScreen implements Screen {
         if (TimeUtils.nanoTime() - bird.getLastShrinkTime() > 10000000000L) {
             bird.getHitbox().setRadius(50);
             if (bird.getBirdWidth() < 100) {
+                bird.getHitbox().setPosition(bird.getBirdSprite().getX() + bird.getHitbox().radius,
+                        bird.getBirdSprite().getY() + bird.getHitbox().radius);
                 bird.setBirdWidth((int) (bird.getHitbox().radius * 2));
             }
         }
@@ -284,15 +299,19 @@ public class SpaceScreen implements Screen {
                 barrier.setWealth(0);
             }
             if (barrier.getBarrierSprite().getX() < (0 - barrier.getBarrierSprite().getWidth())) {
+                barrier.getBarrierSprite().setX(barrier.getBarrierSprite().getX() + (barriers.size / 2f) * barrier.getDistance());
+                barrier.getHitbox().setX(barrier.getHitbox().getX() + (barriers.size / 2f) * barrier.getDistance());
                 if (barrier.getBarrierSprite().getRotation() != 180) {
                     randomNum = ThreadLocalRandom.current().nextInt(
                             200, Gdx.graphics.getHeight());
                     barrier.getBarrierSprite().setY(randomNum);
+                    barrier.getHitbox().setY(barrier.getBarrierSprite().getY());
                     createItems(barrier.getBarrierSprite().getX() + ((barriers.size / 2f) * barrier.getDistance()) + (barrier.getDistance() / 2));
                 } else {
                     barrier.getBarrierSprite().setY(randomNum - barrier.getBarrierSprite().getHeight() - barrier.getGap());
+                    barrier.getHitbox().setY(barrier.getBarrierSprite().getY());
                 }
-                barrier.getBarrierSprite().setX(barrier.getBarrierSprite().getX() + (barriers.size / 2f) * barrier.getDistance());
+
                 barrier.setWealth(game.getDifficulty() / 2.0f);
             }
         }
@@ -307,12 +326,15 @@ public class SpaceScreen implements Screen {
                     200, Gdx.graphics.getHeight());
 
             Barrier b = new Barrier(
-                    Gdx.graphics.getWidth() + new Barrier(0, 0, Configuration.spaceBarrierDownImg, game.getDifficulty()).getDistance() * i,
+                    Gdx.graphics.getWidth() + new Barrier(0, 0, Configuration.spaceBarrierDownImg,
+                            game.getDifficulty()).getDistance() * i,
                     randomNum, Configuration.spaceBarrierDownImg, game.getDifficulty());
+            b.getHitbox().setPosition(b.getHitbox().x - 5 ,b.getHitbox().y);
             barriers.add(b);
             Barrier b2 = new Barrier(Gdx.graphics.getWidth() + (b.getDistance() * i),
                     randomNum - b.getBarrierSprite().getHeight() - b.getGap(), Configuration.spaceBarrierUpImg, game.getDifficulty());
             b2.getBarrierSprite().setRotation(180f);
+            b2.getHitbox().setX(b.getHitbox().x);
             barriers.add(b2);
             createItems(b.getBarrierSprite().getX() + b.getDistance() / 2);
         }

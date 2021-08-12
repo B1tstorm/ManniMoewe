@@ -4,11 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import de.fhkiel.aem.utility.ButtonFactory;
@@ -30,7 +32,7 @@ public class OptionsScreen implements Screen {
     private ImageButton skinButton2;
     private ImageButton skinButton3;
     private ImageButton creditButton;
-    private Skin skin;
+    private Slider.SliderStyle sliderStyle;
     private Slider soundSlider;
 
 
@@ -58,8 +60,10 @@ public class OptionsScreen implements Screen {
         difficultyLabel = new Label("Difficulty", labelStyle);
         soundLabel = new Label("Sound", labelStyle);
 
-        skin = new Skin(Gdx.files.internal("uiskin.json"));
-        soundSlider = new Slider(0, 1, 0.01f, false, skin);
+        sliderStyle = new Slider.SliderStyle();
+        sliderStyle.background = new TextureRegionDrawable(new Texture(Configuration.slider_background));
+        sliderStyle.knob = new TextureRegionDrawable(new Texture(Configuration.slider_knob));
+        soundSlider = new Slider(0, 1, 0.01f, false, sliderStyle);
         soundSlider.setValue(0.5f);
         soundSlider.addListener(new ChangeListener() {
             @Override
@@ -183,7 +187,6 @@ public class OptionsScreen implements Screen {
 
         game.batch.begin();
         game.background.renderBackground();
-        game.background.renderForeground();
         game.batch.end();
 
         stage.draw();

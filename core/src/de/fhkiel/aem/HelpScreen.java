@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -26,7 +27,7 @@ public class HelpScreen implements Screen {
     private final OrthographicCamera camera;
     private final Stage stage;
     private int shownDifficulty;
-    private Table table;
+    private Table table, buttonTable;
 
 
     /**
@@ -46,6 +47,9 @@ public class HelpScreen implements Screen {
         table = new Table();
         table.setFillParent(true);
 
+        buttonTable = new Table();
+        buttonTable.setFillParent(true);
+
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = new BitmapFont(Gdx.files.internal("title-font-export.fnt"));
         labelStyle.fontColor = Color.DARK_GRAY;
@@ -56,48 +60,60 @@ public class HelpScreen implements Screen {
 
         Gdx.input.setInputProcessor(stage);
 
+        int padding = game.getDefaultPadding();
+        table.pad(padding, padding, padding, padding);
 
-        table.add(helpLabel).height(100).colspan(2).center();
-        table.row();
-        table.add(itemLabel).expand();
-        table.add(descriptionLabel).expand().left();
+        table.background(new TextureRegionDrawable(new Texture(Configuration.table_backgroundImg)));
 
+        table.add(helpLabel).height(100).colspan(3).center();
         table.row();
-        table.add(new Image(new Texture(Configuration.manny_straightImg))).maxWidth(100);
-        table.add(new Label("Manni: Die geilste Moewe der Welt.", labelStyle)).fillX();
-
-        table.row();
-        table.add(new Image(new Texture(Configuration.barrierdownImg))).maxWidth(100);
-        table.add(new Label("Hindernis: Bei Beruehrung stribt Manni.", labelStyle)).fillX();
+        table.add(itemLabel).minWidth(300);
+        table.add(descriptionLabel).expand().left().colspan(2);
 
         table.row();
-        table.add(new Image(new Texture(Configuration.pommesImg))).maxWidth(100).maxHeight(100);
+        table.add(new Image(new Texture(Configuration.manny_straightImg))).maxWidth(100).left().padRight(20);
+        table.add(new Label("Manni: Die geilste Moewe der Welt.", labelStyle)).left().colspan(2);
+
+        table.row();
+        table.add(new Image(new Texture(Configuration.barrierhelpImg))).maxWidth(100).left().padRight(20);
+        table.add(new Label("Hindernis: Bei Beruehrung stribt Manni.", labelStyle)).left().colspan(2);
+
+        table.row();
+        table.add(new Image(new Texture(Configuration.pommesImg))).maxWidth(100).maxHeight(100).left().padRight(20);
         table.add(new Label("Item-Pommes: Wenn du drei Pommes gesammelt hast kannst du von einem\n" +
-                "Hindernis getroffen werden ohne zu sterben.", labelStyle)).fillX();
+                "Hindernis getroffen werden ohne zu sterben.", labelStyle)).left().colspan(2);
 
         table.row();
-        table.add(new Image(new Texture(Configuration.item_miniImg))).maxWidth(100);
-        table.add(new Label("Item-Lupe: Verkleinert Manni fuer eine kurze Zeit.", labelStyle)).fillX();
+        table.add(new Image(new Texture(Configuration.item_miniImg))).maxWidth(100).left().padRight(20);
+        table.add(new Label("Item-Lupe: Verkleinert Manni fuer eine kurze Zeit.", labelStyle)).left().colspan(2);
 
         table.row();
-        table.add(new Image(new Texture(Configuration.item_multipyImg))).maxWidth(100);
-        table.add(new Label("Item-Multiplikator: Die erhaltenen Punkte werden für eine " +
-                "kurze Zeit verdoppelt", labelStyle)).fillX();
+        table.add(new Image(new Texture(Configuration.item_multipyImg))).maxWidth(100).left().padRight(20);
+        table.add(new Label("Item-Multiplikator: Die erhaltenen Punkte werden fuer eine " +
+                "kurze Zeit verdoppelt", labelStyle)).left().colspan(2);
 
         table.row();
-        table.add(new Image(new Texture(Configuration.item_slowmoImg))).maxWidth(100);
-        table.add(new Label("Item-Schnecke: Manni wird verlangsamt.", labelStyle)).fillX();
+        table.add(new Image(new Texture(Configuration.item_slowmoImg))).maxWidth(100).left().padRight(20);
+        table.add(new Label("Item-Schnecke: Manni wird verlangsamt.", labelStyle)).left().colspan(2);
 
         table.row();
-        table.add(new Image(new Texture(Configuration.reduceScoreImg))).maxWidth(100);
-        table.add(new Label("Item-Minus: Manni verliert einen Teil seiner Punkte.", labelStyle)).fillX();
+        table.add(new Image(new Texture(Configuration.reduceScoreImg))).maxWidth(100).left().padRight(20);
+        table.add(new Label("Item-Minus: Manni verliert einen Teil seiner Punkte.", labelStyle)).left().colspan(2);
 
         table.row();
-        table.add(ButtonFactory.CreateImageButton(Configuration.back, false,
+
+        buttonTable.padLeft(padding);
+        buttonTable.add().expand().colspan(3);
+        buttonTable.row();
+        buttonTable.add().fillX().minWidth((Gdx.graphics.getWidth() / 3) - (padding * 8));
+        buttonTable.add().fillX().minWidth((Gdx.graphics.getWidth() / 3) - (padding * 8));
+        buttonTable.add(ButtonFactory.CreateImageButton(Configuration.back, false,
                 () -> {
                     game.setScreen(new StartScreen(game));
                     dispose();
-        })).colspan(2).center();
+                })).bottom().center();
+
+        table.add(buttonTable).colspan(3).fillX();
 
         stage.addActor(table);
     }

@@ -81,7 +81,7 @@ public class HighscoreScreen implements Screen {
         table.setFillParent(true);
 
 
-        Label highscore = new Label("Highscores: ", game.labelStyle);
+        Label highscore = new Label("Highscores: ", game.labelStyleHeadline);
         Label name = new Label("Name", game.labelStyle);
         Label place = new Label("Platz", game.labelStyle);
         Label score = new Label("Score", game.labelStyle);

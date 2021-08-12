@@ -44,7 +44,7 @@ public class GameOverScreen implements Screen {
         table.setFillParent(true);
         Gdx.input.setInputProcessor(stage);
         
-        Label overLabel = new Label("Game Over!", game.labelStyle);
+        Label overLabel = new Label("Game Over!", game.labelStyleHeadline);
 
         TextField.TextFieldStyle textFieldStyle = new TextField.TextFieldStyle();
         textFieldStyle.font = game.font;

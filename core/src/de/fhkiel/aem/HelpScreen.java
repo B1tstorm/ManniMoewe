@@ -45,7 +45,7 @@ public class HelpScreen implements Screen {
         buttonTable = new Table();
         buttonTable.setFillParent(true);
 
-        Label helpLabel = new Label("Help", game.labelStyle);
+        Label helpLabel = new Label("Help", game.labelStyleHeadline);
         Label itemLabel = new Label("Item", game.labelStyle);
         Label descriptionLabel = new Label("Description", game.labelStyle);
 

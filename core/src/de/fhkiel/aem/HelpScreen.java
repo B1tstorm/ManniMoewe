@@ -2,20 +2,15 @@ package de.fhkiel.aem;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import de.fhkiel.aem.model.HighscoreEntry;
 import de.fhkiel.aem.utility.ButtonFactory;
 
 /**
@@ -50,13 +45,9 @@ public class HelpScreen implements Screen {
         buttonTable = new Table();
         buttonTable.setFillParent(true);
 
-        Label.LabelStyle labelStyle = new Label.LabelStyle();
-        labelStyle.font = new BitmapFont(Gdx.files.internal("title-font-export.fnt"));
-        labelStyle.fontColor = Color.DARK_GRAY;
-
-        Label helpLabel = new Label("Help", labelStyle);
-        Label itemLabel = new Label("Item", labelStyle);
-        Label descriptionLabel = new Label("Description", labelStyle);
+        Label helpLabel = new Label("Help", game.labelStyle);
+        Label itemLabel = new Label("Item", game.labelStyle);
+        Label descriptionLabel = new Label("Description", game.labelStyle);
 
         Gdx.input.setInputProcessor(stage);
 
@@ -72,33 +63,33 @@ public class HelpScreen implements Screen {
 
         table.row();
         table.add(new Image(new Texture(Configuration.manny_straightImg))).maxWidth(100).left().padRight(20);
-        table.add(new Label("Manni: Die geilste Moewe der Welt.", labelStyle)).left().colspan(2);
+        table.add(new Label("Manni: Die geilste Moewe der Welt.", game.labelStyle)).left().colspan(2);
 
         table.row();
         table.add(new Image(new Texture(Configuration.barrierhelpImg))).maxWidth(100).left().padRight(20);
-        table.add(new Label("Hindernis: Bei Beruehrung stribt Manni.", labelStyle)).left().colspan(2);
+        table.add(new Label("Hindernis: Bei Beruehrung stribt Manni.", game.labelStyle)).left().colspan(2);
 
         table.row();
         table.add(new Image(new Texture(Configuration.pommesImg))).maxWidth(100).maxHeight(100).left().padRight(20);
         table.add(new Label("Item-Pommes: Wenn du drei Pommes gesammelt hast kannst du von einem\n" +
-                "Hindernis getroffen werden ohne zu sterben.", labelStyle)).left().colspan(2);
+                "Hindernis getroffen werden ohne zu sterben.", game.labelStyle)).left().colspan(2);
 
         table.row();
         table.add(new Image(new Texture(Configuration.item_miniImg))).maxWidth(100).left().padRight(20);
-        table.add(new Label("Item-Lupe: Verkleinert Manni fuer eine kurze Zeit.", labelStyle)).left().colspan(2);
+        table.add(new Label("Item-Lupe: Verkleinert Manni fuer eine kurze Zeit.", game.labelStyle)).left().colspan(2);
 
         table.row();
         table.add(new Image(new Texture(Configuration.item_multipyImg))).maxWidth(100).left().padRight(20);
         table.add(new Label("Item-Multiplikator: Die erhaltenen Punkte werden fuer eine " +
-                "kurze Zeit verdoppelt", labelStyle)).left().colspan(2);
+                "kurze Zeit verdoppelt", game.labelStyle)).left().colspan(2);
 
         table.row();
         table.add(new Image(new Texture(Configuration.item_slowmoImg))).maxWidth(100).left().padRight(20);
-        table.add(new Label("Item-Schnecke: Manni wird verlangsamt.", labelStyle)).left().colspan(2);
+        table.add(new Label("Item-Schnecke: Manni wird verlangsamt.", game.labelStyle)).left().colspan(2);
 
         table.row();
         table.add(new Image(new Texture(Configuration.reduceScoreImg))).maxWidth(100).left().padRight(20);
-        table.add(new Label("Item-Minus: Manni verliert einen Teil seiner Punkte.", labelStyle)).left().colspan(2);
+        table.add(new Label("Item-Minus: Manni verliert einen Teil seiner Punkte.", game.labelStyle)).left().colspan(2);
 
         table.row();
 

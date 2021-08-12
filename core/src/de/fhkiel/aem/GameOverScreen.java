@@ -70,15 +70,12 @@ public class GameOverScreen implements Screen {
         nameTextField.setAlignment(Align.center);
         nameTextField.setMaxLength(30);
 
-        int padding = game.getDefaultPadding();
-        table.pad(padding, padding, padding, padding);
-
         table.add(overLabel).height(200).top().center().colspan(3).expand();
         table.row();
         table.add(nameTextField).center().colspan(3).maxSize(Gdx.graphics.getWidth() / 2f).fillX();
         table.row();
-        table.add(restartButton).center().bottom().expand();
         table.add(highscoreButton).center().bottom().expand();
+        table.add(restartButton).center().bottom().expand();
         table.add(backButton).center().bottom().expand();
 
         stage.addActor(table);

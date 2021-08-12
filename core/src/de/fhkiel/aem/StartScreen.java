@@ -71,12 +71,14 @@ public class StartScreen implements Screen {
             if(game.musicShouldPlay){
                 game.musicShouldPlay = false;
                 game.kielMusic.setVolume(0f);
-                game.oceanSeagullMusic.pause();
+                game.spaceMusic.setVolume(0f);
+                game.oceanSeagullMusic.setVolume(0f);
                 muteButton.setChecked(true);
             }   else {
                 game.musicShouldPlay = true;
                 game.kielMusic.setVolume(0.5f);
-                game.oceanSeagullMusic.play();
+                game.oceanSeagullMusic.setVolume(0.5f);
+                game.spaceMusic.setVolume(0.5f);
                 muteButton.setChecked(false);
             }
         });
@@ -88,8 +90,6 @@ public class StartScreen implements Screen {
 
         muteButton.setProgrammaticChangeEvents(false);
 
-        int padding = game.getDefaultPadding();
-        table.pad(padding, padding, padding, padding);
 
         table.add(exitButton).left().top();
 
@@ -113,9 +113,12 @@ public class StartScreen implements Screen {
     public void show() {
         if(game.musicShouldPlay) {
             game.oceanSeagullMusic.play();
+            game.spaceMusic.pause();
+            game.kielMusic.pause();
         }
         if(!game.musicShouldPlay) {
-            game.kielMusic.setVolume(0f);
+            game.kielMusic.pause();
+            game.spaceMusic.pause();
             muteButton.setChecked(true);
         }
 

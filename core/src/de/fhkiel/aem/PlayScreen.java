@@ -61,11 +61,15 @@ public class PlayScreen implements Screen {
         labelStyle.font = new BitmapFont(Gdx.files.internal("title-font-export.fnt"));
         labelStyle.fontColor = Color.GRAY;
 
+
         table = new Table();
+
+        int padding = game.getDefaultPadding();
+        table.pad(padding, padding, padding, padding);
+
         table.setFillParent(true);
         tablePressSpace = new Table();
         tablePressSpace.setFillParent(true);
-        //table.debug();
 
         items = new Array<>();
 
@@ -198,13 +202,13 @@ public class PlayScreen implements Screen {
 
         if(bird.getBirdWidth() < 101) {
             if (TimeUtils.nanoTime() - bird.getLastShrinkTime() > 8000000000L && TimeUtils.nanoTime() - bird.getLastShrinkTime() < 8500000000L) {
-                bird.setBirdWidth(100);
+                bird.setBirdWidth(80);
             }
             else if(TimeUtils.nanoTime() - bird.getLastShrinkTime() >8500000000L && TimeUtils.nanoTime() - bird.getLastShrinkTime() < 9000000000L) {
                 bird.setBirdWidth(50);
             }
             else if(TimeUtils.nanoTime() - bird.getLastShrinkTime() > 9000000000L && TimeUtils.nanoTime() - bird.getLastShrinkTime() < 9500000000L){
-                bird.setBirdWidth(100);
+                bird.setBirdWidth(80);
             }
             else if(TimeUtils.nanoTime() - bird.getLastShrinkTime() > 9500000000L && TimeUtils.nanoTime() - bird.getLastShrinkTime() < 9800000000L) {
                 bird.setBirdWidth(50);

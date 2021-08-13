@@ -316,7 +316,7 @@ public class SpaceScreen implements Screen {
             if (barrier.getBarrierSprite().getX() < (0 - barrier.getBarrierSprite().getWidth())) {
                 barrier.getBarrierSprite().setX(barrier.getBarrierSprite().getX() + (barriers.size / 2f) * barrier.getDistance());
                 barrier.getHitbox().setX(barrier.getHitbox().getX() + (barriers.size / 2f) * barrier.getDistance());
-                if (barrier.getBarrierSprite().getRotation() != 180) {
+                if (barrier.isDown()) {
                     randomNum = ThreadLocalRandom.current().nextInt(
                             200, Gdx.graphics.getHeight());
                     barrier.getBarrierSprite().setY(randomNum);
@@ -348,7 +348,8 @@ public class SpaceScreen implements Screen {
             barriers.add(b);
             Barrier b2 = new Barrier(Gdx.graphics.getWidth() + (b.getDistance() * i),
                     randomNum - b.getBarrierSprite().getHeight() - b.getGap(), Configuration.spaceBarrierUpImg, game.getDifficulty());
-            b2.getBarrierSprite().setRotation(180f);
+            //b2.getBarrierSprite().setRotation(180f);
+            b2.setDown(true);
             b2.getHitbox().setX(b.getHitbox().x);
             barriers.add(b2);
             createItems(b.getBarrierSprite().getX() + b.getDistance() / 2);

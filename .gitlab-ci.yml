@@ -64,7 +64,7 @@ cache:
 build:
   stage: build
   script:
-    - ./gradlew build
+    - ./gradlew desktop:build
 
 test:
   stage: test
@@ -74,7 +74,7 @@ test:
 deploy:
   stage: deploy
   script:
-    - ./gradlew dist
+    - ./gradlew desktop:dist
   artifacts:
    paths:
      - desktop/build/libs/desktop-1.0.jar

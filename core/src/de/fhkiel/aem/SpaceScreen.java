@@ -260,17 +260,19 @@ public class SpaceScreen implements Screen {
                     if (bird.getScoreCollectable() == 3) {
                         lastInvisibleTime = TimeUtils.nanoTime();
                         bird.setInvincible(true);
+                        game.helm_cracked.play();
                         bird.setScoreCollectable(0);
                     } else {
-                        game.kielMusic.stop();
+                        game.spaceMusic.stop();
                         gameOver = true;
                         runGame = false;
+                        game.die_Sound.play();
                         gameOverScreen = new GameOverScreen(game, bird.getHighscore());
                         bird.setDieTime(TimeUtils.millis());
                     }
                 }
                 if (bird.getHitbox().y > Configuration.ScreenHeight && barrier.getBarrierSprite().getX() <= bird.getBirdSprite().getX()) {
-                    game.kielMusic.stop();
+                    game.spaceMusic.stop();
                     gameOver = true;
                     runGame = false;
                     gameOverScreen = new GameOverScreen(game, bird.getHighscore());

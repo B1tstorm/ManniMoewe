@@ -19,6 +19,8 @@ public class FlappyBird extends Game {
 	public Music oceanSeagullMusic;
 	public Music kielMusic;
 	public Music spaceMusic;
+	public Music helm_cracked;
+	public Music die_Sound;
 	private int difficulty = 2;
 	public boolean musicShouldPlay = true;
 	private int defaultPadding = 50;
@@ -47,6 +49,12 @@ public class FlappyBird extends Game {
 		spaceMusic = Gdx.audio.newMusic(Gdx.files.internal("Space_Sound.mp3"));
 		spaceMusic.setVolume(0.5f);
 		spaceMusic.setLooping(true);
+
+		helm_cracked = Gdx.audio.newMusic(Gdx.files.internal("Helm_kaputt.mp3"));
+		helm_cracked.setVolume(0.5f);
+
+		die_Sound = Gdx.audio.newMusic(Gdx.files.internal("Die_Sound.mp3"));
+		die_Sound.setVolume(0.5f);
 
 		// Custom Typeface "Luckiest Guy" Google Font
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("LuckiestGuy-Regular.ttf"));

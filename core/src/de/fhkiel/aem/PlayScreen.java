@@ -263,12 +263,14 @@ public class PlayScreen implements Screen {
                         || Intersector.overlaps(bird.getHitbox(), barrier.getHitbox3())) {
                     if (bird.getScoreCollectable() == 3) {
                         lastInvisibleTime = TimeUtils.nanoTime();
+                        game.helm_cracked.play();
                         bird.setInvincible(true);
                         bird.setScoreCollectable(0);
                     } else {
                         game.kielMusic.stop();
                         gameOver = true;
                         runGame = false;
+                        game.die_Sound.play();
                         gameOverScreen = new GameOverScreen(game, bird.getHighscore());
                         bird.setDieTime(TimeUtils.millis());
                     }
@@ -377,7 +379,7 @@ public class PlayScreen implements Screen {
                 200, Gdx.graphics.getHeight() - 200);
         int randomNum2 = ThreadLocalRandom.current().nextInt(0, 100);
 
-        if (randomNum2 < 10) {
+        if (randomNum2 < 100) {
             items.add(new Fries(xPos, randomNum1));
         } else if (randomNum2 < 15) {
             items.add(new Multiplier(xPos, randomNum1));

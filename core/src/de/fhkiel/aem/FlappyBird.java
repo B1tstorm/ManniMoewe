@@ -6,7 +6,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+//import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import de.fhkiel.aem.model.Highscore;
 
@@ -57,37 +57,39 @@ public class FlappyBird extends Game {
 		die_Sound.setVolume(0.5f);
 
 		// Custom Typeface "Luckiest Guy" Google Font
-		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("LuckiestGuy-Regular.ttf"));
-		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-		parameter.size = 36;
-		parameter.color = Color.valueOf("FFFFFF");
-		parameter.shadowColor = Color.valueOf("9A836D");
-		parameter.shadowOffsetX = -3;
-		parameter.shadowOffsetY = 3;
-		BitmapFont font36 = generator.generateFont(parameter); // font size 36 pixels
-		generator.dispose();
+//		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("LuckiestGuy-Regular.ttf"));
+//		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+//		parameter.size = 36;
+//		parameter.color = Color.valueOf("FFFFFF");
+//		parameter.shadowColor = Color.valueOf("9A836D");
+//		parameter.shadowOffsetX = -3;
+//		parameter.shadowOffsetY = 3;
+//		BitmapFont font36 = generator.generateFont(parameter); // font size 36 pixels
+//		generator.dispose();
 
 		labelStyle = new Label.LabelStyle();
-		labelStyle.font = font36;
+		labelStyle.font = new BitmapFont(Gdx.files.internal("title-font-export.fnt"));
+		labelStyle.fontColor = Color.WHITE;
+
 
 		// Custom Typeface "Luckiest Guy" Google Font
-		FreeTypeFontGenerator generatorHeadline = new FreeTypeFontGenerator(Gdx.files.internal("LuckiestGuy-Regular.ttf"));
-		FreeTypeFontGenerator.FreeTypeFontParameter parameterHeadline = new FreeTypeFontGenerator.FreeTypeFontParameter();
-		parameterHeadline.size = 96;
-		parameterHeadline.color = Color.valueOf("FFFFFF");
-		parameterHeadline.shadowColor = Color.valueOf("9A836D");
-		parameterHeadline.shadowOffsetX = -3;
-		parameterHeadline.shadowOffsetY = 3;
-		BitmapFont font72 = generatorHeadline.generateFont(parameterHeadline); // font size 36 pixels
-		generatorHeadline.dispose();
+//		FreeTypeFontGenerator generatorHeadline = new FreeTypeFontGenerator(Gdx.files.internal("LuckiestGuy-Regular.ttf"));
+//		FreeTypeFontGenerator.FreeTypeFontParameter parameterHeadline = new FreeTypeFontGenerator.FreeTypeFontParameter();
+//		parameterHeadline.size = 96;
+//		parameterHeadline.color = Color.valueOf("FFFFFF");
+//		parameterHeadline.shadowColor = Color.valueOf("9A836D");
+//		parameterHeadline.shadowOffsetX = -3;
+//		parameterHeadline.shadowOffsetY = 3;
+//		BitmapFont font72 = generatorHeadline.generateFont(parameterHeadline); // font size 36 pixels
+//		generatorHeadline.dispose();
 
-		labelStyleHeadline = new Label.LabelStyle();
-		labelStyleHeadline.font = font72;
+		labelStyleHeadline = labelStyle;
+		labelStyleHeadline.font = labelStyle.font;
 
 
 
 		batch = new SpriteBatch();
-		font = font36;
+		font = labelStyle.font;
 
 		background = new NormalBackground(batch);
 

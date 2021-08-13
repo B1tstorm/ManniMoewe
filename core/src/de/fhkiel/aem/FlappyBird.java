@@ -38,7 +38,7 @@ public class FlappyBird extends Game {
 
 	@Override
 	public void create () {
-		oceanSeagullMusic = Gdx.audio.newMusic(Gdx.files.internal("Meer_Möwe.mp3"));
+		oceanSeagullMusic = Gdx.audio.newMusic(Gdx.files.internal("Meer_Moewe.mp3"));
 		oceanSeagullMusic.setLooping(true);
 		oceanSeagullMusic.setVolume(0.5f);
 

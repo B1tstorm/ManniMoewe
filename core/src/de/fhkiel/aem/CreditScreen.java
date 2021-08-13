@@ -101,6 +101,9 @@ public class CreditScreen implements Screen {
         table.add(kai).expand();
         table.add(desRole).expand();
         table.row();
+        table.add(new Label("Alaska", game.labelStyle)).expand();
+        table.add(new Label("Office Dog", game.labelStyle)).expand();
+        table.row();
         table.add(new Image(new Texture(Configuration.manny_heyImg))).colspan(2).height(300);
         table.row();
 

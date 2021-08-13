@@ -197,11 +197,6 @@ public class SpaceScreen implements Screen {
     private void update(float delta) {
         int randomNum = 0;
 
-        if(bird.getBirdSprite().getY() > Configuration.ScreenHeight + 500 && bird.getHighscore() > 3) {
-            game.setScreen(new SpaceScreen(game, bird.getHighscore(), bird));
-            dispose();
-        }
-
         if (bird.getScoreCollectable() < 3) {
             bird.setHelmetactive(false);
         }

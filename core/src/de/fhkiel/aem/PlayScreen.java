@@ -61,7 +61,9 @@ public class PlayScreen implements Screen {
         table = new Table();
 
         int padding = game.getDefaultPadding();
-        table.pad(padding, padding, padding, padding);
+        table.padLeft(padding);
+        table.padRight(padding);
+        table.padBottom(padding);
 
         table.setFillParent(true);
         tablePressSpace = new Table();
@@ -96,8 +98,9 @@ public class PlayScreen implements Screen {
         collectableLabel = new Label("" + bird.getScoreCollectable() + " / 3", game.labelStyle);
         speedLabel = new Label("Speed: " + game.getSpeedMultiplier() * 60 + "km/h", game.labelStyle);
 
-        table.add(new Image(pommespackung_leer)).top().left().maxHeight(55).maxWidth(55);
-        table.add(collectableLabel).expand().center().top().left().padLeft(20);
+
+        table.add(new Image(pommespackung_leer)).top().left().maxHeight(55).maxWidth(55).padTop(25);
+        table.add(collectableLabel).expand().center().top().left().padLeft(20).padTop(25);
 
         table.add(highscoreLabel).expand().height(100).center().top();
         table.add(speedLabel).expand().height(100).center().top();

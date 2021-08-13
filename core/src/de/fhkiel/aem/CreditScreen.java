@@ -2,10 +2,8 @@ package de.fhkiel.aem;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -38,31 +36,27 @@ public class CreditScreen implements Screen {
         stage = new Stage(new FitViewport(Configuration.ScreenWidth, Configuration.ScreenHeight));
 
         Gdx.input.setInputProcessor(stage);
+        
+        headerLabel = new Label("Credits", game.labelStyleHeadline);
+        name = new Label("Name", game.labelStyle);
+        role = new Label("Rolle", game.labelStyle);
+        poRole = new Label("Product Owner", game.labelStyle);
+        smRole = new Label("Scrum Master", game.labelStyle);
+        devRole = new Label("Developer", game.labelStyle);
+        devRole1 = new Label("Developer", game.labelStyle);
+        devRole2 = new Label("Developer", game.labelStyle);
+        devRole3 = new Label("Developer", game.labelStyle);
+        desRole = new Label("Designer", game.labelStyle);
+        devdesRole = new Label("Designer / Developer", game.labelStyle);
 
-        Label.LabelStyle labelStyle = new Label.LabelStyle();
-        labelStyle.font = new BitmapFont(Gdx.files.internal("title-font-export.fnt"));
-        labelStyle.fontColor = Color.DARK_GRAY;
-
-        headerLabel = new Label("Credits", labelStyle);
-        name = new Label("Name", labelStyle);
-        role = new Label("Rolle", labelStyle);
-        poRole = new Label("Product Owner", labelStyle);
-        smRole = new Label("Scrum Master", labelStyle);
-        devRole = new Label("Developer", labelStyle);
-        devRole1 = new Label("Developer", labelStyle);
-        devRole2 = new Label("Developer", labelStyle);
-        devRole3 = new Label("Developer", labelStyle);
-        desRole = new Label("Designer", labelStyle);
-        devdesRole = new Label("Designer / Developer", labelStyle);
-
-        niels = new Label("Niels Lassen", labelStyle);
-        oliver = new Label("Kamil Oliver Gorczyca", labelStyle);
-        marvin = new Label("Marvin Winterhoff", labelStyle);
-        anas = new Label("Anas Arodake", labelStyle);
-        joshua = new Label("Joshua Widdermann", labelStyle);
-        kai = new Label("Kai Tilman Harmsen", labelStyle);
-        jonas = new Label("Jonas Becker", labelStyle);
-        paul = new Label("Paul Rieck", labelStyle);
+        niels = new Label("Niels Lassen", game.labelStyle);
+        oliver = new Label("Kamil Oliver Gorczyca", game.labelStyle);
+        marvin = new Label("Marvin Winterhoff", game.labelStyle);
+        anas = new Label("Anas Arodake", game.labelStyle);
+        joshua = new Label("Joshua Widdermann", game.labelStyle);
+        kai = new Label("Kai Tilman Harmsen", game.labelStyle);
+        jonas = new Label("Jonas Becker", game.labelStyle);
+        paul = new Label("Paul Rieck", game.labelStyle);
 
         buttonTable = new Table();
         buttonTable.setFillParent(true);

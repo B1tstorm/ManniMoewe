@@ -2,13 +2,14 @@ package de.fhkiel.aem;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -51,13 +52,9 @@ public class OptionsScreen implements Screen {
         table.setFillParent(true);
         Gdx.input.setInputProcessor(stage);
 
-        Label.LabelStyle labelStyle = new Label.LabelStyle();
-        labelStyle.font = new BitmapFont(Gdx.files.internal("title-font-export.fnt"));
-        labelStyle.fontColor = Color.WHITE;
-
-        charLabel = new Label("Character", labelStyle);
-        difficultyLabel = new Label("Difficulty", labelStyle);
-        soundLabel = new Label("Sound", labelStyle);
+        charLabel = new Label("Character", game.labelStyle);
+        difficultyLabel = new Label("Difficulty", game.labelStyle);
+        soundLabel = new Label("Sound", game.labelStyle);
 
         sliderStyle = new Slider.SliderStyle();
         sliderStyle.background = new TextureRegionDrawable(new Texture(Configuration.slider_backgroundImg));
@@ -71,7 +68,7 @@ public class OptionsScreen implements Screen {
             }
         });
 
-        Label headerLabel = new Label("Options", labelStyle);
+        Label headerLabel = new Label("Options", game.labelStyleHeadline);
 
         int padding = game.getDefaultPadding();
         table.pad(padding, padding, padding, padding);

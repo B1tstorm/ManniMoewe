@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -44,17 +43,12 @@ public class GameOverScreen implements Screen {
         createButtons();
         table.setFillParent(true);
         Gdx.input.setInputProcessor(stage);
-
-        Label.LabelStyle labelStyle = new Label.LabelStyle();
-        labelStyle.font = new BitmapFont(Gdx.files.internal("title-font-export.fnt"));
-        labelStyle.fontColor = Color.WHITE;
-
-        Label overLabel = new Label("Game Over!", labelStyle);
-
+        
+        Label overLabel = new Label("Game Over!", game.labelStyleHeadline);
 
         TextField.TextFieldStyle textFieldStyle = new TextField.TextFieldStyle();
-        textFieldStyle.font = new BitmapFont(Gdx.files.internal("title-font-export.fnt"));
-        textFieldStyle.fontColor = Color.GRAY;
+        textFieldStyle.font = game.font;
+        textFieldStyle.fontColor= Color.valueOf("FFFFFF");
 
         Pixmap cursorColor = new Pixmap(3,
                 (int) overLabel.getHeight(),

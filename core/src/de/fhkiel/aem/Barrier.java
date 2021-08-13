@@ -21,6 +21,7 @@ public class Barrier {
     private Rectangle hitbox, hitbox2;
     private Circle hitbox3;
     private int hitboxKorrektur = 10;
+    private boolean down = false;
 
     /**
      * Creates a new Barrier on the given location.
@@ -117,5 +118,13 @@ public class Barrier {
 
     public Rectangle getHitbox2() {
         return hitbox2;
+    }
+
+    public boolean isDown() {
+        return down;
+    }
+
+    public void setDown(boolean down) {
+        this.down = down;
     }
 }

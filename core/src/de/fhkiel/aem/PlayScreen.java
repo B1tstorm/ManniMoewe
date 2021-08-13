@@ -320,7 +320,7 @@ public class PlayScreen implements Screen {
                 barrier.getHitbox().setX(barrier.getHitbox().getX() + (barriers.size / 2f) * barrier.getDistance());
                 barrier.getHitbox2().setX(barrier.getHitbox2().getX() + (barriers.size / 2f) * barrier.getDistance());
                 barrier.getHitbox3().setX(barrier.getHitbox3().x + (barriers.size / 2f) * barrier.getDistance());
-                if (barrier.getBarrierSprite().getRotation() != 180) {
+                if (!barrier.isDown()) {
                     randomNum = ThreadLocalRandom.current().nextInt(
                             200, Gdx.graphics.getHeight());
                     barrier.getBarrierSprite().setY(randomNum);
@@ -358,8 +358,9 @@ public class PlayScreen implements Screen {
                     b.getHitbox2().y - b.getHitbox3().radius);
             barriers.add(b);
             Barrier b2 = new Barrier(Gdx.graphics.getWidth() + (b.getDistance() * i),
-                    randomNum - b.getBarrierSprite().getHeight() - b.getGap(), Configuration.barrierupImg, game.getDifficulty());
-            b2.getBarrierSprite().setRotation(180f);
+                    randomNum - b.getBarrierSprite().getHeight() - b.getGap(), Configuration.barrierdownImg, game.getDifficulty());
+            //b2.getBarrierSprite().setRotation(180f);
+            b2.setDown(true);
             b2.getHitbox().setX(b.getHitbox().x);
             b2.getHitbox2().setPosition(b2.getHitbox().x + 400, b2.getHitbox().x);
             b2.getHitbox2().setPosition(b2.getHitbox().x + (b2.getHitbox().width - b2.getHitbox2().width) / 2,
@@ -376,7 +377,7 @@ public class PlayScreen implements Screen {
                 200, Gdx.graphics.getHeight() - 200);
         int randomNum2 = ThreadLocalRandom.current().nextInt(0, 100);
 
-        if (randomNum2 < 10) {
+        if (randomNum2 < 100) {
             items.add(new Fries(xPos, randomNum1));
         } else if (randomNum2 < 15) {
             items.add(new Multiplier(xPos, randomNum1));

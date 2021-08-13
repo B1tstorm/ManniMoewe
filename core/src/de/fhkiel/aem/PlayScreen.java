@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -244,7 +245,7 @@ public class PlayScreen implements Screen {
         float speed = game.getSpeedMultiplier() * 60;
         double roundOff = Math.round(speed * 100.0) / 100.0;
 
-        speedLabel.setText(String.format("Speed: " + roundOff + "km/h", "%.2f"));
+        speedLabel.setText("Speed: " + roundOff + "km/h");
 
         if (bird.getScoreCollectable() == 1) {
             table.getCells().get(0).setActor(new Image(pommespackung_eins));
@@ -323,7 +324,7 @@ public class PlayScreen implements Screen {
                 barrier.getHitbox2().setX(barrier.getHitbox2().getX() + (barriers.size / 2f) * barrier.getDistance());
                 barrier.getHitbox3().setX(barrier.getHitbox3().x + (barriers.size / 2f) * barrier.getDistance());
                 if (!barrier.isDown()) {
-                    randomNum = ThreadLocalRandom.current().nextInt(
+                    randomNum = MathUtils.random(
                             200, Gdx.graphics.getHeight());
                     barrier.getBarrierSprite().setY(randomNum);
                     barrier.getHitbox().setY(barrier.getBarrierSprite().getY() + 55);
@@ -346,7 +347,7 @@ public class PlayScreen implements Screen {
      */
     public void createBarriers() {
         for (int i = 0; i < 10; i++) {
-            int randomNum = ThreadLocalRandom.current().nextInt(
+            int randomNum = MathUtils.random(
                     200, Gdx.graphics.getHeight());
 
             Barrier b = new Barrier(
@@ -375,9 +376,9 @@ public class PlayScreen implements Screen {
     }
 
     private void createItems(float xPos) {
-        int randomNum1 = ThreadLocalRandom.current().nextInt(
+        int randomNum1 = MathUtils.random(
                 200, Gdx.graphics.getHeight() - 200);
-        int randomNum2 = ThreadLocalRandom.current().nextInt(0, 100);
+        int randomNum2 = MathUtils.random(0, 100);
 
         if (randomNum2 < 100) {
             items.add(new Fries(xPos, randomNum1));

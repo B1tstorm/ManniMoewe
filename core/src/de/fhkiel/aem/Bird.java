@@ -71,10 +71,10 @@ public class Bird {
     public Bird(float xPos, float yPos, boolean spaceManniActive) {
         spaceManni = spaceManniActive;
         if(spaceManni) {
-            mannyStare = new Texture(Gdx.files.internal(Configuration.mannyStraightSpace));
+            mannyStare = new Texture(Gdx.files.internal(Configuration.manniSpaceBtn + "-hover.png"));
         }
         else {
-            mannyStare = new Texture(Gdx.files.internal(Configuration.manny_stareImg));
+            mannyStare = new Texture(Gdx.files.internal(Configuration.manny_heyImg));
         }
         birdSprite = new Sprite(mannyStare);
 

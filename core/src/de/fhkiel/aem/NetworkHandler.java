@@ -1,7 +1,9 @@
 package de.fhkiel.aem;
 
 import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonWriter;
 import de.fhkiel.aem.model.Highscore;
+import de.fhkiel.aem.model.HighscoreEntry;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -19,6 +21,7 @@ public class NetworkHandler {
 
 	public NetworkHandler() {
 		json = new Json();
+		json.setOutputType(JsonWriter.OutputType.json);
 	}
 
 	/**
@@ -42,6 +45,7 @@ public class NetworkHandler {
 			try(OutputStream os = http.getOutputStream()) {
 				os.write(out);
 			}
+			System.out.println(json.toJson(highscore));
 			System.out.println("Send JSON to Server!");
 		} catch (Exception e) {
 			System.out.println("Outer Catch!");

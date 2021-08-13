@@ -131,7 +131,7 @@ public class PlayScreen implements Screen {
     public void render(float delta) {
         if(pause) {
             stage.draw();
-            if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
+            if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.justTouched())
                 pause = false;
         }
 
@@ -295,7 +295,7 @@ public class PlayScreen implements Screen {
             }
         }
         //beim Drücken der Leertaste soll die Zeile"press space to ......" verschwenden und das spiel wird in Bewegung gesetzt
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.justTouched()) {
             runGame = true;
             tablePressSpace.clear();
             currentTime = TimeUtils.nanoTime();
@@ -322,7 +322,7 @@ public class PlayScreen implements Screen {
                 barrier.getHitbox().setX(barrier.getHitbox().getX() + (barriers.size / 2f) * barrier.getDistance());
                 barrier.getHitbox2().setX(barrier.getHitbox2().getX() + (barriers.size / 2f) * barrier.getDistance());
                 barrier.getHitbox3().setX(barrier.getHitbox3().x + (barriers.size / 2f) * barrier.getDistance());
-                if (barrier.getBarrierSprite().getRotation() != 180) {
+                if (!barrier.isDown()) {
                     randomNum = ThreadLocalRandom.current().nextInt(
                             200, Gdx.graphics.getHeight());
                     barrier.getBarrierSprite().setY(randomNum);
@@ -360,8 +360,9 @@ public class PlayScreen implements Screen {
                     b.getHitbox2().y - b.getHitbox3().radius);
             barriers.add(b);
             Barrier b2 = new Barrier(Gdx.graphics.getWidth() + (b.getDistance() * i),
-                    randomNum - b.getBarrierSprite().getHeight() - b.getGap(), Configuration.barrierupImg, game.getDifficulty());
-            b2.getBarrierSprite().setRotation(180f);
+                    randomNum - b.getBarrierSprite().getHeight() - b.getGap(), Configuration.barrierdownImg, game.getDifficulty());
+            //b2.getBarrierSprite().setRotation(180f);
+            b2.setDown(true);
             b2.getHitbox().setX(b.getHitbox().x);
             b2.getHitbox2().setPosition(b2.getHitbox().x + 400, b2.getHitbox().x);
             b2.getHitbox2().setPosition(b2.getHitbox().x + (b2.getHitbox().width - b2.getHitbox2().width) / 2,

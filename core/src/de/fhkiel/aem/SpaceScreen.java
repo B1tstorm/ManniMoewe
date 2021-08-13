@@ -7,9 +7,9 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -242,7 +242,7 @@ public class SpaceScreen implements Screen {
         float speed = game.getSpeedMultiplier() * 60;
         double roundOff = Math.round(speed * 100.0) / 100.0;
 
-        speedLabel.setText(String.format("Speed: " + roundOff + "km/h", "%.2f"));
+        speedLabel.setText("Speed: " + roundOff + "km/h");
 
         if (bird.getScoreCollectable() == 1) {
             table.getCells().get(0).setActor(new Image(pommespackung_eins));
@@ -317,7 +317,7 @@ public class SpaceScreen implements Screen {
                 barrier.getBarrierSprite().setX(barrier.getBarrierSprite().getX() + (barriers.size / 2f) * barrier.getDistance());
                 barrier.getHitbox().setX(barrier.getHitbox().getX() + (barriers.size / 2f) * barrier.getDistance());
                 if (!barrier.isDown()) {
-                    randomNum = ThreadLocalRandom.current().nextInt(
+                    randomNum = MathUtils.random(
                             200, Gdx.graphics.getHeight());
                     barrier.getBarrierSprite().setY(randomNum);
                     barrier.getHitbox().setY(barrier.getBarrierSprite().getY());
@@ -337,7 +337,7 @@ public class SpaceScreen implements Screen {
      */
     public void createBarriers() {
         for (int i = 0; i < 10; i++) {
-            int randomNum = ThreadLocalRandom.current().nextInt(
+            int randomNum = MathUtils.random(
                     200, Gdx.graphics.getHeight());
 
             Barrier b = new Barrier(
@@ -348,7 +348,7 @@ public class SpaceScreen implements Screen {
             barriers.add(b);
             Barrier b2 = new Barrier(Gdx.graphics.getWidth() + (b.getDistance() * i),
                     randomNum - b.getBarrierSprite().getHeight() - b.getGap(), Configuration.spaceBarrierUpImg, game.getDifficulty());
-
+            //b2.getBarrierSprite().setRotation(180f);
             b2.setDown(true);
             b2.getHitbox().setX(b.getHitbox().x);
             barriers.add(b2);
@@ -357,9 +357,9 @@ public class SpaceScreen implements Screen {
     }
 
     private void createItems(float xPos) {
-        int randomNum1 = ThreadLocalRandom.current().nextInt(
+        int randomNum1 = MathUtils.random(
                 200, Gdx.graphics.getHeight() - 200);
-        int randomNum2 = ThreadLocalRandom.current().nextInt(0, 100);
+        int randomNum2 = MathUtils.random(0, 100);
 
         if (randomNum2 < 10) {
             items.add(new Fries(xPos, randomNum1));

@@ -244,7 +244,7 @@ public class PlayScreen implements Screen {
         float speed = game.getSpeedMultiplier() * 60;
         double roundOff = Math.round(speed * 100.0) / 100.0;
 
-        speedLabel.setText(String.format("Speed: " + roundOff + "km/h", "%.2f"));
+        speedLabel.setText("Speed: " + roundOff + "km/h");
 
         if (bird.getScoreCollectable() == 1) {
             table.getCells().get(0).setActor(new Image(pommespackung_eins));
@@ -361,7 +361,6 @@ public class PlayScreen implements Screen {
             barriers.add(b);
             Barrier b2 = new Barrier(Gdx.graphics.getWidth() + (b.getDistance() * i),
                     randomNum - b.getBarrierSprite().getHeight() - b.getGap(), Configuration.barrierdownImg, game.getDifficulty());
-            //b2.getBarrierSprite().setRotation(180f);
             b2.setDown(true);
             b2.getHitbox().setX(b.getHitbox().x);
             b2.getHitbox2().setPosition(b2.getHitbox().x + 400, b2.getHitbox().x);
@@ -379,7 +378,7 @@ public class PlayScreen implements Screen {
                 200, Gdx.graphics.getHeight() - 200);
         int randomNum2 = ThreadLocalRandom.current().nextInt(0, 100);
 
-        if (randomNum2 < 100) {
+        if (randomNum2 < 10) {
             items.add(new Fries(xPos, randomNum1));
         } else if (randomNum2 < 15) {
             items.add(new Multiplier(xPos, randomNum1));

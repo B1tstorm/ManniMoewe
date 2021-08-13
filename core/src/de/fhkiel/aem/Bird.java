@@ -114,7 +114,7 @@ public class Bird {
         hitbox.setY(hitbox.y - fallSpeed * deltaTime);
         fallSpeed += 20;
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.justTouched()) {
             sprungNachOben();
         }
 

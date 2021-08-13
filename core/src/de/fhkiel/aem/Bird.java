@@ -44,10 +44,16 @@ public class Bird {
     public boolean spaceScreen = false;
     private long dieTime = 0;
     private static HashMap<Integer, Texture> animationMap = new HashMap<>();
+    private Texture mannyStare;
+    private boolean spaceManni = false;
 
 
     public Texture getMannyStraight() {
-        return mannyStraight;
+        if(spaceManni){
+            return mannyStraightSpace;
+        }else {
+            return mannyStraight;
+        }
     }
 
     public Texture getMannyStraightSpace() {return mannyStraightSpace;}
@@ -62,8 +68,14 @@ public class Bird {
      * @param xPos x position of the bird
      * @param yPos y position of the bird
      */
-    public Bird(float xPos, float yPos) {
-        Texture mannyStare = new Texture(Gdx.files.internal(Configuration.manny_stareImg));
+    public Bird(float xPos, float yPos, boolean spaceManniActive) {
+        spaceManni = spaceManniActive;
+        if(spaceManni) {
+            mannyStare = new Texture(Gdx.files.internal(Configuration.mannyStraightSpace));
+        }
+        else {
+            mannyStare = new Texture(Gdx.files.internal(Configuration.manny_stareImg));
+        }
         birdSprite = new Sprite(mannyStare);
 
         birdSprite.setX(xPos);
@@ -100,7 +112,7 @@ public class Bird {
         //bird Fällt nach unten mit einer Beschleunigung
         birdSprite.setY(birdSprite.getY() - fallSpeed * deltaTime);
         hitbox.setY(hitbox.y - fallSpeed * deltaTime);
-        fallSpeed += 25;
+        fallSpeed += 20;
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             sprungNachOben();
@@ -109,7 +121,7 @@ public class Bird {
         //nach xxxx millisec nachdem der button betätigt wurde, fällt der Vogel auf 2 Phasen wieder runter
         if (pressTime != 0 && (fallSpeed < 0 && TimeUtils.millis() >= (pressTime + 200))) {
 
-            if(spaceScreen) {
+            if(spaceScreen || spaceManni) {
                 if (helmetactive) {
                     birdSprite.setTexture(mannyStraightSpaceHelmet);
                 } else {
@@ -127,7 +139,7 @@ public class Bird {
             birdMayRotate = false;
         }
         if (pressTime != 0 && fallSpeed > 0 && TimeUtils.millis() >= (pressTime + 300)) {
-            if(spaceScreen) {
+            if(spaceScreen || spaceManni) {
                 if (helmetactive) {
                     birdSprite.setTexture(mannyStraightSpaceHelmet);
                 } else {
@@ -220,37 +232,37 @@ public class Bird {
             birdMayRotate = true;
         }
         pressTime = TimeUtils.millis();
-        if(spaceScreen) {
+        if(spaceScreen || spaceManni) {
             if (helmetactive) {
-                birdSprite.setTexture(mannyStraightSpaceHelmet);
+                birdSprite.setTexture(mannyUpSpaceHelmet);
             } else {
-                birdSprite.setTexture(mannyStraightSpace);
+                birdSprite.setTexture(mannyUpSpace);
             }
         }
         else {
             if (helmetactive) {
-                birdSprite.setTexture(mannyStraightHelm);
+                birdSprite.setTexture(mannyUpHelm);
             } else {
-                birdSprite.setTexture(mannyStraight);
+                birdSprite.setTexture(mannyUp);
             }
         }
-        fallSpeed = -1000;
+        fallSpeed = -850;
     }
 
     private void slide() {
         pressTime = TimeUtils.millis();
-        if(spaceScreen) {
+        if(spaceScreen || spaceManni) {
             if (helmetactive) {
-                birdSprite.setTexture(mannyStraightSpaceHelmet);
+                birdSprite.setTexture(mannyDownSpaceHelmet);
             } else {
-                birdSprite.setTexture(mannyStraightSpace);
+                birdSprite.setTexture(mannyDownSpace);
             }
         }
         else {
             if (helmetactive) {
-                birdSprite.setTexture(mannyStraightHelm);
+                birdSprite.setTexture(mannyDownHelm);
             } else {
-                birdSprite.setTexture(mannyStraight);
+                birdSprite.setTexture(mannyDown);
             }
         }
         fallSpeed = -400;
@@ -385,7 +397,7 @@ public class Bird {
      */
     private void initializeAnimation() {
 
-        if(spaceScreen){
+        if(spaceScreen || spaceManni){
             animationMap.put(0, new Texture(Gdx.files.internal(Configuration.mannyOuch2Space)));
             animationMap.put(1, new Texture(Gdx.files.internal(Configuration.mannyOuch3Space)));
         }

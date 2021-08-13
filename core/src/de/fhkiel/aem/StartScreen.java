@@ -41,8 +41,7 @@ public class StartScreen implements Screen {
         camera.setToOrtho(false, Configuration.ScreenWidth, Configuration.ScreenHeight);
 
         stage = new Stage(new FitViewport(Configuration.ScreenWidth, Configuration.ScreenHeight));
-        bird = new Bird(50, 250 );
-
+        bird = new Bird(50, 250, game.isCharSpaceManniActive());
 
 
         Table table = new Table();

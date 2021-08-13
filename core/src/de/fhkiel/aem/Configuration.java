@@ -39,6 +39,9 @@ public class Configuration {
     public static final String help = "ATFB-help";
     public static final String muteImg = "ATFB-mute.png";
     public static final String unmuteImg = "ATFB-unmute.png";
+    public static final String manniBtn = "ATFB-button-manny";
+    public static final String manniSpaceBtn = "ATFB-button-manny-space";
+    public static final String manniSpaceLocked = "ATFB-manny-space-locked.png";
 
     // Environment Assets
     public static final String barrierdownImg = "ATFB-barrier-down.png";

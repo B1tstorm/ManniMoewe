@@ -52,6 +52,9 @@ public class SpaceScreen implements Screen {
      * @param game The game object
      */
     public SpaceScreen(FlappyBird game, float highscoreAlt, Bird bird) {
+
+        game.setFoundEasteregg(true);
+
         shapeRenderer = new ShapeRenderer();
         gameOver = false;
         runGame = false;

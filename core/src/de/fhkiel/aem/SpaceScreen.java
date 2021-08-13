@@ -289,7 +289,7 @@ public class SpaceScreen implements Screen {
             }
         }
         //beim Drücken der Leertaste soll die Zeile"press space to ......" verschwenden und das spiel wird in Bewegung gesetzt
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.justTouched()) {
             runGame = true;
             tablePressSpace.clear();
             currentTime = TimeUtils.nanoTime();

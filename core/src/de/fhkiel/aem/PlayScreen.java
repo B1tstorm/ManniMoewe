@@ -131,7 +131,7 @@ public class PlayScreen implements Screen {
     public void render(float delta) {
         if(pause) {
             stage.draw();
-            if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
+            if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.justTouched())
                 pause = false;
         }
 
@@ -293,7 +293,7 @@ public class PlayScreen implements Screen {
             }
         }
         //beim Drücken der Leertaste soll die Zeile"press space to ......" verschwenden und das spiel wird in Bewegung gesetzt
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.justTouched()) {
             runGame = true;
             tablePressSpace.clear();
             currentTime = TimeUtils.nanoTime();

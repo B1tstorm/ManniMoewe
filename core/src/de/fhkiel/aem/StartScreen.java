@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -27,6 +28,7 @@ public class StartScreen implements Screen {
     private ImageButton muteButton;
     private ImageButton exitButton;
     private final Bird bird;
+    private final Label versionNr;
 
     protected Viewport viewport;
 
@@ -94,11 +96,14 @@ public class StartScreen implements Screen {
         });
 
         muteButton.setProgrammaticChangeEvents(false);
+        versionNr = new Label("v1.0.1", game.labelStyle);
+        versionNr.setColor(1,1,1,0.5f);
 
 
         table.add(exitButton).left().top();
 
-        table.add().fillX();
+//        table.add().fillX();
+        table.add(versionNr).center().top().height(100);
 
         table.add(helpButton).right().top();
         table.row();

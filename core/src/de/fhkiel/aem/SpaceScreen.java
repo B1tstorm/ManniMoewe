@@ -317,8 +317,7 @@ public class SpaceScreen implements Screen {
                 barrier.getBarrierSprite().setX(barrier.getBarrierSprite().getX() + (barriers.size / 2f) * barrier.getDistance());
                 barrier.getHitbox().setX(barrier.getHitbox().getX() + (barriers.size / 2f) * barrier.getDistance());
                 if (!barrier.isDown()) {
-                    randomNum = MathUtils.random(
-                            200, Gdx.graphics.getHeight());
+                    randomNum = MathUtils.random(200, 1025);
                     barrier.getBarrierSprite().setY(randomNum);
                     barrier.getHitbox().setY(barrier.getBarrierSprite().getY());
                     createItems(barrier.getBarrierSprite().getX() + (barrier.getDistance() / 2));
@@ -337,8 +336,8 @@ public class SpaceScreen implements Screen {
      */
     public void createBarriers() {
         for (int i = 0; i < 10; i++) {
-            int randomNum = MathUtils.random(
-                    200, Gdx.graphics.getHeight());
+            //bestimmt den pixel an dem ein Turm spawnen darf
+            int randomNum = MathUtils.random(200,1025);
 
             Barrier b = new Barrier(
                     Gdx.graphics.getWidth() + new Barrier(0, 0, Configuration.spaceBarrierDownImg,

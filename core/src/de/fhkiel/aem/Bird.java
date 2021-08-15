@@ -157,7 +157,7 @@ public class Bird {
             pressTime = 0;
         }
         //stoppe den Vogel am Rand des Bilds
-        if (birdSprite.getY() <= 25) {
+        if (birdSprite.getY() <= 50) {
             slide();
         }
 

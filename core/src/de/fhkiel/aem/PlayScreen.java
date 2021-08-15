@@ -324,8 +324,7 @@ public class PlayScreen implements Screen {
                 barrier.getHitbox2().setX(barrier.getHitbox2().getX() + (barriers.size / 2f) * barrier.getDistance());
                 barrier.getHitbox3().setX(barrier.getHitbox3().x + (barriers.size / 2f) * barrier.getDistance());
                 if (!barrier.isDown()) {
-                    randomNum = MathUtils.random(
-                            200, Gdx.graphics.getHeight());
+                    randomNum = MathUtils.random(200, 1025);
                     barrier.getBarrierSprite().setY(randomNum);
                     barrier.getHitbox().setY(barrier.getBarrierSprite().getY() + 55);
                     barrier.getHitbox2().setY(barrier.getHitbox().y - barrier.getHitbox2().height);
@@ -347,8 +346,8 @@ public class PlayScreen implements Screen {
      */
     public void createBarriers() {
         for (int i = 0; i < 10; i++) {
-            int randomNum = MathUtils.random(
-                    200, Gdx.graphics.getHeight());
+            //bestimmt den pixel an dem ein Turm spawnen darf
+            int randomNum = MathUtils.random(200, 1025);
 
             Barrier b = new Barrier(
                     Gdx.graphics.getWidth() + new Barrier(0, 0, Configuration.barrierdownImg,

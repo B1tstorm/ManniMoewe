@@ -2,8 +2,8 @@
 ## Tools
 - IntelliJ IDE
 ## Installation
-[Spiel als Webversion](http://85.214.170.214) (Empfohlen: Browser im Vollbild)
-oder
+[Spiel als Webversion](http://85.214.170.214) (Empfohlen: Browser im Vollbild)    
+oder    
 Die .exe Datei ist ready to run. Der User muss keine weiteren Installationen betätigen
 
 ## Arbeitsablauf Entwicklungsarbeit

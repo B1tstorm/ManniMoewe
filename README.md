@@ -1,4 +1,5 @@
 # Flappy Bird - AEM 2021 - Team 2
+Dies ist unsere Interpretation von Flappy Bird im Kieler Stil. Das Projekt wurde im Rahmen eines Uni Moduls (Agile Entwicklungsmethoden) durchgeführt. Die Rollen werden im Spiel unter "Credits" beschreiben :-)
 ## Tools
 - IntelliJ IDE
 ## Installation

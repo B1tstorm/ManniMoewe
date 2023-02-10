@@ -2,7 +2,9 @@
 ## Tools
 - IntelliJ IDE
 ## Installation
-Die .exe Datei ist ready to run. Der User muss keine weiteren Instalationen bet채tigen
+[Spiel als Webversion](http://85.214.170.214) (Empfohlen: Browser im Vollbild)
+oder
+Die .exe Datei ist ready to run. Der User muss keine weiteren Installationen bet채tigen
 
 ## Arbeitsablauf Entwicklungsarbeit
 - Erstellen und Auschecken eines neuen feature branches vom develop branch.
@@ -19,9 +21,9 @@ Die .exe Datei ist ready to run. Der User muss keine weiteren Instalationen bet�
 
 ## DoD
 - Alle Tests durchlaufen
-- Mind. 2 Entwickler m체ssen mergerequest anschauen
+- Mind. 2 Entwickler m체ssen pullrequest anschauen
 - Dokumentation vervollst채ndigt
-- Kompilierbar
+- Kompilierbar (Pipeline zeigt gr체n)
 
 ##Spielanleitung
 Um das Spiel zu spielen, muss man sich zun채chst die .jar Datei von Flappy Bird runterladen. 
